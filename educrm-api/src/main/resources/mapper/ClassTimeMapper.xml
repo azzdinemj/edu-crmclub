@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.ClassTimeMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.ClassTime" >
+    <id column="pk_class_time" property="pkClassTime" jdbcType="VARCHAR" />
+    <id column="type" property="type" jdbcType="VARCHAR" />
+    <id column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_class_time, type, sort, pk_domain, caption, start_time, end_time, creator, creation_date, 
+    modifier, lastedit_date,isvalid
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassTime" >
+    select
+    <include refid="Base_Column_List" />
+    from class_time
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="type != null" >
+      and type = #{type}
+    </if>
+    <if test="isvalid != null" >
+      and isvalid = #{isvalid}
+    </if>
+    <if test="caption != null and caption !='' ">
+      and caption LIKE "%"#{caption}"%"
+    </if>
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+    ORDER BY sort
+  </select>
+  <select id="selectMaxSort" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassTime" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from
+    class_time
+    where type=(SELECT type from class_time where sort = (SELECT max(sort) from class_time HAVING  end_time= max(end_time)));
+  </select>
+  <select id="selectSort" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassTime" >
+    select
+    <include refid="Base_Column_List" />
+    from class_time
+    where 1=1
+    <if test="pkEmployee != null" >
+      and <![CDATA[ sort <=(select MAX(ct.sort) from
+      `schedule` sc LEFT JOIN class_time ct
+      on sc.pk_class_time=ct.pk_class_time where
+      sc.pk_employee=#{pkEmployee}) GROUP BY sort]]>
+    </if>
+    <if test="type != null" >
+      and type = #{type}
+    </if>
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+    ORDER BY sort
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.ClassTime" >
+    select
+    count(*)
+    from class_time
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassTime" >
+    select 
+    <include refid="Base_Column_List" />
+    from class_time
+    where pk_class_time = #{pkClassTime,jdbcType=VARCHAR}
+    <if test="type != null" >
+      and type = #{type,jdbcType=VARCHAR}
+    </if>
+    <if test="sort != null" >
+      and sort = #{sort,jdbcType=INTEGER}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wuxue.model.ClassTime" >
+    delete from class_time
+    where pk_class_time = #{pkClassTime,jdbcType=VARCHAR}
+      and type = #{type,jdbcType=VARCHAR}
+      and sort = #{sort,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.ClassTime" >
+    insert into class_time (pk_class_time, type, sort, 
+      pk_domain, caption, start_time, 
+      end_time, creator, creation_date, 
+      modifier, lastedit_date,isvalid)
+    values (#{pkClassTime,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
+      #{pkDomain,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
+      #{endTime,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP},#{isvalid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.ClassTime" >
+    insert into class_time
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkClassTime != null" >
+        pk_class_time,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkClassTime != null" >
+        #{pkClassTime,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.ClassTime" >
+    update class_time
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_class_time = #{pkClassTime,jdbcType=VARCHAR}
+      and type = #{type,jdbcType=VARCHAR}
+      and sort = #{sort,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.ClassTime" >
+    update class_time
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      isvalid = #{isvalid,jdbcType=INTEGER}
+    where pk_class_time = #{pkClassTime,jdbcType=VARCHAR}
+      and type = #{type,jdbcType=VARCHAR}
+      and sort = #{sort,jdbcType=INTEGER}
+  </update>
+</mapper>

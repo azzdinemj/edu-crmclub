@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.DeliveryApplicationMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.shuttle.DeliveryApplication" >
+    <id column="pk_delivery" property="pkDelivery" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_linkman" property="pkLinkman" jdbcType="VARCHAR" />
+    <result column="entrustment_id" property="entrustmentId" jdbcType="VARCHAR" />
+    <result column="delivery_date" property="deliveryDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="isaudit" property="isaudit" jdbcType="INTEGER" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_delivery, pk_domain, pk_linkman, entrustment_id, delivery_date, status, isaudit, 
+    notes, creation_date,isvalid
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.shuttle.DeliveryApplication" >
+    select 
+    <include refid="Base_Column_List" />
+    from delivery_application
+    where 1=1
+    <if test="pkLinkman != null and pkLinkman != ''">
+      and pk_linkman = #{pkLinkman}
+    </if>
+    <if test="entrustmentId != null" >
+      and entrustment_id = #{entrustmentId}
+    </if>
+    <if test="isaudit == 999">
+      and isaudit = 1 or isaudit = 3
+    </if>
+    <if test="status != null">
+      and status = #{status}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from delivery_application
+    where pk_delivery = #{pkDelivery,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from delivery_application
+    where pk_delivery = #{pkDelivery,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.shuttle.DeliveryApplication" >
+    insert into delivery_application (pk_delivery, pk_domain, pk_linkman, 
+      entrustment_id, delivery_date, status, 
+      isaudit, notes, creation_date,isvalid
+      )
+    values (#{pkDelivery,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkLinkman,jdbcType=VARCHAR}, 
+      #{entrustmentId,jdbcType=VARCHAR}, #{deliveryDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{isaudit,jdbcType=INTEGER}, #{notes,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP},
+      #{isvalid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.shuttle.DeliveryApplication" >
+    insert into delivery_application
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDelivery != null" >
+        pk_delivery,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman,
+      </if>
+      <if test="entrustmentId != null" >
+        entrustment_id,
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isaudit != null" >
+        isaudit,
+      </if>
+      <if test="notes != null" >
+        notes,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDelivery != null" >
+        #{pkDelivery,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkLinkman != null" >
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="entrustmentId != null" >
+        #{entrustmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isaudit != null" >
+        #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.shuttle.DeliveryApplication" >
+    update delivery_application
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="entrustmentId != null" >
+        entrustment_id = #{entrustmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isaudit != null" >
+        isaudit = #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_delivery = #{pkDelivery,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.shuttle.DeliveryApplication" >
+    update delivery_application
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      entrustment_id = #{entrustmentId,jdbcType=VARCHAR},
+      delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      isaudit = #{isaudit,jdbcType=INTEGER},
+      notes = #{notes,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      isvalid = #{isvalid,jdbcType=INTEGER}
+    where pk_delivery = #{pkDelivery,jdbcType=VARCHAR}
+  </update>
+</mapper>

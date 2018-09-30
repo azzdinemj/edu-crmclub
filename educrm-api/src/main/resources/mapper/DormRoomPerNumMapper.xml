@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.DormRoomPerNumMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.DormRoomPerNum" >
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_dorm_room" property="pkDormRoom" jdbcType="VARCHAR" />
+    <result column="stunum" property="stunum" jdbcType="BIGINT" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="kind" property="kind" jdbcType="INTEGER" />
+    <result column="current_num" property="currentNum" jdbcType="INTEGER" />
+    <result column="empnum" property="empnum" jdbcType="BIGINT" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    pk_domain,pk_dorm_room,stunum,sex,kind,current_num,empnum
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.SchoolBusStudentNum" >
+    select
+    <include refid="Base_Column_List" />
+    from dorm_room_per_num
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    order by pk_domain DESC,kind DESC
+  </select>
+
+  <insert id="insert" parameterType="com.wuxue.model.DormRoomPerNum" >
+    insert into dorm_room_per_num (pk_domain, pk_dorm_room, stunum, 
+      sex, kind, current_num
+      )
+    values (#{pkDomain,jdbcType=VARCHAR}, #{pkDormRoom,jdbcType=VARCHAR}, #{stunum,jdbcType=BIGINT}, 
+      #{sex,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER}, #{currentNum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.DormRoomPerNum" >
+    insert into dorm_room_per_num
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkDormRoom != null" >
+        pk_dorm_room,
+      </if>
+      <if test="stunum != null" >
+        stunum,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="kind != null" >
+        kind,
+      </if>
+      <if test="currentNum != null" >
+        current_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDormRoom != null" >
+        #{pkDormRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="stunum != null" >
+        #{stunum,jdbcType=BIGINT},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="currentNum != null" >
+        #{currentNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.ParentOrderEditMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.ParentOrderEdit" >
+    <id column="pk_order_edit" property="pkOrderEdit" jdbcType="VARCHAR" />
+    <result column="parent_order" property="parentOrder" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="pk_linkman" property="pkLinkman" jdbcType="VARCHAR" />
+      <result column="old_meal_id" property="oldMealId" jdbcType="VARCHAR"/>
+      <result column="new_meal_id" property="newMealId" jdbcType="VARCHAR"/>
+    <result column="old_cost" property="oldCost" jdbcType="DECIMAL" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_order_edit, parent_order, pk_student, pk_linkman, old_cost, cost,type, creation_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.ParentOrderEdit" >
+    select
+    <include refid="Base_Column_List" />
+    from parent_order_edit
+    where 1=1
+    <if test="parentOrder != null" >
+      and parent_order = #{parentOrder}
+    </if>
+    order by creation_date desc
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from parent_order_edit
+    where pk_order_edit = #{pkOrderEdit,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from parent_order_edit
+    where pk_order_edit = #{pkOrderEdit,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.ParentOrderEdit" >
+    insert into parent_order_edit (pk_order_edit, parent_order, pk_student, 
+      pk_linkman, old_cost, cost, type,
+      creation_date)
+    values (#{pkOrderEdit,jdbcType=VARCHAR}, #{parentOrder,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, 
+      #{pkLinkman,jdbcType=VARCHAR}, #{oldCost,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL},  #{type,jdbcType=INTEGER},
+      #{creationDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.ParentOrderEdit" >
+    insert into parent_order_edit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkOrderEdit != null" >
+        pk_order_edit,
+      </if>
+      <if test="parentOrder != null" >
+        parent_order,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman,
+      </if>
+      <if test="oldCost != null" >
+        old_cost,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="oldMealId != null">
+            old_meal_id,
+        </if>
+        <if test="newMealId != null">
+            new_meal_id,
+        </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkOrderEdit != null" >
+        #{pkOrderEdit,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOrder != null" >
+        #{parentOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkLinkman != null" >
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="oldCost != null" >
+        #{oldCost,jdbcType=DECIMAL},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="oldMealId != null">
+            #{oldMealId,jdbcType=VARCHAR},
+        </if>
+        <if test="newMealId != null">
+            #{newMealId,jdbcType=VARCHAR},
+        </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.ParentOrderEdit" >
+    update parent_order_edit
+    <set >
+      <if test="parentOrder != null" >
+        parent_order = #{parentOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="oldCost != null" >
+        old_cost = #{oldCost,jdbcType=DECIMAL},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_order_edit = #{pkOrderEdit,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.ParentOrderEdit" >
+    update parent_order_edit
+    set parent_order = #{parentOrder,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      old_cost = #{oldCost,jdbcType=DECIMAL},
+      cost = #{cost,jdbcType=DECIMAL},
+      type = #{type,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where pk_order_edit = #{pkOrderEdit,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getNewOrderSumCost">
+    select sum(cost) from parent_order po
+    inner join parent_order_edit poe on po.parent_order = poe.parent_order
+    where po.isvalid = 1 and  poe.pkLinkman = #{pkLinkman}
+  </select>
+
+
+</mapper>

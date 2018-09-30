@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.QuestionsItemMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.QuestionsItem" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="partnum" property="partnum" jdbcType="INTEGER" />
+    <result column="rank" property="rank" jdbcType="VARCHAR" />
+    <result column="questions_subject_id" property="questionsSubjectId" jdbcType="VARCHAR" />
+    <result column="questions_subject_name" property="questionsSubjectName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="SMALLINT" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="analysis" property="analysis" jdbcType="VARCHAR" />
+    <result column="iscoherent" property="iscoherent" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="rightnum" property="rightnum" jdbcType="INTEGER" />
+    <result column="wrongnum" property="wrongnum" jdbcType="INTEGER" />
+    <result column="finishnum" property="finishnum" jdbcType="INTEGER" />
+    <result column="ischild" property="ischild" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="regdate" property="regdate" jdbcType="TIMESTAMP" />
+    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="LONGVARCHAR" />
+    <result column="option" property="option" jdbcType="LONGVARCHAR" />
+
+
+    <result column="pk_sys_dict_values" property="pkSysDictValues" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!--<resultMap id="ResultMapWithBLOBs" type="com.wuxue.model.QuestionsItemWithBLOBs" extends="BaseResultMap" >-->
+    <!--<result column="title" property="title" jdbcType="LONGVARCHAR" />-->
+    <!--<result column="option" property="option" jdbcType="LONGVARCHAR" />-->
+  <!--</resultMap>-->
+
+  <sql id="Base_Column_List" >
+    id, partnum, rank, questions_subject_id,questions_subject_name, `type`, tags, answer, analysis, iscoherent,
+    pid, rightnum, wrongnum, finishnum, ischild, sort, regdate, modifydate, status, isdel,pk_sys_dict_values
+  </sql>
+  <sql id="Blob_Column_List" >
+    title, `option`
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.QuestionsItem" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from questions_item qi
+    where qi.isdel != 0
+    <if test="type != null and type!='' " >
+      and `type`=#{type}
+    </if>
+    <if test="title != null and title!='' " >
+      and title like "%"#{title}"%"
+    </if>
+    <if test="rank != null and rank!='' " >
+      and rank=#{rank}
+    </if>
+    <if test="questionsSubjectId != null and questionsSubjectId!='' " >
+      and  find_in_set(#{questionsSubjectId} ,questions_subject_id)
+    </if>
+    <if test="pkStudent != null and pkStudent!='' " >
+      and   qi.id  NOT IN
+      (select pk_questions_item from questions_test qt where pk_student= #{pkStudent} and qt.type='1' and qt.istrue='0' )
+    </if>
+    <if test="pkSysDictValues != null and pkSysDictValues!='' " >
+      and pk_sys_dict_values=#{pkSysDictValues}
+    </if>
+    ORDER  BY  regdate DESC
+  </select>
+
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.QuestionsItem" >
+    select
+    count(*)
+    from questions_item
+    where 1=1
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from questions_item
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from questions_item
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.QuestionsItem" >
+    insert into questions_item (id, partnum, rank, 
+      questions_subject_id,questions_subject_name, `type`, tags,
+      answer, analysis, iscoherent, 
+      pid, rightnum, wrongnum, 
+      finishnum, ischild, sort, 
+      regdate, modifydate, status, 
+      isdel, title, `option`,pk_sys_dict_values
+      )
+    values (#{id,jdbcType=VARCHAR}, #{partnum,jdbcType=INTEGER}, #{rank,jdbcType=VARCHAR},
+      #{questionsSubjectId,jdbcType=VARCHAR},#{questionsSubjectName,jdbcType=VARCHAR}, #{type,jdbcType=SMALLINT}, #{tags,jdbcType=VARCHAR},
+      #{answer,jdbcType=VARCHAR}, #{analysis,jdbcType=VARCHAR}, #{iscoherent,jdbcType=INTEGER}, 
+      #{pid,jdbcType=INTEGER}, #{rightnum,jdbcType=INTEGER}, #{wrongnum,jdbcType=INTEGER}, 
+      #{finishnum,jdbcType=INTEGER}, #{ischild,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
+      #{regdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{isdel,jdbcType=INTEGER}, #{title,jdbcType=LONGVARCHAR}, #{option,jdbcType=LONGVARCHAR},
+      #{pkSysDictValues,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.QuestionsItem" >
+    insert into questions_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="partnum != null" >
+        partnum,
+      </if>
+      <if test="rank != null" >
+        rank,
+      </if>
+      <if test="questionsSubjectId != null" >
+        questions_subject_id,
+      </if>
+      <if test="questionsSubjectName != null" >
+        questions_subject_name,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="analysis != null" >
+        analysis,
+      </if>
+      <if test="iscoherent != null" >
+        iscoherent,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="rightnum != null" >
+        rightnum,
+      </if>
+      <if test="wrongnum != null" >
+        wrongnum,
+      </if>
+      <if test="finishnum != null" >
+        finishnum,
+      </if>
+      <if test="ischild != null" >
+        ischild,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="regdate != null" >
+        regdate,
+      </if>
+      <if test="modifydate != null" >
+        modifydate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="option != null" >
+        `option`,
+      </if>
+      <if test="pkSysDictValues != null" >
+        pk_sys_dict_values,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="partnum != null" >
+        #{partnum,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null" >
+        #{rank,jdbcType=VARCHAR},
+      </if>
+      <if test="questionsSubjectId != null" >
+        #{questionsSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionsSubjectName != null" >
+        #{questionsSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="analysis != null" >
+        #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="iscoherent != null" >
+        #{iscoherent,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="rightnum != null" >
+        #{rightnum,jdbcType=INTEGER},
+      </if>
+      <if test="wrongnum != null" >
+        #{wrongnum,jdbcType=INTEGER},
+      </if>
+      <if test="finishnum != null" >
+        #{finishnum,jdbcType=INTEGER},
+      </if>
+      <if test="ischild != null" >
+        #{ischild,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="regdate != null" >
+        #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="option != null" >
+        #{option,jdbcType=LONGVARCHAR},
+      </if>
+
+      <if test="pkSysDictValues != null" >
+        #{pkSysDictValues,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.QuestionsItem" >
+    update questions_item
+    <set >
+      <if test="partnum != null" >
+        partnum = #{partnum,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null" >
+        rank = #{rank,jdbcType=VARCHAR},
+      </if>
+      <if test="questionsSubjectId != null" >
+        questions_subject_id = #{questionsSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionsSubjectName != null" >
+        questions_subject_name = #{questionsSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="analysis != null" >
+        analysis = #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="iscoherent != null" >
+        iscoherent = #{iscoherent,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="rightnum != null" >
+        rightnum = #{rightnum,jdbcType=INTEGER},
+      </if>
+      <if test="wrongnum != null" >
+        wrongnum = #{wrongnum,jdbcType=INTEGER},
+      </if>
+      <if test="finishnum != null" >
+        finishnum = #{finishnum,jdbcType=INTEGER},
+      </if>
+      <if test="ischild != null" >
+        ischild = #{ischild,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="regdate != null" >
+        regdate = #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="option != null" >
+        `option` = #{option,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pkSysDictValues != null" >
+        pk_sys_dict_values = #{pkSysDictValues,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wuxue.model.QuestionsItem" >
+    update questions_item
+    set partnum = #{partnum,jdbcType=INTEGER},
+      rank = #{rank,jdbcType=VARCHAR},
+      questions_subject_id = #{questionsSubjectId,jdbcType=VARCHAR},
+       questions_subject_name = #{questionsSubjectName,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=SMALLINT},
+      tags = #{tags,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      analysis = #{analysis,jdbcType=VARCHAR},
+      iscoherent = #{iscoherent,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=INTEGER},
+      rightnum = #{rightnum,jdbcType=INTEGER},
+      wrongnum = #{wrongnum,jdbcType=INTEGER},
+      finishnum = #{finishnum,jdbcType=INTEGER},
+      ischild = #{ischild,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      regdate = #{regdate,jdbcType=TIMESTAMP},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      title = #{title,jdbcType=LONGVARCHAR},
+      `option` = #{option,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.QuestionsItem" >
+    update questions_item
+    set partnum = #{partnum,jdbcType=INTEGER},
+      rank = #{rank,jdbcType=VARCHAR},
+      questions_subject_id = #{questionsSubjectId,jdbcType=VARCHAR},
+       questions_subject_name = #{questionsSubjectName,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=SMALLINT},
+      tags = #{tags,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      analysis = #{analysis,jdbcType=VARCHAR},
+      iscoherent = #{iscoherent,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=INTEGER},
+      rightnum = #{rightnum,jdbcType=INTEGER},
+      wrongnum = #{wrongnum,jdbcType=INTEGER},
+      finishnum = #{finishnum,jdbcType=INTEGER},
+      ischild = #{ischild,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      regdate = #{regdate,jdbcType=TIMESTAMP},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      pk_sys_dict_values=#{pkSysDictValues,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.LinkmanMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Linkman" >
+    <id column="pk_linkman" property="pkLinkman" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="relationship" property="relationship" jdbcType="VARCHAR" />
+    <result column="occupation" property="occupation" jdbcType="VARCHAR" />
+    <result column="degree_completed" property="degreeCompleted" jdbcType="VARCHAR" />
+    <result column="work_unit" property="workUnit" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="duty" property="duty" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="msn" property="msn" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="likes" property="likes" jdbcType="VARCHAR" />
+    <result column="zip" property="zip" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="iskey" property="iskey" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_linkman, pk_domain, pk_student, code, caption, sex, relationship, occupation, 
+    degree_completed, work_unit, phone, fax, mobile_phone, department, duty, qq, msn, 
+    email, likes, zip, address, memo, iskey, creator, creation_date, modifier, lastedit_date,img,id_card
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.Linkman" >
+    select
+    <include refid="Base_Column_List" />
+    from linkman
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkStudent != null" >
+      and pk_student = #{pkStudent}
+    </if>
+    <if test="caption != null and caption != ''" >
+      and caption like "%"#{caption}"%"
+    </if>
+    <if test="studentName != null and studentName != ''" >
+      and pk_student in (select pk_student from student where caption LIKE "%"#{studentName}"%")
+    </if>
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+  </select>
+  <select id="selectByPhoneAndIdCard" resultMap="BaseResultMap" parameterType="com.wuxue.model.Linkman" >
+    select
+    <include refid="Base_Column_List" />
+    from linkman
+    where 1=1
+    <if test="phone != null and phone !=''" >
+      and phone = #{phone}
+    </if>
+    <if test="caption != null and idCard != ''" >
+      and caption = #{caption}
+    </if>
+    <if test="idCard != null and idCard != ''" >
+      and id_card = #{idCard}
+    </if>
+  </select>
+  <select id="selectByStudent" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from linkman
+    where pk_linkman in (SELECT pk_linkman FROM student_linkman WHERE pk_student=#{pkStudent})
+  </select>
+  <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from linkman
+    where phone = #{phone,jdbcType=VARCHAR}
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.Linkman" >
+    select
+    count(*)
+    from linkman
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from linkman
+    where pk_linkman = #{pkLinkman,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from linkman
+    where pk_student = #{pkLinkman,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Linkman" >
+    insert into linkman (pk_linkman, pk_domain, pk_student, 
+      code, caption, sex, 
+      relationship, occupation, degree_completed, 
+      work_unit, phone, fax, 
+      mobile_phone, department, duty, 
+      qq, msn, email, likes, 
+      zip, address, memo, 
+      iskey, creator, creation_date, 
+      modifier, lastedit_date,img,id_card)
+    values (#{pkLinkman,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{relationship,jdbcType=VARCHAR}, #{occupation,jdbcType=VARCHAR}, #{degreeCompleted,jdbcType=VARCHAR}, 
+      #{workUnit,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, 
+      #{mobilePhone,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{duty,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{msn,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{likes,jdbcType=VARCHAR}, 
+      #{zip,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
+      #{iskey,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP},#{img,jdbcType=VARCHAR},#{idCard,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Linkman" >
+    insert into linkman
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkLinkman != null" >
+        pk_linkman,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="relationship != null" >
+        relationship,
+      </if>
+      <if test="occupation != null" >
+        occupation,
+      </if>
+      <if test="degreeCompleted != null" >
+        degree_completed,
+      </if>
+      <if test="workUnit != null" >
+        work_unit,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="duty != null" >
+        duty,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="msn != null" >
+        msn,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="likes != null" >
+        likes,
+      </if>
+      <if test="zip != null" >
+        zip,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="iskey != null" >
+        iskey,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="idCard != null" >
+        id_card,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkLinkman != null" >
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="relationship != null" >
+        #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="occupation != null" >
+        #{occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeCompleted != null" >
+        #{degreeCompleted,jdbcType=VARCHAR},
+      </if>
+      <if test="workUnit != null" >
+        #{workUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="duty != null" >
+        #{duty,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="msn != null" >
+        #{msn,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="likes != null" >
+        #{likes,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="iskey != null" >
+        #{iskey,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Linkman" >
+    update linkman
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="relationship != null" >
+        relationship = #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="occupation != null" >
+        occupation = #{occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeCompleted != null" >
+        degree_completed = #{degreeCompleted,jdbcType=VARCHAR},
+      </if>
+      <if test="workUnit != null" >
+        work_unit = #{workUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="duty != null" >
+        duty = #{duty,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="msn != null" >
+        msn = #{msn,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="likes != null" >
+        likes = #{likes,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        zip = #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="iskey != null" >
+        iskey = #{iskey,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        id_card= #{idCard,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_linkman = #{pkLinkman,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Linkman" >
+    update linkman
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      relationship = #{relationship,jdbcType=VARCHAR},
+      occupation = #{occupation,jdbcType=VARCHAR},
+      degree_completed = #{degreeCompleted,jdbcType=VARCHAR},
+      work_unit = #{workUnit,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      duty = #{duty,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      msn = #{msn,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      likes = #{likes,jdbcType=VARCHAR},
+      zip = #{zip,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      iskey = #{iskey,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      img = #{img,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR}
+    where pk_linkman = #{pkLinkman,jdbcType=VARCHAR}
+  </update>
+  <select id="selectLinkMansByIds" resultMap="BaseResultMap">
+    select pk_linkman,img,relationship from linkman where 1=1
+    <if test="ids != null and ids.size > 0">
+      and pk_linkman in
+      <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+  </select>
+
+  <insert id="insertSelectiveCollect" parameterType="com.wuxue.model.Linkman" >
+    insert into linkman_collect
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkLinkman != null" >
+        pk_linkman,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="relationship != null" >
+        relationship,
+      </if>
+      <if test="occupation != null" >
+        occupation,
+      </if>
+      <if test="degreeCompleted != null" >
+        degree_completed,
+      </if>
+      <if test="workUnit != null" >
+        work_unit,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="duty != null" >
+        duty,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="msn != null" >
+        msn,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="likes != null" >
+        likes,
+      </if>
+      <if test="zip != null" >
+        zip,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="iskey != null" >
+        iskey,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="idCard != null" >
+        id_card,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkLinkman != null" >
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="relationship != null" >
+        #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="occupation != null" >
+        #{occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeCompleted != null" >
+        #{degreeCompleted,jdbcType=VARCHAR},
+      </if>
+      <if test="workUnit != null" >
+        #{workUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="duty != null" >
+        #{duty,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="msn != null" >
+        #{msn,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="likes != null" >
+        #{likes,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="iskey != null" >
+        #{iskey,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

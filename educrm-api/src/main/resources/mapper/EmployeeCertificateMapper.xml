@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.EmployeeCertificateMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.EmployeeCertificate" >
+    <id column="pk_employee_certificate" property="pkEmployeeCertificate" jdbcType="VARCHAR" />
+    <result column="pk_employee" property="pkEmployee" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="certificate_name" property="certificateName" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_employee_certificate, pk_employee, date, certificate_name, memo, creator, creation_date, 
+    modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.EmployeeCertificate" >
+    select
+    <include refid="Base_Column_List" />
+    from employee_certificate
+    where 1=1
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+    <if test="pkEmployee != null">
+      and pk_employee = #{pkEmployee}
+    </if>
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.EmployeeCertificate" >
+    select
+    count(*)
+    from employee_certificate
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from employee_certificate
+    where pk_employee_certificate = #{pkEmployeeCertificate,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from employee_certificate
+    where pk_employee_certificate = #{pkEmployeeCertificate,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.EmployeeCertificate" >
+    insert into employee_certificate (pk_employee_certificate, pk_employee, 
+      date, certificate_name, memo, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkEmployeeCertificate,jdbcType=VARCHAR}, #{pkEmployee,jdbcType=VARCHAR}, 
+      #{date,jdbcType=TIMESTAMP}, #{certificateName,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.EmployeeCertificate" >
+    insert into employee_certificate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkEmployeeCertificate != null" >
+        pk_employee_certificate,
+      </if>
+      <if test="pkEmployee != null" >
+        pk_employee,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="certificateName != null" >
+        certificate_name,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkEmployeeCertificate != null" >
+        #{pkEmployeeCertificate,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null" >
+        #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="certificateName != null" >
+        #{certificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.EmployeeCertificate" >
+    update employee_certificate
+    <set >
+      <if test="pkEmployee != null" >
+        pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="certificateName != null" >
+        certificate_name = #{certificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_employee_certificate = #{pkEmployeeCertificate,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.EmployeeCertificate" >
+    update employee_certificate
+    set pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      certificate_name = #{certificateName,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_employee_certificate = #{pkEmployeeCertificate,jdbcType=VARCHAR}
+  </update>
+</mapper>

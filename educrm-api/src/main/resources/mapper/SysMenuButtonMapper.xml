@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SysMenuButtonMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SysMenuButton" >
+    <id column="pk_sys_menu" property="pkSysMenu" jdbcType="VARCHAR" />
+    <id column="pk_sys_button" property="pkSysButton" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="hasline" property="hasline" jdbcType="INTEGER" />
+    <result column="display" property="display" jdbcType="INTEGER" />
+    <result column="showmsg" property="showmsg" jdbcType="INTEGER" />
+    <result column="hasstate" property="hasstate" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="short" property="shorts" jdbcType="INTEGER" />
+    <result column="caption_eng" property="captionEng" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_sys_menu, pk_sys_button, caption, img, hasline, display, showmsg, hasstate, width, 
+    height, short,caption_eng
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.SysMenuButton" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_menu_button
+    where 1=1
+    <if test="start != null and pageSize != null">
+      LIMIT #{start}, #{pageSize}
+    </if>
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.SysMenuButton" >
+    select
+    count(*)
+    from sys_menu_button
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.wuxue.model.SysMenuButtonKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu_button
+    where pk_sys_menu = #{pkSysMenu,jdbcType=VARCHAR}
+      and pk_sys_button = #{pkSysButton,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wuxue.model.SysMenuButtonKey" >
+    delete from sys_menu_button
+    where pk_sys_menu = #{pkSysMenu,jdbcType=VARCHAR}
+      and pk_sys_button = #{pkSysButton,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SysMenuButton" >
+    insert into sys_menu_button (pk_sys_menu, pk_sys_button, caption, 
+      img, hasline, display, 
+      showmsg, hasstate, width, 
+      height, short,caption_eng)
+    values (#{pkSysMenu,jdbcType=VARCHAR}, #{pkSysButton,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}, 
+      #{img,jdbcType=VARCHAR}, #{hasline,jdbcType=INTEGER}, #{display,jdbcType=INTEGER}, 
+      #{showmsg,jdbcType=INTEGER}, #{hasstate,jdbcType=INTEGER}, #{width,jdbcType=INTEGER}, 
+      #{height,jdbcType=INTEGER}, #{shorts,jdbcType=INTEGER}),#{captionEng,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SysMenuButton" >
+    insert into sys_menu_button
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSysMenu != null" >
+        pk_sys_menu,
+      </if>
+      <if test="pkSysButton != null" >
+        pk_sys_button,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="hasline != null" >
+        hasline,
+      </if>
+      <if test="display != null" >
+        display,
+      </if>
+      <if test="showmsg != null" >
+        showmsg,
+      </if>
+      <if test="hasstate != null" >
+        hasstate,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="shorts != null" >
+        short,
+      </if>
+      <if test="captionEng != null" >
+        caption_eng,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSysMenu != null" >
+        #{pkSysMenu,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysButton != null" >
+        #{pkSysButton,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="hasline != null" >
+        #{hasline,jdbcType=INTEGER},
+      </if>
+      <if test="display != null" >
+        #{display,jdbcType=INTEGER},
+      </if>
+      <if test="showmsg != null" >
+        #{showmsg,jdbcType=INTEGER},
+      </if>
+      <if test="hasstate != null" >
+        #{hasstate,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="shorts != null" >
+        #{shorts,jdbcType=INTEGER},
+      </if>
+      <if test="captionEng != null" >
+        #{captionEng,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SysMenuButton" >
+    update sys_menu_button
+    <set >
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="hasline != null" >
+        hasline = #{hasline,jdbcType=INTEGER},
+      </if>
+      <if test="display != null" >
+        display = #{display,jdbcType=INTEGER},
+      </if>
+      <if test="showmsg != null" >
+        showmsg = #{showmsg,jdbcType=INTEGER},
+      </if>
+      <if test="hasstate != null" >
+        hasstate = #{hasstate,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="shorts != null" >
+        short = #{shorts,jdbcType=INTEGER},
+      </if>
+      <if test="captionEng != null" >
+        caption_eng = #{captionEng,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_sys_menu = #{pkSysMenu,jdbcType=VARCHAR}
+      and pk_sys_button = #{pkSysButton,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SysMenuButton" >
+    update sys_menu_button
+    set caption = #{caption,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR},
+      hasline = #{hasline,jdbcType=INTEGER},
+      display = #{display,jdbcType=INTEGER},
+      showmsg = #{showmsg,jdbcType=INTEGER},
+      hasstate = #{hasstate,jdbcType=INTEGER},
+      width = #{width,jdbcType=INTEGER},
+      height = #{height,jdbcType=INTEGER},
+      short = #{shorts,jdbcType=INTEGER},
+      caption_eng = #{captionEng,jdbcType=VARCHAR},
+    where pk_sys_menu = #{pkSysMenu,jdbcType=VARCHAR}
+      and pk_sys_button = #{pkSysButton,jdbcType=VARCHAR}
+  </update>
+</mapper>

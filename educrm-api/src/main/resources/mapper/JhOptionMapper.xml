@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.JhOptionMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.JhOption">
+    <id column="pk_option" jdbcType="VARCHAR" property="pkOption" />
+    <result column="pk_question" jdbcType="VARCHAR" property="pkQuestion" />
+    <result column="mark" jdbcType="VARCHAR" property="mark" />
+    <result column="pk_examination" jdbcType="VARCHAR" property="pkExamination" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="people_num" jdbcType="INTEGER" property="peopleNum" />
+    <result column="caption" jdbcType="VARCHAR" property="caption" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="lastedit_date" jdbcType="TIMESTAMP" property="lasteditDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="isdel" jdbcType="INTEGER" property="isdel" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_option, pk_question, mark, caption, creator, creation_date, modifier, lastedit_date, 
+    status, isdel, sort
+  </sql>
+
+  <!--通用查询-->
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.JhOption">
+    select
+    <include refid="Base_Column_List"/>
+    from jh_option
+    where 1=1
+    <if test="pkQuestion !=null and pkQuestion !=''">
+       and pk_question=#{pkQuestion}
+    </if>
+  </select>
+
+  <select id="statistics" resultMap="BaseResultMap" parameterType="com.wuxue.model.JhOption">
+    SELECT
+    c.pk_question,
+    c.pk_examination,
+    c.num,
+    c.people_num,
+    o.mark,
+    o.caption
+    FROM
+    jh_option o
+    LEFT JOIN (
+    SELECT
+    SUBSTRING_INDEX(
+    SUBSTRING_INDEX(
+    a.path,
+    ',',
+    b.help_topic_id + 1
+    ),
+    ',' ,- 1
+    ) AS optiones,
+    count(*) / num * 100 AS num,
+    count(*) as people_num,
+    a.pk_question,
+    a.pk_examination
+    FROM
+    (
+    SELECT
+    GROUP_CONCAT(REPLACE(`option`, '/', ',')) AS path,
+    pk_question,
+    pk_examination,
+    count(*) AS num
+    FROM
+    jh_answerdetail b
+    WHERE
+    pk_examination = #{pkExamination}
+    GROUP BY
+    pk_question
+    ) a
+    LEFT JOIN mysql.help_topic b ON b.help_topic_id <![CDATA[<]]> (
+    LENGTH(a.path) - LENGTH(REPLACE(a.path, ',', '')) + 1
+    )
+    GROUP BY
+    a.pk_question,
+    optiones
+    ) AS c ON o.pk_question = c.pk_question
+    AND o.mark = c.optiones
+    WHERE
+    c.pk_question IS NOT NULL
+    GROUP BY
+    c.pk_question,
+    o.mark
+  </select>
+
+  <!--通用计数-->
+  <select id="" resultType="java.lang.Integer" parameterType="com.wuxue.model.JhOption">
+    select count(*) FROM  jh_option where 1=1
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jh_option
+    where pk_option = #{pkOption,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from jh_option
+    where pk_option = #{pkOption,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.JhOption">
+    insert into jh_option (pk_option, pk_question, mark, 
+      caption, creator, creation_date, 
+      modifier, lastedit_date, status, 
+      isdel, sort)
+    values (#{pkOption,jdbcType=VARCHAR}, #{pkQuestion,jdbcType=VARCHAR}, #{mark,jdbcType=VARCHAR}, 
+      #{caption,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{isdel,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.JhOption">
+    insert into jh_option
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkOption != null">
+        pk_option,
+      </if>
+      <if test="pkQuestion != null">
+        pk_question,
+      </if>
+      <if test="mark != null">
+        mark,
+      </if>
+      <if test="caption != null">
+        caption,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkOption != null">
+        #{pkOption,jdbcType=VARCHAR},
+      </if>
+      <if test="pkQuestion != null">
+        #{pkQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null">
+        #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null">
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.JhOption">
+    update jh_option
+    <set>
+      <if test="pkQuestion != null">
+        pk_question = #{pkQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null">
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null">
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_option = #{pkOption,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.JhOption">
+    update jh_option
+    set pk_question = #{pkQuestion,jdbcType=VARCHAR},
+      mark = #{mark,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER}
+    where pk_option = #{pkOption,jdbcType=VARCHAR}
+  </update>
+</mapper>

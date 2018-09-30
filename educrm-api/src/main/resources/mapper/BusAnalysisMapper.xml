@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.BusAnalysisMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.shuttle.BusAnalysis" >
+    <id column="pk_bus_analysis" property="pkBusAnalysis" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="pk_school_bus" property="pkSchoolBus" jdbcType="VARCHAR" />
+    <result column="date_type" property="dateType" jdbcType="INTEGER" />
+    <result column="analysis_date" property="analysisDate" jdbcType="TIMESTAMP" />
+    <result column="running_times" property="runningTimes" jdbcType="INTEGER" />
+    <result column="person_time_num" property="personTimeNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_bus_analysis, pk_domain, code, pk_school_bus, date_type, analysis_date, running_times, 
+    person_time_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bus_analysis
+    where pk_bus_analysis = #{pkBusAnalysis,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from bus_analysis
+    where pk_bus_analysis = #{pkBusAnalysis,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.shuttle.BusAnalysis" >
+    insert into bus_analysis (pk_bus_analysis, pk_domain, code, 
+      pk_school_bus, date_type, analysis_date, 
+      running_times, person_time_num)
+    values (#{pkBusAnalysis,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{pkSchoolBus,jdbcType=VARCHAR}, #{dateType,jdbcType=INTEGER}, #{analysisDate,jdbcType=TIMESTAMP}, 
+      #{runningTimes,jdbcType=INTEGER}, #{personTimeNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.shuttle.BusAnalysis" >
+    insert into bus_analysis
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkBusAnalysis != null" >
+        pk_bus_analysis,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="pkSchoolBus != null" >
+        pk_school_bus,
+      </if>
+      <if test="dateType != null" >
+        date_type,
+      </if>
+      <if test="analysisDate != null" >
+        analysis_date,
+      </if>
+      <if test="runningTimes != null" >
+        running_times,
+      </if>
+      <if test="personTimeNum != null" >
+        person_time_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkBusAnalysis != null" >
+        #{pkBusAnalysis,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBus != null" >
+        #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="dateType != null" >
+        #{dateType,jdbcType=INTEGER},
+      </if>
+      <if test="analysisDate != null" >
+        #{analysisDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="runningTimes != null" >
+        #{runningTimes,jdbcType=INTEGER},
+      </if>
+      <if test="personTimeNum != null" >
+        #{personTimeNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.shuttle.BusAnalysis" >
+    update bus_analysis
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBus != null" >
+        pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="dateType != null" >
+        date_type = #{dateType,jdbcType=INTEGER},
+      </if>
+      <if test="analysisDate != null" >
+        analysis_date = #{analysisDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="runningTimes != null" >
+        running_times = #{runningTimes,jdbcType=INTEGER},
+      </if>
+      <if test="personTimeNum != null" >
+        person_time_num = #{personTimeNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_bus_analysis = #{pkBusAnalysis,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.shuttle.BusAnalysis" >
+    update bus_analysis
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      date_type = #{dateType,jdbcType=INTEGER},
+      analysis_date = #{analysisDate,jdbcType=TIMESTAMP},
+      running_times = #{runningTimes,jdbcType=INTEGER},
+      person_time_num = #{personTimeNum,jdbcType=INTEGER}
+    where pk_bus_analysis = #{pkBusAnalysis,jdbcType=VARCHAR}
+  </update>
+</mapper>

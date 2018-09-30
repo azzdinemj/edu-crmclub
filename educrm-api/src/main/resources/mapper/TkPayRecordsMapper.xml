@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.TkPayRecordsMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.TkPayRecords" >
+    <id column="pk_pay_records" property="pkPayRecords" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="pk_set_meal" property="pkSetMeal" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="DOUBLE" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_pay_records, pk_student, pk_set_meal, pay_type, amount, creator, creation_date, 
+    modifier, lastedit_date,status
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.TkPayRecords">
+      SELECT
+    <include refid="Base_Column_List" />
+    FROM tk_pay_records
+    WHERE 1=1
+    <if test="pkStudent != null" >
+      and pk_student = #{pkStudent}
+    </if>
+    <if test="status != null " >
+      and status = #{status}
+    </if>
+    ORDER BY lastedit_date DESC
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tk_pay_records
+    where pk_pay_records = #{pkPayRecords,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tk_pay_records
+    where pk_pay_records = #{pkPayRecords,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.TkPayRecords" >
+    insert into tk_pay_records (pk_pay_records, pk_student, pk_set_meal, 
+      pay_type, amount, creator, 
+      creation_date, modifier, lastedit_date,status
+      )
+    values (#{pkPayRecords,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{pkSetMeal,jdbcType=VARCHAR}, 
+      #{payType,jdbcType=INTEGER}, #{amount,jdbcType=DOUBLE}, #{creator,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP}
+      ,#{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.TkPayRecords" >
+    insert into tk_pay_records
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkPayRecords != null" >
+        pk_pay_records,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkSetMeal != null" >
+        pk_set_meal,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkPayRecords != null" >
+        #{pkPayRecords,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSetMeal != null" >
+        #{pkSetMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.TkPayRecords" >
+    update tk_pay_records
+    <set >
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSetMeal != null" >
+        pk_set_meal = #{pkSetMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_pay_records = #{pkPayRecords,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.TkPayRecords" >
+    update tk_pay_records
+    set pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_set_meal = #{pkSetMeal,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DOUBLE},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      status=#{status,jdbcType=INTEGER}
+    where pk_pay_records = #{pkPayRecords,jdbcType=VARCHAR}
+  </update>
+</mapper>

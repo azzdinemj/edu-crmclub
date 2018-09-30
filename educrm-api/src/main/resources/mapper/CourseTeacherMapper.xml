@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.CourseTeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.CourseTeacher" >
+    <id column="pk_employee" property="pkEmployee" jdbcType="VARCHAR" />
+    <id column="pk_sys_dict_values" property="pkSysDictValues" jdbcType="VARCHAR" />
+    <result column="kind" property="kind" jdbcType="INTEGER" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_employee, pk_sys_dict_values, kind, isvalid, memo, creator, creation_date, modifier, 
+    lastedit_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from course_teacher
+    where 1=1
+    <if test="pkEmployee != null" >
+      and pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+    </if>
+    <if test="pkSysDictValues != null" >
+      and pk_sys_dict_values = #{pkSysDictValues,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectByEmp" resultMap="BaseResultMap" parameterType="java.lang.String" >
+
+    SELECT c.pk_sys_dict_values AS pk_sys_dict_values,s.caption as courseCaption FROM
+    (SELECT pk_sys_dict_values  from course_teacher where pk_employee=#{pkEmployee,jdbcType=VARCHAR}) c
+
+    LEFT JOIN sys_dict_values s ON c.pk_sys_dict_values=s.pk_sys_dict_values;
+
+    <!--SELECT-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from course_teacher-->
+    <!--where pk_employee=(SELECT pk_employee from employee where sys_user=#{sysUser,jdbcType=VARCHAR})-->
+  </select>
+  <select id="selectByHeadEmp" resultMap="BaseResultMap" parameterType="java.lang.String" >
+      SELECT
+      pk_sys_dict_values AS pk_sys_dict_values,caption as courseCaption
+      from sys_dict_values where pk_sys_dict_values in (
+        SELECT pk_product from `schedule` where
+        pk_student =
+        (SELECT pk_classinfo from classinfo where head_teacher = (SELECT pk_employee from employee where sys_user=#{sysUser,jdbcType=VARCHAR})
+        ) OR pk_student in (SELECT pk_classinfo from classinfo_employee where pk_employee = #{pkEmployee,jdbcType=VARCHAR})
+        ) GROUP BY pk_product)
+  </select>
+  <select id="selectByDoublePrimaryKey" resultMap="BaseResultMap" parameterType="com.wuxue.model.CourseTeacherKey" >
+    select
+    <include refid="Base_Column_List" />
+    from course_teacher
+    where 1=1 and pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+      and pk_sys_dict_values = #{pkSysDictValues,jdbcType=VARCHAR}
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.CourseTeacherKey" >
+    select
+    <include refid="Base_Column_List" />
+    from course_teacher
+    where 1=1
+    and pk_employee IN (SELECT pk_employee from employee)
+    <if test="isvalid != null" >
+      and isvalid = #{isvalid}
+    </if>
+    <if test="pkEmployee != null" >
+      and pk_employee = #{pkEmployee}
+    </if>
+    <if test="teacherCaption != null and teacherCaption!=''" >
+      and pk_employee IN (SELECT pk_employee FROM employee where caption LIKE "%"#{teacherCaption}"%")
+    </if>
+    <if test="courseCaption != null" >
+      and pk_sys_dict_values IN (SELECT pk_sys_dict_values FROM sys_dict_values where caption LIKE "%"#{courseCaption}"%")
+    </if>
+    ORDER BY lastedit_date
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wuxue.model.CourseTeacherKey" >
+    delete from course_teacher
+    where pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+      and pk_sys_dict_values = #{pkSysDictValues,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.CourseTeacher" >
+    insert into course_teacher (pk_employee, pk_sys_dict_values, kind, 
+      isvalid, memo, creator, 
+      creation_date, modifier, lastedit_date
+      )
+    values (#{pkEmployee,jdbcType=VARCHAR}, #{pkSysDictValues,jdbcType=VARCHAR}, #{kind,jdbcType=INTEGER}, 
+      #{isvalid,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.CourseTeacher" >
+    insert into course_teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkEmployee != null" >
+        pk_employee,
+      </if>
+      <if test="pkSysDictValues != null" >
+        pk_sys_dict_values,
+      </if>
+      <if test="kind != null" >
+        kind,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkEmployee != null" >
+        #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysDictValues != null" >
+        #{pkSysDictValues,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.CourseTeacher" >
+    update course_teacher
+    <set >
+      <if test="kind != null" >
+        kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+      and pk_sys_dict_values = #{pkSysDictValues,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.CourseTeacher" >
+    update course_teacher
+    set kind = #{kind,jdbcType=INTEGER},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+      and pk_sys_dict_values = #{pkSysDictValues,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SysRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SysRole" >
+    <id column="pk_sys_role" property="pkSysRole" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_sys_role, pk_domain, code, caption, isvalid, memo, creator, creation_date, modifier, 
+    lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.SysRole" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_role
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="code != null" >
+      and code = #{code}
+    </if>
+    <if test="caption != null and caption !='' ">
+      and caption LIKE "%"#{caption}"%"
+    </if>
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.SysRole" >
+    select
+    count(*)
+    from sys_role
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where pk_sys_role = #{pkSysRole,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_role
+    where pk_sys_role = #{pkSysRole,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SysRole" >
+    insert into sys_role (pk_sys_role, pk_domain, code, 
+      caption, isvalid, memo, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkSysRole,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{caption,jdbcType=VARCHAR}, #{isvalid,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SysRole" >
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSysRole != null" >
+        pk_sys_role,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSysRole != null" >
+        #{pkSysRole,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SysRole" >
+    update sys_role
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_sys_role = #{pkSysRole,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SysRole" >
+    update sys_role
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_sys_role = #{pkSysRole,jdbcType=VARCHAR}
+  </update>
+</mapper>

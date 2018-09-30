@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.JhAnswerdetailMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.JhAnswerdetail">
+    <id column="pk_answerdetail" jdbcType="VARCHAR" property="pkAnswerdetail" />
+    <result column="pk_answer" jdbcType="VARCHAR" property="pkAnswer" />
+    <result column="pk_examination" jdbcType="VARCHAR" property="pkExamination" />
+    <result column="pk_question" jdbcType="VARCHAR" property="pkQuestion" />
+    <result column="option" jdbcType="VARCHAR" property="option" />
+    <result column="other" jdbcType="VARCHAR" property="other" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_answerdetail, pk_answer, pk_examination, pk_question, `option`, other
+  </sql>
+
+  <!--通用查询-->
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.JhAnswerdetail">
+    select
+    <include refid="Base_Column_List"/>
+    from jh_answerdetail
+    where 1=1
+  </select>
+
+  <!--通用计数-->
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.JhAnswerdetail">
+    select count(*) FROM  jh_answerdetail where 1=1
+    <if test="pkExamination != null">
+      and pk_examination = #{pkExamination}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jh_answerdetail
+    where pk_answerdetail = #{pkAnswerdetail,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from jh_answerdetail
+    where pk_answerdetail = #{pkAnswerdetail,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.JhAnswerdetail">
+    insert into jh_answerdetail (pk_answerdetail, pk_answer, pk_examination, 
+      pk_question, `option`, other
+      )
+    values (#{pkAnswerdetail,jdbcType=VARCHAR}, #{pkAnswer,jdbcType=VARCHAR}, #{pkExamination,jdbcType=VARCHAR}, 
+      #{pkQuestion,jdbcType=VARCHAR}, #{option,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.JhAnswerdetail">
+    insert into jh_answerdetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkAnswerdetail != null">
+        pk_answerdetail,
+      </if>
+      <if test="pkAnswer != null">
+        pk_answer,
+      </if>
+      <if test="pkExamination != null">
+        pk_examination,
+      </if>
+      <if test="pkQuestion != null">
+        pk_question,
+      </if>
+      <if test="option != null">
+        `option`,
+      </if>
+      <if test="other != null">
+        other,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkAnswerdetail != null">
+        #{pkAnswerdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="pkAnswer != null">
+        #{pkAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="pkExamination != null">
+        #{pkExamination,jdbcType=VARCHAR},
+      </if>
+      <if test="pkQuestion != null">
+        #{pkQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="option != null">
+        #{option,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null">
+        #{other,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.JhAnswerdetail">
+    update jh_answerdetail
+    <set>
+      <if test="pkAnswer != null">
+        pk_answer = #{pkAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="pkExamination != null">
+        pk_examination = #{pkExamination,jdbcType=VARCHAR},
+      </if>
+      <if test="pkQuestion != null">
+        pk_question = #{pkQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="option != null">
+        `option` = #{option,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null">
+        other = #{other,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_answerdetail = #{pkAnswerdetail,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.JhAnswerdetail">
+    update jh_answerdetail
+    set pk_answer = #{pkAnswer,jdbcType=VARCHAR},
+      pk_examination = #{pkExamination,jdbcType=VARCHAR},
+      pk_question = #{pkQuestion,jdbcType=VARCHAR},
+      `option` = #{option,jdbcType=VARCHAR},
+      other = #{other,jdbcType=VARCHAR}
+    where pk_answerdetail = #{pkAnswerdetail,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

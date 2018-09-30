@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.StudentShiftMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.StudentShift" >
+    <id column="pk_student_shift" property="pkStudentShift" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="pk_parent_classinfo" property="pkParentClassinfo" jdbcType="VARCHAR" />
+    <result column="pk_classinfo" property="pkClassinfo" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_student_shift, pk_student, pk_parent_classinfo, pk_classinfo, isvalid, creator, 
+    creation_date, modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.StudentShift" >
+    select
+    <include refid="Base_Column_List" />
+    from student_shift
+    where 1=1
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.StudentShift" >
+    select
+    count(*)
+    from student_shift
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from student_shift
+    where pk_student_shift = #{pkStudentShift,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student_shift
+    where pk_student_shift = #{pkStudentShift,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.StudentShift" >
+    insert into student_shift (pk_student_shift, pk_student, pk_parent_classinfo, 
+      pk_classinfo, isvalid, creator, 
+      creation_date, modifier, lastedit_date
+      )
+    values (#{pkStudentShift,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{pkParentClassinfo,jdbcType=VARCHAR}, 
+      #{pkClassinfo,jdbcType=VARCHAR}, #{isvalid,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.StudentShift" >
+    insert into student_shift
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkStudentShift != null" >
+        pk_student_shift,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkParentClassinfo != null" >
+        pk_parent_classinfo,
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkStudentShift != null" >
+        #{pkStudentShift,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParentClassinfo != null" >
+        #{pkParentClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null" >
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.StudentShift" >
+    update student_shift
+    <set >
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParentClassinfo != null" >
+        pk_parent_classinfo = #{pkParentClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_student_shift = #{pkStudentShift,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.StudentShift" >
+    update student_shift
+    set pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_parent_classinfo = #{pkParentClassinfo,jdbcType=VARCHAR},
+      pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_student_shift = #{pkStudentShift,jdbcType=VARCHAR}
+  </update>
+</mapper>

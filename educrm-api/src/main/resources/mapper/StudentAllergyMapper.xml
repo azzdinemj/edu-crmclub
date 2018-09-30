@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.StudentAllergyMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.StudentAllergy" >
+    <id column="pk_student_allergy" property="pkStudentAllergy" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="pk_material" property="pkMaterial" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_student_allergy, pk_student, pk_material, creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_allergy
+    where pk_student_allergy = #{pkStudentAllergy,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student_allergy
+    where pk_student_allergy = #{pkStudentAllergy,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.StudentAllergy" >
+    insert into student_allergy (pk_student_allergy, pk_student, pk_material, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkStudentAllergy,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{pkMaterial,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.StudentAllergy" >
+    insert into student_allergy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkStudentAllergy != null" >
+        pk_student_allergy,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkMaterial != null" >
+        pk_material,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkStudentAllergy != null" >
+        #{pkStudentAllergy,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkMaterial != null" >
+        #{pkMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.StudentAllergy" >
+    update student_allergy
+    <set >
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkMaterial != null" >
+        pk_material = #{pkMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_student_allergy = #{pkStudentAllergy,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.StudentAllergy" >
+    update student_allergy
+    set pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_material = #{pkMaterial,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_student_allergy = #{pkStudentAllergy,jdbcType=VARCHAR}
+  </update>
+</mapper>

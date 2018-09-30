@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.TkProductMarkMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.TkProductMark" >
+    <id column="pk_product_mark" property="pkProductMark" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="pk_product" property="pkProduct" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_product_mark, pk_student, pk_product, creation_date
+  </sql>
+
+  <!--通用查询-->
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.TkProductMark">
+    select
+    <include refid="Base_Column_List"/>
+    from tk_product_mark
+    where 1=1
+    <if test="pkStudent!=null and pkStudent!=''">
+      AND  pk_student=#{pkStudent}
+    </if>
+  </select>
+
+  <!--通用计数-->
+  <select id="" resultType="java.lang.Integer" parameterType="com.wuxue.model.TkProductMark">
+    select count(*) FROM  tk_product_mark where 1=1
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tk_product_mark
+    where pk_product_mark = #{pkProductMark,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tk_product_mark
+    where pk_product_mark = #{pkProductMark,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.TkProductMark" >
+    insert into tk_product_mark (pk_product_mark, pk_student, pk_product, 
+      creation_date)
+    values (#{pkProductMark,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{pkProduct,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.TkProductMark" >
+    insert into tk_product_mark
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkProductMark != null" >
+        pk_product_mark,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkProduct != null" >
+        pk_product,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkProductMark != null" >
+        #{pkProductMark,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkProduct != null" >
+        #{pkProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.TkProductMark" >
+    update tk_product_mark
+    <set >
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkProduct != null" >
+        pk_product = #{pkProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_product_mark = #{pkProductMark,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.TkProductMark" >
+    update tk_product_mark
+    set pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_product = #{pkProduct,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where pk_product_mark = #{pkProductMark,jdbcType=VARCHAR}
+  </update>
+</mapper>

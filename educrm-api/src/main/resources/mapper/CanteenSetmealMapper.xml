@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.CanteenSetmealMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.CanteenSetmeal" >
+    <id column="pk_canteen_meal" property="pkCanteenMeal" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="pk_canteen" property="pkCanteen" jdbcType="VARCHAR" />
+    <result column="pk_set_meal" property="pkSetMeal" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_canteen_meal,code, pk_canteen, pk_set_meal, isvalid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from canteen_setmeal
+    where pk_canteen_meal = #{pkCanteenMeal,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from canteen_setmeal
+    where pk_canteen_meal = #{pkCanteenMeal,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.CanteenSetmeal" >
+    insert into canteen_setmeal (pk_canteen_meal, code,
+      pk_canteen, pk_set_meal, isvalid
+      )
+    values (#{pkCanteenMeal,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+      #{pkCanteen,jdbcType=VARCHAR}, #{pkSetMeal,jdbcType=VARCHAR}, #{isvalid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.CanteenSetmeal" >
+    insert into canteen_setmeal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkCanteenMeal != null" >
+        pk_canteen_meal,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="pkCanteen != null" >
+        pk_canteen,
+      </if>
+      <if test="pkSetMeal != null" >
+        pk_set_meal,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkCanteenMeal != null" >
+        #{pkCanteenMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkCanteen != null" >
+        #{pkCanteen,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSetMeal != null" >
+        #{pkSetMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.CanteenSetmeal" >
+    update canteen_setmeal
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkCanteen != null" >
+        pk_canteen = #{pkCanteen,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSetMeal != null" >
+        pk_set_meal = #{pkSetMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_canteen_meal = #{pkCanteenMeal,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.CanteenSetmeal" >
+    update canteen_setmeal
+    set code = #{code,jdbcType=VARCHAR},
+      pk_canteen = #{pkCanteen,jdbcType=VARCHAR},
+      pk_set_meal = #{pkSetMeal,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=INTEGER}
+    where pk_canteen_meal = #{pkCanteenMeal,jdbcType=VARCHAR}
+  </update>
+</mapper>

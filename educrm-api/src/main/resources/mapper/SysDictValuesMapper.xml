@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.SysDictValuesMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SysDictValues">
+    <id column="pk_sys_dict_values" jdbcType="VARCHAR" property="pkSysDictValues" />
+    <id column="pk_domain" jdbcType="VARCHAR" property="pkDomain" />
+    <result column="pk_sys_dict" jdbcType="VARCHAR" property="pkSysDict" />
+    <result column="caption" jdbcType="VARCHAR" property="caption" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="kind" jdbcType="INTEGER" property="kind" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="isdefault" jdbcType="INTEGER" property="isdefault" />
+    <result column="isvalid" jdbcType="INTEGER" property="isvalid" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="lastedit_date" jdbcType="TIMESTAMP" property="lasteditDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_sys_dict_values, pk_domain, pk_sys_dict, caption, `value`, kind, memo, isdefault, isvalid,
+    sort, creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="select" parameterType="com.wuxue.model.SysDictValues" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_dict_values
+    where 1=1
+    and isvalid != 0
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkSysDict != null">
+      and pk_sys_dict = #{pkSysDict}
+    </if>
+    <if test="caption != null and caption!='' " >
+      and caption LIKE "%"#{caption}"%"
+    </if>
+    order BY  sort ASC
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+  </select>
+  <select id="countBy" parameterType="com.wuxue.model.SysDictValues" resultType="java.lang.Integer">
+    select
+    count(*)
+    from sys_dict_values
+    where 1=1
+  </select>
+  <select id="selectWorkType" parameterType="java.lang.String" resultType="com.wuxue.base.KeyValue">
+     SELECT a.pk_sys_dict_values id , a.caption caption from sys_dict_values a ,
+  (SELECT pk_product from `schedule` where pk_student in
+  (SELECT pk_classinfo from classinfo_student where pk_student=#{pkStudent,jdbcType=VARCHAR}) GROUP BY pk_product) b
+   where a.pk_sys_dict_values = b.pk_product
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_dict_values
+    where pk_sys_dict_values = #{pkSysDictValues,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySysDict" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_dict_values
+    where pk_sys_dict = #{pkSysDictValues,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_dict_values
+    where pk_sys_dict_values = #{pkSysDictValues,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SysDictValues">
+    insert into sys_dict_values (pk_sys_dict_values, pk_domain,pk_sys_dict, caption,
+      value, kind, memo, 
+      isdefault, isvalid, sort, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkSysDictValues,jdbcType=VARCHAR},#{pkDomain,jdbcType=VARCHAR}, #{pkSysDict,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR},
+      #{value,jdbcType=VARCHAR}, #{kind,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, 
+      #{isdefault,jdbcType=INTEGER}, #{isvalid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SysDictValues">
+    insert into sys_dict_values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkSysDictValues != null">
+        pk_sys_dict_values,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkSysDict != null">
+        pk_sys_dict,
+      </if>
+      <if test="caption != null">
+        caption,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="kind != null">
+        kind,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="isdefault != null">
+        isdefault,
+      </if>
+      <if test="isvalid != null">
+        isvalid,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkSysDictValues != null">
+        #{pkSysDictValues,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysDict != null">
+        #{pkSysDict,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null">
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null">
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="isdefault != null">
+        #{isdefault,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null">
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SysDictValues">
+    update sys_dict_values
+    <set>
+      <if test="pkSysDict != null">
+        pk_sys_dict = #{pkSysDict,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null">
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null">
+        kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="isdefault != null">
+        isdefault = #{isdefault,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null">
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_sys_dict_values = #{pkSysDictValues,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SysDictValues">
+    update sys_dict_values
+    set pk_sys_dict = #{pkSysDict,jdbcType=VARCHAR},
+      pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      kind = #{kind,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      isdefault = #{isdefault,jdbcType=INTEGER},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_sys_dict_values = #{pkSysDictValues,jdbcType=VARCHAR}
+  </update>
+
+  <resultMap id="courseResultMap" type="com.wuxue.model.Employee">
+    <id column="pk_employee" jdbcType="VARCHAR" property="pkEmployee" />
+    <id column="isvalid" jdbcType="INTEGER" property="isvalid" />
+  </resultMap>
+  <select id="selectCourse" parameterType="com.wuxue.model.SysDictValues" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_dict_values
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkEmployee != null and pkEmployee !=''and  isvalid != null">
+      and pk_sys_dict_values IN (select pk_sys_dict_values from course_teacher where pk_employee = #{pkEmployee} AND isvalid =#{isvalid} )
+    </if>
+  </select>
+</mapper>

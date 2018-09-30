@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.ParentConfirmMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.junhwa.ParentConfirm">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <id column="pk_confirm" jdbcType="VARCHAR" property="pkConfirm" />
+    <result column="pk_linkman" jdbcType="VARCHAR" property="pkLinkman" />
+    <result column="pk_debus_record" jdbcType="VARCHAR" property="pkDebusRecord" />
+    <result column="pk_school_bus" jdbcType="VARCHAR" property="pkSchoolBus" />
+    <result column="pk_student" jdbcType="VARCHAR" property="pkStudent" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    pk_confirm, pk_linkman, pk_debus_record, pk_school_bus, pk_student, status, creation_date
+  </sql>
+  <select id="selectByExample" parameterType="com.wuxue.model.junhwa.ParentConfirmExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from parentconfirm
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startIndex != null and startIndex &gt;= 0">
+      limit #{startIndex} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from parentconfirm
+    where pk_confirm = #{pkConfirm,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    delete from parentconfirm
+    where pk_confirm = #{pkConfirm,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wuxue.model.junhwa.ParentConfirmExample">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    delete from parentconfirm
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.junhwa.ParentConfirm">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    insert into parentconfirm (pk_confirm, pk_linkman, pk_debus_record, 
+      pk_school_bus, pk_student, status, 
+      creation_date)
+    values (#{pkConfirm,jdbcType=VARCHAR}, #{pkLinkman,jdbcType=VARCHAR}, #{pkDebusRecord,jdbcType=VARCHAR}, 
+      #{pkSchoolBus,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{creationDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.junhwa.ParentConfirm">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    insert into parentconfirm
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkConfirm != null">
+        pk_confirm,
+      </if>
+      <if test="pkLinkman != null">
+        pk_linkman,
+      </if>
+      <if test="pkDebusRecord != null">
+        pk_debus_record,
+      </if>
+      <if test="pkSchoolBus != null">
+        pk_school_bus,
+      </if>
+      <if test="pkStudent != null">
+        pk_student,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkConfirm != null">
+        #{pkConfirm,jdbcType=VARCHAR},
+      </if>
+      <if test="pkLinkman != null">
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDebusRecord != null">
+        #{pkDebusRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBus != null">
+        #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null">
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wuxue.model.junhwa.ParentConfirmExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select count(*) from parentconfirm
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update parentconfirm
+    <set>
+      <if test="record.pkConfirm != null">
+        pk_confirm = #{record.pkConfirm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pkLinkman != null">
+        pk_linkman = #{record.pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pkDebusRecord != null">
+        pk_debus_record = #{record.pkDebusRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pkSchoolBus != null">
+        pk_school_bus = #{record.pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pkStudent != null">
+        pk_student = #{record.pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update parentconfirm
+    set pk_confirm = #{record.pkConfirm,jdbcType=VARCHAR},
+      pk_linkman = #{record.pkLinkman,jdbcType=VARCHAR},
+      pk_debus_record = #{record.pkDebusRecord,jdbcType=VARCHAR},
+      pk_school_bus = #{record.pkSchoolBus,jdbcType=VARCHAR},
+      pk_student = #{record.pkStudent,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.junhwa.ParentConfirm">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update parentconfirm
+    <set>
+      <if test="pkLinkman != null">
+        pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDebusRecord != null">
+        pk_debus_record = #{pkDebusRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBus != null">
+        pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null">
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_confirm = #{pkConfirm,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.junhwa.ParentConfirm">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update parentconfirm
+    set pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      pk_debus_record = #{pkDebusRecord,jdbcType=VARCHAR},
+      pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where pk_confirm = #{pkConfirm,jdbcType=VARCHAR}
+  </update>
+</mapper>

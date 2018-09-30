@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.ReceivableMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Receivable">
+    <id column="pk_receivable" jdbcType="VARCHAR" property="pkReceivable" />
+    <result column="pk_domain" jdbcType="VARCHAR" property="pkDomain" />
+    <result column="pk_parent" jdbcType="VARCHAR" property="pkParent" />
+    <result column="kind" jdbcType="INTEGER" property="kind" />
+    <result column="pk_student" jdbcType="VARCHAR" property="pkStudent" />
+    <result column="pk_expense_item" jdbcType="VARCHAR" property="pkExpenseItem" />
+    <result column="pk_sys_user" jdbcType="VARCHAR" property="pkSysUser" />
+    <result column="pay_name" jdbcType="VARCHAR" property="payName" />
+    <result column="school_year" jdbcType="VARCHAR" property="schoolYear" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="cost" jdbcType="DECIMAL" property="cost" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="issubmit" jdbcType="INTEGER" property="issubmit" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="submitor" jdbcType="VARCHAR" property="submitor" />
+    <result column="submit_date" jdbcType="TIMESTAMP" property="submitDate" />
+    <result column="isaudit" jdbcType="INTEGER" property="isaudit" />
+    <result column="auditor" jdbcType="VARCHAR" property="auditor" />
+    <result column="audit_date" jdbcType="TIMESTAMP" property="auditDate" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="lastedit_date" jdbcType="TIMESTAMP" property="lasteditDate" />
+    <result column="iscancel" jdbcType="INTEGER" property="iscancel" />
+    <result column="cancel" jdbcType="VARCHAR" property="cancel" />
+    <result column="cancel_date" jdbcType="TIMESTAMP" property="cancelDate" />
+    <result column="from_date" jdbcType="TIMESTAMP" property="fromDate" />
+    <result column="to_date" jdbcType="TIMESTAMP" property="toDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_receivable, pk_domain, pk_parent, kind, pk_student, pk_expense_item, pk_sys_user, pay_name,school_year,
+    code, date, cost, money, notes, currency,issubmit, status,submitor, submit_date, isaudit, auditor,
+    audit_date, creator, creation_date, modifier, lastedit_date, iscancel, cancel, cancel_date
+  </sql>
+  <select id="select" parameterType="com.wuxue.model.Receivable" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from receivable
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkParent != null" >
+      and pk_parent = #{pkParent}
+    </if>
+    <if test="pkStudent != null and pkStudent !=''" >
+      and pk_student = #{pkStudent}
+    </if>
+    <if test="caption != null and caption !=''" >
+      and pk_student IN (SELECT pk_student FROM student where caption LIKE "%"#{caption}"%")
+    </if>
+    <if test="status != null" >
+      and status = #{status}
+    </if>
+    <if test="code != null and code !=''" >
+      and code = #{code}
+    </if>
+    <if test="fromDate != null">
+      <![CDATA[ and date >= #{fromDate} ]]>
+    </if>
+    <if test="toDate != null">
+      <![CDATA[ and date <= #{toDate} ]]>
+    </if>
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+    order by lastedit_date DESC
+  </select>
+  <select id="countBy" parameterType="com.wuxue.model.Receivable" resultType="java.lang.Integer">
+    select
+    count(*)
+    from receivable
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from receivable
+    where pk_receivable = #{pkReceivable,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from receivable
+    where pk_receivable = #{pkReceivable,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Receivable">
+    insert into receivable (pk_receivable, pk_domain, pk_parent, 
+      kind, pk_student, pk_expense_item, 
+      pk_sys_user, pay_name,school_year,code, date,
+      cost, money, notes, currency,
+      issubmit, status,submitor, submit_date,
+      isaudit, auditor, audit_date, 
+      creator, creation_date, modifier, 
+      lastedit_date, iscancel, cancel, 
+      cancel_date)
+    values (#{pkReceivable,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkParent,jdbcType=VARCHAR}, 
+      #{kind,jdbcType=INTEGER}, #{pkStudent,jdbcType=VARCHAR}, #{pkExpenseItem,jdbcType=VARCHAR}, 
+      #{pkSysUser,jdbcType=VARCHAR}, #{payName,jdbcType=VARCHAR}, #{schoolYear,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP},
+      #{cost,jdbcType=DECIMAL}, #{money,jdbcType=DECIMAL}, #{notes,jdbcType=VARCHAR},  #{currency,jdbcType=VARCHAR},
+      #{issubmit,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{submitor,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP},
+      #{isaudit,jdbcType=INTEGER}, #{auditor,jdbcType=VARCHAR}, #{auditDate,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP}, #{iscancel,jdbcType=INTEGER}, #{cancel,jdbcType=VARCHAR}, 
+      #{cancelDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pkReceivable" parameterType="com.wuxue.model.Receivable">
+    insert into receivable
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkReceivable != null">
+        pk_receivable,
+      </if>
+      <if test="pkDomain != null">
+        pk_domain,
+      </if>
+      <if test="pkParent != null">
+        pk_parent,
+      </if>
+      <if test="kind != null">
+        kind,
+      </if>
+      <if test="pkStudent != null">
+        pk_student,
+      </if>
+      <if test="pkExpenseItem != null">
+        pk_expense_item,
+      </if>
+      <if test="pkSysUser != null">
+        pk_sys_user,
+      </if>
+      <if test="payName != null">
+        pay_name,
+      </if>
+      <if test="schoolYear != null">
+        school_year,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="cost != null">
+        cost,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="issubmit != null">
+        issubmit,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="submitor != null">
+        submitor,
+      </if>
+      <if test="submitDate != null">
+        submit_date,
+      </if>
+      <if test="isaudit != null">
+        isaudit,
+      </if>
+      <if test="auditor != null">
+        auditor,
+      </if>
+      <if test="auditDate != null">
+        audit_date,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date,
+      </if>
+      <if test="iscancel != null">
+        iscancel,
+      </if>
+      <if test="cancel != null">
+        cancel,
+      </if>
+      <if test="cancelDate != null">
+        cancel_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkReceivable != null">
+        #{pkReceivable,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null">
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParent != null">
+        #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null">
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="pkStudent != null">
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkExpenseItem != null">
+        #{pkExpenseItem,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysUser != null">
+        #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="payName != null">
+        #{payName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolYear != null">
+        #{schoolYear,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cost != null">
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmit != null">
+        #{issubmit,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="submitor != null">
+        #{submitor,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null">
+        #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isaudit != null">
+        #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditor != null">
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null">
+        #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iscancel != null">
+        #{iscancel,jdbcType=INTEGER},
+      </if>
+      <if test="cancel != null">
+        #{cancel,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelDate != null">
+        #{cancelDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Receivable">
+    update receivable
+    <set>
+      <if test="pkDomain != null">
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParent != null">
+        pk_parent = #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null">
+        kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="pkStudent != null">
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkExpenseItem != null">
+        pk_expense_item = #{pkExpenseItem,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysUser != null">
+        pk_sys_user = #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="payName != null">
+        pay_name = #{payName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolYear != null">
+        school_year = #{schoolYear,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cost != null">
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmit != null">
+        issubmit = #{issubmit,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="submitor != null">
+        submitor = #{submitor,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null">
+        submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isaudit != null">
+        isaudit = #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditor != null">
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null">
+        audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iscancel != null">
+        iscancel = #{iscancel,jdbcType=INTEGER},
+      </if>
+      <if test="cancel != null">
+        cancel = #{cancel,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelDate != null">
+        cancel_date = #{cancelDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_receivable = #{pkReceivable,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Receivable">
+    update receivable
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_parent = #{pkParent,jdbcType=VARCHAR},
+      kind = #{kind,jdbcType=INTEGER},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_expense_item = #{pkExpenseItem,jdbcType=VARCHAR},
+      pk_sys_user = #{pkSysUser,jdbcType=VARCHAR},
+      pay_name = #{payName,jdbcType=VARCHAR},
+      school_year = #{schoolYear,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      cost = #{cost,jdbcType=DECIMAL},
+      money = #{money,jdbcType=DECIMAL},
+      notes = #{notes,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      issubmit = #{issubmit,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      submitor = #{submitor,jdbcType=VARCHAR},
+      submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      isaudit = #{isaudit,jdbcType=INTEGER},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      iscancel = #{iscancel,jdbcType=INTEGER},
+      cancel = #{cancel,jdbcType=VARCHAR},
+      cancel_date = #{cancelDate,jdbcType=TIMESTAMP}
+    where pk_receivable = #{pkReceivable,jdbcType=VARCHAR}
+  </update>
+  <update id="updateoldReceivable" parameterType="com.wuxue.model.Receivable">
+    update receivable
+    set status = 3
+    where pk_student = #{pkStudent,jdbcType=VARCHAR} AND school_year = #{schoolYear,jdbcType=VARCHAR}
+    AND  status = #{status,jdbcType=INTEGER}
+  </update>
+</mapper>

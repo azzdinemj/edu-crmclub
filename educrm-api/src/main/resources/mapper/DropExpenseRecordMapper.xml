@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.DropExpenseRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.DropExpenseRecord" >
+    <id column="pk_drop_expense_record" property="pkDropExpenseRecord" jdbcType="BIGINT" />
+    <result column="proportion_id" property="proportionId" jdbcType="VARCHAR" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="DECIMAL" />
+    <result column="receivable_cost" property="receivableCost" jdbcType="DECIMAL" />
+    <result column="receipts" property="receipts" jdbcType="DECIMAL" />
+    <result column="business_type" property="businessType" jdbcType="INTEGER" />
+    <result column="business_cost" property="businessCost" jdbcType="DECIMAL" />
+    <result column="business_id" property="businessId" jdbcType="VARCHAR" />
+    <result column="school_year" property="schoolYear" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_drop_expense_record, proportion_id, cost, discount, receivable_cost, receipts, 
+    business_type, business_cost, business_id, school_year, pk_student, creator, creation_date, 
+    modifier, lastedit_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from drop_expense_record
+    where pk_drop_expense_record = #{pkDropExpenseRecord,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from drop_expense_record
+    where pk_drop_expense_record = #{pkDropExpenseRecord,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.DropExpenseRecord" >
+    insert into drop_expense_record (pk_drop_expense_record, proportion_id, 
+      cost, discount, receivable_cost, 
+      receipts, business_type, business_cost, 
+      business_id, school_year, pk_student, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkDropExpenseRecord,jdbcType=BIGINT}, #{proportionId,jdbcType=VARCHAR}, 
+      #{cost,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, #{receivableCost,jdbcType=DECIMAL}, 
+      #{receipts,jdbcType=DECIMAL}, #{businessType,jdbcType=INTEGER}, #{businessCost,jdbcType=DECIMAL}, 
+      #{businessId,jdbcType=VARCHAR}, #{schoolYear,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.DropExpenseRecord" >
+    insert into drop_expense_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDropExpenseRecord != null" >
+        pk_drop_expense_record,
+      </if>
+      <if test="proportionId != null" >
+        proportion_id,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="receivableCost != null" >
+        receivable_cost,
+      </if>
+      <if test="receipts != null" >
+        receipts,
+      </if>
+      <if test="businessType != null" >
+        business_type,
+      </if>
+      <if test="businessCost != null" >
+        business_cost,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="schoolYear != null" >
+        school_year,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDropExpenseRecord != null" >
+        #{pkDropExpenseRecord,jdbcType=BIGINT},
+      </if>
+      <if test="proportionId != null" >
+        #{proportionId,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="receivableCost != null" >
+        #{receivableCost,jdbcType=DECIMAL},
+      </if>
+      <if test="receipts != null" >
+        #{receipts,jdbcType=DECIMAL},
+      </if>
+      <if test="businessType != null" >
+        #{businessType,jdbcType=INTEGER},
+      </if>
+      <if test="businessCost != null" >
+        #{businessCost,jdbcType=DECIMAL},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolYear != null" >
+        #{schoolYear,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.DropExpenseRecord" >
+    update drop_expense_record
+    <set >
+      <if test="proportionId != null" >
+        proportion_id = #{proportionId,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="receivableCost != null" >
+        receivable_cost = #{receivableCost,jdbcType=DECIMAL},
+      </if>
+      <if test="receipts != null" >
+        receipts = #{receipts,jdbcType=DECIMAL},
+      </if>
+      <if test="businessType != null" >
+        business_type = #{businessType,jdbcType=INTEGER},
+      </if>
+      <if test="businessCost != null" >
+        business_cost = #{businessCost,jdbcType=DECIMAL},
+      </if>
+      <if test="businessId != null" >
+        business_id = #{businessId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolYear != null" >
+        school_year = #{schoolYear,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_drop_expense_record = #{pkDropExpenseRecord,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.DropExpenseRecord" >
+    update drop_expense_record
+    set proportion_id = #{proportionId,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=DECIMAL},
+      receivable_cost = #{receivableCost,jdbcType=DECIMAL},
+      receipts = #{receipts,jdbcType=DECIMAL},
+      business_type = #{businessType,jdbcType=INTEGER},
+      business_cost = #{businessCost,jdbcType=DECIMAL},
+      business_id = #{businessId,jdbcType=VARCHAR},
+      school_year = #{schoolYear,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_drop_expense_record = #{pkDropExpenseRecord,jdbcType=BIGINT}
+  </update>
+</mapper>

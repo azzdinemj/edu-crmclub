@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.PhaseNutrientMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.PhaseNutrient" >
+    <id column="pk_phase_nutrient" property="pkPhaseNutrient" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="cycle" property="cycle" jdbcType="INTEGER" />
+    <result column="nutrition_id" property="nutritionId" jdbcType="VARCHAR" />
+    <result column="lowest" property="lowest" jdbcType="DECIMAL" />
+    <result column="highest" property="highest" jdbcType="DECIMAL" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_phase_nutrient, code, cycle, nutrition_id, lowest, highest, age, isvalid, memo, 
+    creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from phase_nutrient
+    where pk_phase_nutrient = #{pkPhaseNutrient,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from phase_nutrient
+    where pk_phase_nutrient = #{pkPhaseNutrient,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.PhaseNutrient" >
+    insert into phase_nutrient (pk_phase_nutrient, code, cycle, 
+      nutrition_id, lowest, highest, 
+      age, isvalid, memo, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkPhaseNutrient,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{cycle,jdbcType=INTEGER}, 
+      #{nutritionId,jdbcType=VARCHAR}, #{lowest,jdbcType=DECIMAL}, #{highest,jdbcType=DECIMAL}, 
+      #{age,jdbcType=INTEGER}, #{isvalid,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.PhaseNutrient" >
+    insert into phase_nutrient
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkPhaseNutrient != null" >
+        pk_phase_nutrient,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="cycle != null" >
+        cycle,
+      </if>
+      <if test="nutritionId != null" >
+        nutrition_id,
+      </if>
+      <if test="lowest != null" >
+        lowest,
+      </if>
+      <if test="highest != null" >
+        highest,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkPhaseNutrient != null" >
+        #{pkPhaseNutrient,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="cycle != null" >
+        #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="nutritionId != null" >
+        #{nutritionId,jdbcType=VARCHAR},
+      </if>
+      <if test="lowest != null" >
+        #{lowest,jdbcType=DECIMAL},
+      </if>
+      <if test="highest != null" >
+        #{highest,jdbcType=DECIMAL},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.PhaseNutrient" >
+    update phase_nutrient
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="cycle != null" >
+        cycle = #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="nutritionId != null" >
+        nutrition_id = #{nutritionId,jdbcType=VARCHAR},
+      </if>
+      <if test="lowest != null" >
+        lowest = #{lowest,jdbcType=DECIMAL},
+      </if>
+      <if test="highest != null" >
+        highest = #{highest,jdbcType=DECIMAL},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_phase_nutrient = #{pkPhaseNutrient,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.PhaseNutrient" >
+    update phase_nutrient
+    set code = #{code,jdbcType=VARCHAR},
+      cycle = #{cycle,jdbcType=INTEGER},
+      nutrition_id = #{nutritionId,jdbcType=VARCHAR},
+      lowest = #{lowest,jdbcType=DECIMAL},
+      highest = #{highest,jdbcType=DECIMAL},
+      age = #{age,jdbcType=INTEGER},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_phase_nutrient = #{pkPhaseNutrient,jdbcType=INTEGER}
+  </update>
+</mapper>

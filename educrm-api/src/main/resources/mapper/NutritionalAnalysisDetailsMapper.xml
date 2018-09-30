@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.NutritionalAnalysisDetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.NutritionalAnalysisDetails" >
+    <id column="analysis_detailes" property="analysisDetailes" jdbcType="VARCHAR" />
+    <result column="nut_con_analysis_id" property="nutConAnalysisId" jdbcType="VARCHAR" />
+    <result column="content_analysis_id" property="contentAnalysisId" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="maximal_value" property="maximalValue" jdbcType="DECIMAL" />
+    <result column="minimum_value" property="minimumValue" jdbcType="DECIMAL" />
+    <result column="content" property="content" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    analysis_detailes, nut_con_analysis_id, content_analysis_id, pk_student, maximal_value, 
+    minimum_value, content, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from nutritional_analysis_details
+    where analysis_detailes = #{analysisDetailes,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from nutritional_analysis_details
+    where analysis_detailes = #{analysisDetailes,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.NutritionalAnalysisDetails" >
+    insert into nutritional_analysis_details (analysis_detailes, nut_con_analysis_id, 
+      content_analysis_id, pk_student, maximal_value, 
+      minimum_value, content, status
+      )
+    values (#{analysisDetailes,jdbcType=VARCHAR}, #{nutConAnalysisId,jdbcType=VARCHAR}, 
+      #{contentAnalysisId,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{maximalValue,jdbcType=DECIMAL}, 
+      #{minimumValue,jdbcType=DECIMAL}, #{content,jdbcType=DECIMAL}, #{status,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.NutritionalAnalysisDetails" >
+    insert into nutritional_analysis_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="analysisDetailes != null" >
+        analysis_detailes,
+      </if>
+      <if test="nutConAnalysisId != null" >
+        nut_con_analysis_id,
+      </if>
+      <if test="contentAnalysisId != null" >
+        content_analysis_id,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="maximalValue != null" >
+        maximal_value,
+      </if>
+      <if test="minimumValue != null" >
+        minimum_value,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="analysisDetailes != null" >
+        #{analysisDetailes,jdbcType=VARCHAR},
+      </if>
+      <if test="nutConAnalysisId != null" >
+        #{nutConAnalysisId,jdbcType=VARCHAR},
+      </if>
+      <if test="contentAnalysisId != null" >
+        #{contentAnalysisId,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="maximalValue != null" >
+        #{maximalValue,jdbcType=DECIMAL},
+      </if>
+      <if test="minimumValue != null" >
+        #{minimumValue,jdbcType=DECIMAL},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.NutritionalAnalysisDetails" >
+    update nutritional_analysis_details
+    <set >
+      <if test="nutConAnalysisId != null" >
+        nut_con_analysis_id = #{nutConAnalysisId,jdbcType=VARCHAR},
+      </if>
+      <if test="contentAnalysisId != null" >
+        content_analysis_id = #{contentAnalysisId,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="maximalValue != null" >
+        maximal_value = #{maximalValue,jdbcType=DECIMAL},
+      </if>
+      <if test="minimumValue != null" >
+        minimum_value = #{minimumValue,jdbcType=DECIMAL},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+    </set>
+    where analysis_detailes = #{analysisDetailes,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.NutritionalAnalysisDetails" >
+    update nutritional_analysis_details
+    set nut_con_analysis_id = #{nutConAnalysisId,jdbcType=VARCHAR},
+      content_analysis_id = #{contentAnalysisId,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      maximal_value = #{maximalValue,jdbcType=DECIMAL},
+      minimum_value = #{minimumValue,jdbcType=DECIMAL},
+      content = #{content,jdbcType=DECIMAL},
+      status = #{status,jdbcType=BIT}
+    where analysis_detailes = #{analysisDetailes,jdbcType=VARCHAR}
+  </update>
+</mapper>

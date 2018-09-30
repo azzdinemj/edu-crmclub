@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Employee" >
+    <id column="pk_employee" property="pkEmployee" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_department" property="pkDepartment" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="short_code" property="shortCode" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="nation" property="nation" jdbcType="VARCHAR" />
+    <result column="account_loction" property="accountLoction" jdbcType="VARCHAR" />
+    <result column="political_status" property="politicalStatus" jdbcType="VARCHAR" />
+    <result column="health_status" property="healthStatus" jdbcType="VARCHAR" />
+    <result column="marital_status" property="maritalStatus" jdbcType="VARCHAR" />
+    <result column="isfertility" property="isfertility" jdbcType="INTEGER" />
+    <result column="isfertilityplan" property="isfertilityplan" jdbcType="INTEGER" />
+    <result column="job_post" property="jobPost" jdbcType="VARCHAR" />
+    <result column="kind" property="kind" jdbcType="INTEGER" />
+    <result column="enterdate" property="enterdate" jdbcType="TIMESTAMP" />
+    <result column="isleave" property="isleave" jdbcType="INTEGER" />
+    <result column="leavedate" property="leavedate" jdbcType="TIMESTAMP" />
+    <result column="graduated_school" property="graduatedSchool" jdbcType="VARCHAR" />
+    <result column="the_profession" property="theProfession" jdbcType="VARCHAR" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="job_title" property="jobTitle" jdbcType="VARCHAR" />
+    <result column="foreign_language" property="foreignLanguage" jdbcType="VARCHAR" />
+    <result column="computer_skill" property="computerSkill" jdbcType="VARCHAR" />
+    <result column="isstay" property="isstay" jdbcType="INTEGER" />
+    <result column="canheadteacher" property="canheadteacher" jdbcType="INTEGER" />
+    <result column="expected_salary" property="expectedSalary" jdbcType="DECIMAL" />
+    <result column="file_location" property="fileLocation" jdbcType="VARCHAR" />
+    <result column="birth" property="birth" jdbcType="TIMESTAMP" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="zip" property="zip" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="id_kind" property="idKind" jdbcType="VARCHAR" />
+    <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+    <result column="id_address" property="idAddress" jdbcType="VARCHAR" />
+    <result column="emergency_contact" property="emergencyContact" jdbcType="VARCHAR" />
+    <result column="relationship" property="relationship" jdbcType="VARCHAR" />
+    <result column="emergency_contact_phone" property="emergencyContactPhone" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="career_planning" property="careerPlanning" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+    <result column="from_date" property="fromDate" jdbcType="TIMESTAMP" />
+    <result column="to_date" property="toDate" jdbcType="TIMESTAMP" />
+    <result column="sys_user" property="sysUser" jdbcType="VARCHAR" />
+    <result column="dorm_room" property="dormRoom" jdbcType="VARCHAR" />
+    <result column="types" property="types" jdbcType="VARCHAR" />
+    <result column="allergen" property="allergen" jdbcType="VARCHAR" />
+    <result column="taboofood" property="taboofood" jdbcType="VARCHAR" />
+
+    <result column="nationality" property="nationality" jdbcType="VARCHAR" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="audio" property="audio" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_employee, pk_domain, pk_department, code, caption, short_code, sex, nation, account_loction, 
+    political_status, health_status, marital_status, isfertility, isfertilityplan, job_post, 
+    kind, enterdate, isleave, leavedate, graduated_school, the_profession, education, 
+    job_title, foreign_language, computer_skill, isstay, canheadteacher, expected_salary, 
+    file_location, birth, bank, bank_account, phone, mobile_phone, fax, email, zip, address, 
+    id_kind, id_card, id_address, emergency_contact, relationship, emergency_contact_phone, 
+    isvalid, career_planning, memo, sort, creator, creation_date, modifier, lastedit_date,sys_user,dorm_room,
+    types,allergen,taboofood,nationality,img,audio,price
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.Employee" >
+    select
+    <include refid="Base_Column_List" />
+    from employee
+    where 1=1
+    <if test="mobilePhone != null and mobilePhone!='' " >
+      and mobile_phone = #{mobilePhone}
+    </if>
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="caption != null and caption !=''" >
+      and caption LIKE "%"#{caption}"%"
+    </if>
+    <if test="fromDate != null">
+      <![CDATA[ and enterdate >= #{fromDate} ]]>
+    </if>
+    <if test="toDate != null">
+    <![CDATA[ and enterdate <= #{toDate} ]]>
+  </if>
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+    <if test="jobPost != null and jobPost!=''" >
+      and
+      substring(job_post,#{jobPost},1)='1'
+    </if>
+    <if test="dormRoom != null and dormRoom =='false'" >
+      and (dorm_room IS NULL OR dorm_room='')
+    </if>
+    <!--<if test="types == null or types==''" >-->
+      <!--and types is NULL-->
+    <!--</if>-->
+    <if test="types != null and types!=''" >
+      and types = #{types}
+    </if>
+    <if test="isvalid != null" >
+      and isvalid = #{isvalid}
+    </if>
+    <if test="code != null and code !=''" >
+      and code =#{code}
+    </if>
+    <if test="phone != null" >
+      and phone = #{phone}
+    </if>
+    <if test="pkEmployee != null" >
+      and pk_employee = #{pkEmployee}
+    </if>
+    <if test="sysUser != null" >
+      and sys_user = #{sysUser}
+    </if>
+
+    ORDER BY lastedit_date DESC
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.Employee" >
+    select
+    count(*)
+    from employee
+    where 1=1
+  </select>
+  <select id="selectForMap" resultType="java.util.HashMap" parameterType="com.wuxue.model.Employee" >
+    select
+    pk_employee pkEmployee,caption
+    from employee
+    where 1=1
+    <if test="jobPost != null and jobPost!=''" >
+      and
+      substring(job_post,#{jobPost},1)='1'
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from employee
+    where pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+  </select>
+  <select id="getCode" resultType="java.lang.String" >
+    SELECT code from employee where
+
+    code <![CDATA[ < ]]> "10000" ORDER BY code desc LIMIT 1
+  </select>
+    <select id="selectByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from employee
+    where sys_user = #{sysUser,jdbcType=VARCHAR} and isvalid !=0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from employee
+    where pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Employee" >
+    insert into employee (pk_employee, pk_domain, pk_department, 
+      code, caption, short_code, 
+      sex, nation, account_loction, 
+      political_status, health_status, marital_status, 
+      isfertility, isfertilityplan, job_post, 
+      kind, enterdate, isleave, 
+      leavedate, graduated_school, the_profession, 
+      education, job_title, foreign_language, 
+      computer_skill, isstay, canheadteacher, 
+      expected_salary, file_location, birth, 
+      bank, bank_account, phone, 
+      mobile_phone, fax, email, 
+      zip, address, id_kind, 
+      id_card, id_address, emergency_contact, 
+      relationship, emergency_contact_phone, isvalid, 
+      career_planning, memo, sort, 
+      creator, creation_date, modifier, 
+      lastedit_date,sys_user,dorm_room,types,allergen,taboofood,nationality,img,audio,price)
+    values (#{pkEmployee,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkDepartment,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}, #{shortCode,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{nation,jdbcType=VARCHAR}, #{accountLoction,jdbcType=VARCHAR}, 
+      #{politicalStatus,jdbcType=VARCHAR}, #{healthStatus,jdbcType=VARCHAR}, #{maritalStatus,jdbcType=VARCHAR}, 
+      #{isfertility,jdbcType=INTEGER}, #{isfertilityplan,jdbcType=INTEGER}, #{jobPost,jdbcType=VARCHAR}, 
+      #{kind,jdbcType=INTEGER}, #{enterdate,jdbcType=TIMESTAMP}, #{isleave,jdbcType=INTEGER}, 
+      #{leavedate,jdbcType=TIMESTAMP}, #{graduatedSchool,jdbcType=VARCHAR}, #{theProfession,jdbcType=VARCHAR}, 
+      #{education,jdbcType=VARCHAR}, #{jobTitle,jdbcType=VARCHAR}, #{foreignLanguage,jdbcType=VARCHAR}, 
+      #{computerSkill,jdbcType=VARCHAR}, #{isstay,jdbcType=INTEGER}, #{canheadteacher,jdbcType=INTEGER}, 
+      #{expectedSalary,jdbcType=DECIMAL}, #{fileLocation,jdbcType=VARCHAR}, #{birth,jdbcType=TIMESTAMP}, 
+      #{bank,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{mobilePhone,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{zip,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{idKind,jdbcType=VARCHAR}, 
+      #{idCard,jdbcType=VARCHAR}, #{idAddress,jdbcType=VARCHAR}, #{emergencyContact,jdbcType=VARCHAR}, 
+      #{relationship,jdbcType=VARCHAR}, #{emergencyContactPhone,jdbcType=VARCHAR}, #{isvalid,jdbcType=INTEGER}, 
+      #{careerPlanning,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP},#{sysUser,jdbcType=VARCHAR},#{dormRoom,jdbcType=VARCHAR},
+      #{types,jdbcType=VARCHAR},#{allergen,jdbcType=VARCHAR},#{taboofood,jdbcType=VARCHAR},
+      #{nationality,jdbcType=VARCHAR},#{img,jdbcType=VARCHAR},#{audio,jdbcType=VARCHAR},#{price,jdbcType=DOUBLE}
+      ))
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Employee" >
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkEmployee != null" >
+        pk_employee,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkDepartment != null" >
+        pk_department,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="shortCode != null" >
+        short_code,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="nation != null" >
+        nation,
+      </if>
+      <if test="accountLoction != null" >
+        account_loction,
+      </if>
+      <if test="politicalStatus != null" >
+        political_status,
+      </if>
+      <if test="healthStatus != null" >
+        health_status,
+      </if>
+      <if test="maritalStatus != null" >
+        marital_status,
+      </if>
+      <if test="isfertility != null" >
+        isfertility,
+      </if>
+      <if test="isfertilityplan != null" >
+        isfertilityplan,
+      </if>
+      <if test="jobPost != null" >
+        job_post,
+      </if>
+      <if test="kind != null" >
+        kind,
+      </if>
+      <if test="enterdate != null" >
+        enterdate,
+      </if>
+      <if test="isleave != null" >
+        isleave,
+      </if>
+      <if test="leavedate != null" >
+        leavedate,
+      </if>
+      <if test="graduatedSchool != null" >
+        graduated_school,
+      </if>
+      <if test="theProfession != null" >
+        the_profession,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="jobTitle != null" >
+        job_title,
+      </if>
+      <if test="foreignLanguage != null" >
+        foreign_language,
+      </if>
+      <if test="computerSkill != null" >
+        computer_skill,
+      </if>
+      <if test="isstay != null" >
+        isstay,
+      </if>
+      <if test="canheadteacher != null" >
+        canheadteacher,
+      </if>
+      <if test="expectedSalary != null" >
+        expected_salary,
+      </if>
+      <if test="fileLocation != null" >
+        file_location,
+      </if>
+      <if test="birth != null" >
+        birth,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="bankAccount != null" >
+        bank_account,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="zip != null" >
+        zip,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="idKind != null" >
+        id_kind,
+      </if>
+      <if test="idCard != null" >
+        id_card,
+      </if>
+      <if test="idAddress != null" >
+        id_address,
+      </if>
+      <if test="emergencyContact != null" >
+        emergency_contact,
+      </if>
+      <if test="relationship != null" >
+        relationship,
+      </if>
+      <if test="emergencyContactPhone != null" >
+        emergency_contact_phone,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="careerPlanning != null" >
+        career_planning,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+       <if test="sysUser != null" >
+        sys_user,
+      </if>
+       <if test="dormRoom != null" >
+         dorm_room,
+      </if>
+      <if test="types != null" >
+        types,
+      </if>
+      <if test="allergen != null" >
+        allergen,
+      </if>
+      <if test="taboofood != null" >
+        taboofood,
+      </if>
+      <if test="nationality != null" >
+        nationality,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="audio != null" >
+        audio,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkEmployee != null" >
+        #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDepartment != null" >
+        #{pkDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="shortCode != null" >
+        #{shortCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="accountLoction != null" >
+        #{accountLoction,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalStatus != null" >
+        #{politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="healthStatus != null" >
+        #{healthStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null" >
+        #{maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="isfertility != null" >
+        #{isfertility,jdbcType=INTEGER},
+      </if>
+      <if test="isfertilityplan != null" >
+        #{isfertilityplan,jdbcType=INTEGER},
+      </if>
+      <if test="jobPost != null" >
+        #{jobPost,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="enterdate != null" >
+        #{enterdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isleave != null" >
+        #{isleave,jdbcType=INTEGER},
+      </if>
+      <if test="leavedate != null" >
+        #{leavedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="graduatedSchool != null" >
+        #{graduatedSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="theProfession != null" >
+        #{theProfession,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignLanguage != null" >
+        #{foreignLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="computerSkill != null" >
+        #{computerSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="isstay != null" >
+        #{isstay,jdbcType=INTEGER},
+      </if>
+      <if test="canheadteacher != null" >
+        #{canheadteacher,jdbcType=INTEGER},
+      </if>
+      <if test="expectedSalary != null" >
+        #{expectedSalary,jdbcType=DECIMAL},
+      </if>
+      <if test="fileLocation != null" >
+        #{fileLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null" >
+        #{birth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="idKind != null" >
+        #{idKind,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="idAddress != null" >
+        #{idAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContact != null" >
+        #{emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="relationship != null" >
+        #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactPhone != null" >
+        #{emergencyContactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="careerPlanning != null" >
+        #{careerPlanning,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysUser != null" >
+        #{sysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="dormRoom != null" >
+        #{dormRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="types != null" >
+        #{types,jdbcType=VARCHAR},
+      </if>
+      <if test="allergen != null" >
+        #{allergen,jdbcType=VARCHAR},
+      </if>
+      <if test="taboofood != null" >
+        #{taboofood,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null" >
+        #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="audio != null" >
+        #{audio,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Employee" >
+    update employee
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDepartment != null" >
+        pk_department = #{pkDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="shortCode != null" >
+        short_code = #{shortCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="accountLoction != null" >
+        account_loction = #{accountLoction,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalStatus != null" >
+        political_status = #{politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="healthStatus != null" >
+        health_status = #{healthStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null" >
+        marital_status = #{maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="isfertility != null" >
+        isfertility = #{isfertility,jdbcType=INTEGER},
+      </if>
+      <if test="isfertilityplan != null" >
+        isfertilityplan = #{isfertilityplan,jdbcType=INTEGER},
+      </if>
+      <if test="jobPost != null" >
+        job_post = #{jobPost,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null" >
+        kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="enterdate != null" >
+        enterdate = #{enterdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isleave != null" >
+        isleave = #{isleave,jdbcType=INTEGER},
+      </if>
+      <if test="leavedate != null" >
+        leavedate = #{leavedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="graduatedSchool != null" >
+        graduated_school = #{graduatedSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="theProfession != null" >
+        the_profession = #{theProfession,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        job_title = #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignLanguage != null" >
+        foreign_language = #{foreignLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="computerSkill != null" >
+        computer_skill = #{computerSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="isstay != null" >
+        isstay = #{isstay,jdbcType=INTEGER},
+      </if>
+      <if test="canheadteacher != null" >
+        canheadteacher = #{canheadteacher,jdbcType=INTEGER},
+      </if>
+      <if test="expectedSalary != null" >
+        expected_salary = #{expectedSalary,jdbcType=DECIMAL},
+      </if>
+      <if test="fileLocation != null" >
+        file_location = #{fileLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null" >
+        birth = #{birth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        zip = #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="idKind != null" >
+        id_kind = #{idKind,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="idAddress != null" >
+        id_address = #{idAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContact != null" >
+        emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="relationship != null" >
+        relationship = #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactPhone != null" >
+        emergency_contact_phone = #{emergencyContactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="careerPlanning != null" >
+        career_planning = #{careerPlanning,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="sysUser != null" >
+        sys_user = #{sysUser,jdbcType=VARCHAR},
+      </if>
+       <if test="dormRoom != null" >
+         dorm_room = #{dormRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="types != null" >
+        types = #{types,jdbcType=VARCHAR},
+      </if>
+      <if test="types == null" >
+        types = null,
+      </if>
+      <if test="allergen != null" >
+        allergen = #{allergen,jdbcType=VARCHAR},
+      </if>
+      <if test="taboofood != null" >
+        taboofood = #{taboofood,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null" >
+        nationality = #{nationality,jdbcType=VARCHAR},
+      </if>
+
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="audio != null" >
+        audio = #{audio,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Employee" >
+    update employee
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_department = #{pkDepartment,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      short_code = #{shortCode,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      nation = #{nation,jdbcType=VARCHAR},
+      account_loction = #{accountLoction,jdbcType=VARCHAR},
+      political_status = #{politicalStatus,jdbcType=VARCHAR},
+      health_status = #{healthStatus,jdbcType=VARCHAR},
+      marital_status = #{maritalStatus,jdbcType=VARCHAR},
+      isfertility = #{isfertility,jdbcType=INTEGER},
+      isfertilityplan = #{isfertilityplan,jdbcType=INTEGER},
+      job_post = #{jobPost,jdbcType=VARCHAR},
+      kind = #{kind,jdbcType=INTEGER},
+      enterdate = #{enterdate,jdbcType=TIMESTAMP},
+      isleave = #{isleave,jdbcType=INTEGER},
+      leavedate = #{leavedate,jdbcType=TIMESTAMP},
+      graduated_school = #{graduatedSchool,jdbcType=VARCHAR},
+      the_profession = #{theProfession,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      job_title = #{jobTitle,jdbcType=VARCHAR},
+      foreign_language = #{foreignLanguage,jdbcType=VARCHAR},
+      computer_skill = #{computerSkill,jdbcType=VARCHAR},
+      isstay = #{isstay,jdbcType=INTEGER},
+      canheadteacher = #{canheadteacher,jdbcType=INTEGER},
+      expected_salary = #{expectedSalary,jdbcType=DECIMAL},
+      file_location = #{fileLocation,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=TIMESTAMP},
+      bank = #{bank,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      zip = #{zip,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      id_kind = #{idKind,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      id_address = #{idAddress,jdbcType=VARCHAR},
+      emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
+      relationship = #{relationship,jdbcType=VARCHAR},
+      emergency_contact_phone = #{emergencyContactPhone,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      career_planning = #{careerPlanning,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      sys_user = #{sysUser,jdbcType=VARCHAR},
+      dorm_room = #{dormRoom,jdbcType=VARCHAR},
+      types = #{types,jdbcType=VARCHAR},
+      allergen = #{allergen,jdbcType=VARCHAR},
+      taboofood = #{taboofood,jdbcType=VARCHAR},
+      nationality= #{nationality,jdbcType=VARCHAR},
+      img= #{img,jdbcType=VARCHAR},
+      audio= #{audio,jdbcType=VARCHAR},
+      price= #{price,jdbcType=DOUBLE},
+    where pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+  </update>
+  <select id="findEmployeeByPkStudent" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select e.* from classinfo_student cs
+    left join classinfo c on cs.pk_classinfo = c.pk_classinfo
+    left join employee e on e.pk_employee = c.head_teacher
+    where cs.pk_student = #{pkStudent} and c.type =0
+  </select>
+  <select id="selectTeachersByIds" resultMap="BaseResultMap">
+    select pk_employee ,img,caption from employee where 1=1
+    <if test="ids != null and ids.size > 0">
+      and pk_employee in
+      <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+  </select>
+  <select id="selectTeacherJobPost" parameterType="java.lang.String" resultType="java.lang.String">
+    select job_post from employee where pk_employee =#{teacherId}
+  </select>
+</mapper>

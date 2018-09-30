@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.StudentPhaseRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.StudentPhaseRecord" >
+    <id column="pk_student_phase_record" property="pkStudentPhaseRecord" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="stage_time" property="stageTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="pk_classinfo" property="pkClassinfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_student_phase_record, pk_domain, code, stage_time, type, pk_classinfo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_phase_record
+    where pk_student_phase_record = #{pkStudentPhaseRecord,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student_phase_record
+    where pk_student_phase_record = #{pkStudentPhaseRecord,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.StudentPhaseRecord" >
+    insert into student_phase_record (pk_student_phase_record, pk_domain, code, 
+      stage_time, type, pk_classinfo
+      )
+    values (#{pkStudentPhaseRecord,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{stageTime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR}, #{pkClassinfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.StudentPhaseRecord" >
+    insert into student_phase_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkStudentPhaseRecord != null" >
+        pk_student_phase_record,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="stageTime != null" >
+        stage_time,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkStudentPhaseRecord != null" >
+        #{pkStudentPhaseRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="stageTime != null" >
+        #{stageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null" >
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.StudentPhaseRecord" >
+    update student_phase_record
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="stageTime != null" >
+        stage_time = #{stageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_student_phase_record = #{pkStudentPhaseRecord,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.StudentPhaseRecord" >
+    update student_phase_record
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      stage_time = #{stageTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR}
+    where pk_student_phase_record = #{pkStudentPhaseRecord,jdbcType=VARCHAR}
+  </update>
+</mapper>

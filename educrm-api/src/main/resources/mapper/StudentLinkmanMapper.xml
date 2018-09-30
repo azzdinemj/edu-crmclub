@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.StudentLinkmanMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.StudentLinkmanKey" >
+    <id column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <id column="pk_linkman" property="pkLinkman" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_student,pk_linkman
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.StudentLinkmanKey">
+    SELECT 
+    <include refid="Base_Column_List"/>
+    from student_linkman
+    where 1=1
+    <if test="pkStudent != null">
+      AND pk_student= #{pkStudent}
+    </if>
+    <if test="pkLinkman != null">
+      AND pk_linkman= #{pkLinkman}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.wuxue.model.StudentLinkmanKey">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from student_linkman
+    where pk_student= #{pkStudent} AND pk_linkman= #{pkLinkman}
+  </select>
+  <select id="selectStuByParPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from student_linkman
+    where pk_linkman = (select pk_linkman from linkman where phone = #{phone,jdbcType=VARCHAR})
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wuxue.model.StudentLinkmanKey" >
+    delete from student_linkman
+    where pk_student = #{pkStudent,jdbcType=VARCHAR}
+      and pk_linkman = #{pkLinkman,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByStudent" parameterType="java.lang.String" >
+    delete from student_linkman
+    where pk_student = #{pkStudent,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.StudentLinkmanKey" >
+    insert into student_linkman (pk_student, pk_linkman)
+    values (#{pkStudent,jdbcType=VARCHAR}, #{pkLinkman,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.StudentLinkmanKey" >
+    insert into student_linkman
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkLinkman != null" >
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelectiveCollect" parameterType="com.wuxue.model.StudentLinkmanKey" >
+    insert into student_linkman_collect
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkLinkman != null" >
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

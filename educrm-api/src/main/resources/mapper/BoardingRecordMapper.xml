@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.BoardingRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.shuttle.BoardingRecord" >
+    <id column="pk_boarding_record" property="pkBoardingRecord" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="school_bus" property="schoolBus" jdbcType="VARCHAR" />
+    <result column="site_id" property="siteId" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="pk_sys_user" property="pkSysUser" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_boarding_record, pk_domain, school_bus, site_id, date, pk_student, pk_sys_user, 
+    status
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.shuttle.BoardingRecord" >
+    select 
+    <include refid="Base_Column_List" />
+    from boarding_record
+    where 1=1
+    <if test="fromDate != null">
+      <![CDATA[ and date >= #{fromDate} ]]>
+    </if>
+    <if test="toDate != null">
+      <![CDATA[ and date <= #{toDate} ]]>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from boarding_record
+    where pk_boarding_record = #{pkBoardingRecord,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from boarding_record
+    where pk_boarding_record = #{pkBoardingRecord,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.shuttle.BoardingRecord" >
+    insert into boarding_record (pk_boarding_record, pk_domain, school_bus,
+      site_id, date, pk_student, 
+      pk_sys_user, status)
+    values (#{pkBoardingRecord,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{schoolBus,jdbcType=VARCHAR}, 
+      #{siteId,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, #{pkStudent,jdbcType=VARCHAR}, 
+      #{pkSysUser,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.shuttle.BoardingRecord" >
+    insert into boarding_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkBoardingRecord != null" >
+        pk_boarding_record,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="schoolBus != null" >
+        school_bus,
+      </if>
+      <if test="siteId != null" >
+        site_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkSysUser != null" >
+        pk_sys_user,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkBoardingRecord != null" >
+        #{pkBoardingRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolBus != null" >
+        #{schoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysUser != null" >
+        #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.shuttle.BoardingRecord" >
+    update boarding_record
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolBus != null" >
+        school_bus = #{schoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        site_id = #{siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysUser != null" >
+        pk_sys_user = #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_boarding_record = #{pkBoardingRecord,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.shuttle.BoardingRecord" >
+    update boarding_record
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      school_bus = #{schoolBus,jdbcType=VARCHAR},
+      site_id = #{siteId,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_sys_user = #{pkSysUser,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where pk_boarding_record = #{pkBoardingRecord,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getLatestBoardingRecordByPkStudent" resultMap="BaseResultMap">
+    select * from boarding_record
+    where date between #{startTime} and #{endTime}
+    <if test="ids != null and ids.size > 0">
+      and pk_student  in
+      <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+  </select>
+</mapper>

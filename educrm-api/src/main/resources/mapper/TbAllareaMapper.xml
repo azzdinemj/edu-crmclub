@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.TbAllareaMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.TbAllarea" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="parent" property="parent" jdbcType="INTEGER" />
+    <result column="short_name" property="shortName" jdbcType="VARCHAR" />
+    <result column="py_long" property="pyLong" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="py_short" property="pyShort" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="regdate" property="regdate" jdbcType="INTEGER" />
+    <result column="modifydate" property="modifydate" jdbcType="INTEGER" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+   id, name, level, parent, short_name, py_long, tel, py_short, status, isdel,
+   sort, regdate, modifydate
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.TbAllarea" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_allarea
+    where 1=1
+    <if test="id != null" >
+      and id = #{id}
+    </if>
+    <if test="parent != null" >
+      and parent = #{parent}
+    </if>
+    <if test="name != null and name !=''" >
+      and name LIKE "%"#{name}"%"
+    </if>
+
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.TbAllarea" >
+    select
+    count(*)
+    from tb_allarea
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_allarea
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_allarea
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.TbAllarea" >
+    insert into tb_allarea (id, name, level, parent, short_name, py_long, tel, py_short, status, isdel,
+   sort, regdate, modifydate)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER},
+    #{parent,jdbcType=INTEGER}, #{shortName,jdbcType=VARCHAR}, #{pyLong,jdbcType=VARCHAR},
+    #{tel,jdbcType=VARCHAR}, #{pyShort,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+    #{isdel,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{regdate,jdbcType=INTEGER},
+    #{modifydate,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.TbAllarea" >
+    insert into tb_allarea
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="parent != null" >
+        parent,
+      </if>
+      <if test="shortName != null" >
+        short_name,
+      </if>
+      <if test="pyLong != null" >
+        py_long,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="regdate != null" >
+        regdate,
+      </if>
+      <if test="modifydate != null" >
+        modifydate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="shortName != null" >
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="pyLong != null" >
+        #{pyLong,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="pyShort != null" >
+        #{pyShort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="regdate != null" >
+        #{regdate,jdbcType=INTEGER},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=INTEGER},
+      </if>
+
+    </trim>
+  </insert>
+
+
+</mapper>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Notice" >
+    <id column="pk_notice" property="pkNotice" jdbcType="VARCHAR" />
+    <result column="pk_user" property="pkUser" jdbcType="VARCHAR" />
+    <result column="ranges" property="ranges" jdbcType="VARCHAR" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wuxue.model.Notice" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_notice, pk_user, ranges, isdel,type,title, creator, creation_date, modifier, lastedit_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="select" resultMap="ResultMapWithBLOBs" parameterType="com.wuxue.model.Notice" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from notice
+    where ranges = "ALL"
+    <if test="isdel != null" >
+      and isdel = #{isdel}
+    </if>
+    <if test="type != null" >
+      and type = #{type}
+    </if>
+    <if test="ranges != null" >
+      and ranges = #{ranges}
+    </if>
+    ORDER  BY creation_date DESC
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.Notice" >
+    select
+    count(*)
+    from notice
+    where 1=1
+    <if test="isdel != null" >
+      and isdel = #{isdel}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from notice
+    where pk_notice = #{pkNotice,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from notice
+    where pk_notice = #{pkNotice,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Notice" >
+    insert into notice (pk_notice, pk_user, ranges, 
+      isdel,type,title, creator, creation_date,
+      modifier, lastedit_date, content
+      )
+    values (#{pkNotice,jdbcType=VARCHAR}, #{pkUser,jdbcType=VARCHAR}, #{ranges,jdbcType=VARCHAR}, 
+      #{isdel,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},  #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP},
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Notice" >
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkNotice != null" >
+        pk_notice,
+      </if>
+      <if test="pkUser != null" >
+        pk_user,
+      </if>
+      <if test="ranges != null" >
+        ranges,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkNotice != null" >
+        #{pkNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="pkUser != null" >
+        #{pkUser,jdbcType=VARCHAR},
+      </if>
+      <if test="ranges != null" >
+        #{ranges,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Notice" >
+    update notice
+    <set >
+      <if test="pkUser != null" >
+        pk_user = #{pkUser,jdbcType=VARCHAR},
+      </if>
+      <if test="ranges != null" >
+        ranges = #{ranges,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pk_notice = #{pkNotice,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wuxue.model.Notice" >
+    update notice
+    set pk_user = #{pkUser,jdbcType=VARCHAR},
+      ranges = #{ranges,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where pk_notice = #{pkNotice,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Notice" >
+    update notice
+    set pk_user = #{pkUser,jdbcType=VARCHAR},
+      ranges = #{ranges,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_notice = #{pkNotice,jdbcType=VARCHAR}
+  </update>
+</mapper>

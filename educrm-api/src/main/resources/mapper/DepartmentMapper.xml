@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Department" >
+    <id column="pk_department" property="pkDepartment" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_parent" property="pkParent" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="short_code" property="shortCode" jdbcType="VARCHAR" />
+    <result column="pk_sys_user" property="pkSysUser" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="zip" property="zip" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="kind" property="kind" jdbcType="INTEGER" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_department, pk_domain, pk_parent, code, caption, short_code, pk_sys_user, phone, 
+    fax, email, zip, address, kind, isvalid, sort, memo, creator, creation_date, modifier, 
+    lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.Department" >
+    select
+    <include refid="Base_Column_List" />
+    from department
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkParent != null and pkParent !=''" >
+      and pk_parent = #{pkParent}
+    </if>
+    <if test="isvalid != null and isvalid != null">
+      and isvalid=#{isvalid}
+    </if>
+    <if test="start != null and pageSize != null">
+      LIMIT #{start}, #{pageSize}
+    </if>
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.Department" >
+    select
+    count(*)
+    from department
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from department
+    where pk_department = #{pkDepartment,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from department
+    where pk_department = #{pkDepartment,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Department" >
+    insert into department (pk_department, pk_domain, pk_parent, 
+      code, caption, short_code, 
+      pk_sys_user, phone, fax, 
+      email, zip, address, 
+      kind, isvalid, sort, 
+      memo, creator, creation_date, 
+      modifier, lastedit_date)
+    values (#{pkDepartment,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkParent,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}, #{shortCode,jdbcType=VARCHAR}, 
+      #{pkSysUser,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{zip,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{kind,jdbcType=INTEGER}, #{isvalid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
+      #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Department" >
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDepartment != null" >
+        pk_department,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkParent != null" >
+        pk_parent,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="shortCode != null" >
+        short_code,
+      </if>
+      <if test="pkSysUser != null" >
+        pk_sys_user,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="zip != null" >
+        zip,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="kind != null" >
+        kind,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDepartment != null" >
+        #{pkDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParent != null" >
+        #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="shortCode != null" >
+        #{shortCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysUser != null" >
+        #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Department" >
+    update department
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParent != null" >
+        pk_parent = #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="shortCode != null" >
+        short_code = #{shortCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysUser != null" >
+        pk_sys_user = #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        zip = #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null" >
+        kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_department = #{pkDepartment,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Department" >
+    update department
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_parent = #{pkParent,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      short_code = #{shortCode,jdbcType=VARCHAR},
+      pk_sys_user = #{pkSysUser,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      zip = #{zip,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      kind = #{kind,jdbcType=INTEGER},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_department = #{pkDepartment,jdbcType=VARCHAR}
+  </update>
+</mapper>

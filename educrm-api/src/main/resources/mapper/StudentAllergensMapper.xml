@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.StudentAllergensMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.StudentAllergens" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="allergens" property="allergens" jdbcType="VARCHAR" />
+    <id column="student_id" property="studentId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, allergens, student_id, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.wuxue.model.StudentAllergensKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_allergens
+    where id = #{id,jdbcType=INTEGER}
+      and allergens = #{allergens,jdbcType=VARCHAR}
+      and student_id = #{studentId,jdbcType=INTEGER}
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.StudentAllergensKey" >
+    select
+    <include refid="Base_Column_List" />
+    from student_allergens
+    where 1=1
+    <if test="pkStudent != null and pkStudent != ''">
+
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wuxue.model.StudentAllergensKey" >
+    delete from student_allergens
+    where id = #{id,jdbcType=INTEGER}
+      and allergens = #{allergens,jdbcType=VARCHAR}
+      and student_id = #{studentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.StudentAllergens" >
+    insert into student_allergens (id, allergens, student_id, 
+      type)
+    values (#{id,jdbcType=INTEGER}, #{allergens,jdbcType=VARCHAR}, #{studentId,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.StudentAllergens" >
+    insert into student_allergens
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="allergens != null" >
+        allergens,
+      </if>
+      <if test="studentId != null" >
+        student_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="allergens != null" >
+        #{allergens,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null" >
+        #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.StudentAllergens" >
+    update student_allergens
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+      and allergens = #{allergens,jdbcType=VARCHAR}
+      and student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.StudentAllergens" >
+    update student_allergens
+    set type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+      and allergens = #{allergens,jdbcType=VARCHAR}
+      and student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+</mapper>

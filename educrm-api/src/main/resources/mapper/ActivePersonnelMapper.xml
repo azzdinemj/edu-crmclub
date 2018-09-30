@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.ActivePersonnelMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.ActivePersonnel" >
+    <id column="pk_active_personnel" property="pkActivePersonnel" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_active_personnel, name, phone, mobile
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.ActivePersonnel" >
+    select
+    <include refid="Base_Column_List" />
+    from active_personnel
+    where 1=1
+    <if test="name != null" >
+      and name = #{name}
+    </if>
+    <if test="phone != null" >
+      and (phone = #{phone} or mobile = #{phone})
+    </if>
+    <if test="mobile != null" >
+      and (mobile = #{mobile} or phone = #{mobile})
+    </if>
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.ActivePersonnel" >
+    select
+    count(*)
+    from active_personnel
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from active_personnel
+    where pk_active_personnel = #{pkActivePersonnel,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from active_personnel
+    where pk_active_personnel = #{pkActivePersonnel,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.ActivePersonnel" >
+    insert into active_personnel (pk_active_personnel, name, phone, 
+      mobile)
+    values (#{pkActivePersonnel,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.ActivePersonnel" >
+    insert into active_personnel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkActivePersonnel != null" >
+        pk_active_personnel,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkActivePersonnel != null" >
+        #{pkActivePersonnel,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.ActivePersonnel" >
+    update active_personnel
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_active_personnel = #{pkActivePersonnel,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.ActivePersonnel" >
+    update active_personnel
+    set name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR}
+    where pk_active_personnel = #{pkActivePersonnel,jdbcType=VARCHAR}
+  </update>
+</mapper>

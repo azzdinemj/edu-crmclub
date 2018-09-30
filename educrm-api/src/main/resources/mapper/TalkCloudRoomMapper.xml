@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.TalkCloudRoomMapper" >
+
+  <resultMap id="BaseResultMap" type="com.wuxue.model.TalkCloudRoom" >
+    <id column="pk_talk_cloud_room" property="pkTalkCloudRoom" jdbcType="VARCHAR" />
+    <result column="room_name" property="roomName" jdbcType="VARCHAR" />
+    <result column="teacher_url" property="teacherUrl" jdbcType="VARCHAR" />
+    <result column="student_url" property="studentUrl" jdbcType="VARCHAR" />
+    <result column="serial" property="serial" jdbcType="VARCHAR" />
+    <result column="room_type" property="roomType" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="INTEGER" />
+    <result column="end_time" property="endTime" jdbcType="INTEGER" />
+    <result column="chairman_pwd" property="chairmanPwd" jdbcType="VARCHAR" />
+    <result column="assistant_pwd" property="assistantPwd" jdbcType="VARCHAR" />
+    <result column="patrol_pwd" property="patrolPwd" jdbcType="VARCHAR" />
+    <result column="password_required" property="passwordRequired" jdbcType="INTEGER" />
+    <result column="confuser_pwd" property="confuserPwd" jdbcType="VARCHAR" />
+    <result column="video_type" property="videoType" jdbcType="INTEGER" />
+    <result column="video_framerate" property="videoFramerate" jdbcType="INTEGER" />
+    <result column="auto_openav" property="autoOpenav" jdbcType="INTEGER" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="chat_type" property="chatType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+
+    <result column="filenum" property="filenum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_talk_cloud_room,  room_name, teacher_url, student_url, serial, room_type,
+    start_time, end_time, chairman_pwd, assistant_pwd, patrol_pwd, password_required,
+    confuser_pwd, video_type, video_framerate, auto_openav, create_name,update_name status, chat_type,
+    create_time, update_time,filenum
+  </sql>
+
+  <select id="select" resultType="com.wuxue.model.TalkCloudRoom" parameterType="com.wuxue.model.TalkCloudRoom" >
+    
+    SELECT pk_talk_cloud_room pkTalkCloudRoom,
+	room_name roomname,
+	serial serial,
+	CASE room_type WHEN 0 THEN '一对一'
+	WHEN 3 THEN '一对多' 
+	END roomtype,
+	start_time starttime,
+	end_time endtime,
+	create_name createName,
+	`status` `status`,
+	update_time updateTime,
+    filenum filenum
+	FROM talk_cloud_room 
+	WHERE `status` != 9 
+	<if test="serial != null and serial != ''"  >
+      and serial LIKE CONCAT('%',#{serial},'%') 
+    </if>
+    
+    <if test="roomname != null and serial != ''"  >
+      and room_name LIKE CONCAT('%',#{roomname},'%') 
+    </if>
+    
+    <if test="roomname != null and serial != ''"  >
+      and room_name LIKE CONCAT('%',#{roomname},'%') 
+    </if>
+    
+    <if test="roomStatus != null and roomStatus != ''"  >
+    	<if test="roomStatus == 0"  >
+      		 AND end_time>NOW() <!-- 当前教室 -->
+    	</if>
+      	
+      	<if test="roomStatus == 1"  >
+      		 AND start_time>NOW()  <!-- 未来教室 -->
+    	</if>
+    	
+    	<if test="roomStatus == 2"  >
+      		 AND NOW()>end_time  <!-- 历史教室 -->
+    	</if>
+    </if>
+	ORDER BY update_time DESC
+  </select>
+  
+  <!-- 根据id查询 -->
+  <select id="selectByPrimaryKey" resultType="com.wuxue.model.TalkCloudRoom" parameterType="java.lang.String" >
+    SELECT pk_talk_cloud_room pkTalkCloudRoom,
+	room_name roomname,
+	teacher_url teacherUrl,
+	student_url studentUrl,
+	serial serial,
+	CASE room_type WHEN 0 THEN '一对一'
+	WHEN 3 THEN '一对多' 
+	END roomtype,
+	start_time starttime,
+	end_time endtime,
+	chairman_pwd chairmanpwd,
+	assistant_pwd assistantpwd,
+	patrol_pwd patrolpwd,
+	password_required passwordrequired,
+	confuser_pwd confuserpwd,
+	video_type videotype,
+	video_framerate videoframerate,
+	auto_openav autoopenav,
+	filenum filenum
+	FROM talk_cloud_room WHERE pk_talk_cloud_room = #{pkTalkCloudRoom}
+  </select>
+  
+  <!-- 保存 -->
+  <insert id="insertSelective" parameterType="com.wuxue.model.TalkCloudRoom" >
+    insert into talk_cloud_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkTalkCloudRoom != null and pkTalkCloudRoom != ''" >
+        pk_talk_cloud_room,
+      </if>
+      <if test="roomname != null and roomname != ''" >
+        room_name,
+      </if>
+      <if test="teacherUrl != null and teacherUrl != ''" >
+        teacher_url,
+      </if>
+      <if test="studentUrl != null and studentUrl != ''" >
+        student_url,
+      </if>
+      <if test="serial != null and serial != ''" >
+        serial,
+      </if>
+      <if test="roomtype != null and roomtype != ''" >
+        room_type,
+      </if>
+      <if test="starttime != null and starttime != ''" >
+        start_time,
+      </if>
+      <if test="endtime != null and endtime != ''" >
+        end_time,
+      </if>
+      <if test="chairmanpwd != null and chairmanpwd != ''" >
+        chairman_pwd,
+      </if>
+      <if test="assistantpwd != null and assistantpwd != ''" >
+        assistant_pwd,
+      </if>
+      <if test="patrolpwd != null and patrolpwd != ''" >
+        patrol_pwd,
+      </if>
+      <if test="passwordrequired != null and passwordrequired != ''" >
+        password_required,
+      </if>
+      <if test="confuserpwd != null and confuserpwd != ''" >
+        confuser_pwd,
+      </if>
+      <if test="videotype != null and videotype != ''" >
+        video_type,
+      </if>
+      <if test="videoframerate != null and videoframerate != ''" >
+        video_framerate,
+      </if>
+      <if test="autoopenav != null and autoopenav != ''" >
+        auto_openav,
+      </if>
+      <if test="createName != null and createName != ''" >
+        create_name,
+      </if>
+      <if test="status != null and status != ''" >
+        status,
+      </if>
+      <if test="chattype != null and chattype != ''" >
+        chat_type,
+      </if>
+      <if test="filenum != null " >
+        filenum,
+      </if>
+        create_time,
+        update_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkTalkCloudRoom != null and pkTalkCloudRoom != ''" >
+        #{pkTalkCloudRoom},
+      </if>
+
+      <if test="roomname != null and roomname != ''" >
+        #{roomname},
+      </if>
+      <if test="teacherUrl != null and teacherUrl != ''" >
+        #{teacherUrl},
+      </if>
+      <if test="studentUrl != null and studentUrl != ''" >
+        #{studentUrl},
+      </if>
+      <if test="serial != null and serial != ''" >
+        #{serial},
+      </if>
+      <if test="roomtype != null and roomtype != ''" >
+        #{roomtype},
+      </if>
+      <if test="starttime != null and starttime != ''" >
+        #{starttime},
+      </if>
+      <if test="endtime != null and endtime != ''" >
+        #{endtime},
+      </if>
+      <if test="chairmanpwd != null and chairmanpwd != ''" >
+        #{chairmanpwd},
+      </if>
+      <if test="assistantpwd != null and assistantpwd != ''" >
+        #{assistantpwd},
+      </if>
+      <if test="patrolpwd != null and patrolpwd != ''" >
+        #{patrolpwd},
+      </if>
+      <if test="passwordrequired != null and passwordrequired != ''" >
+        #{passwordrequired},
+      </if>
+      <if test="confuserpwd != null and confuserpwd != ''" >
+        #{confuserpwd},
+      </if>
+      <if test="videotype != null and videotype != ''" >
+        #{videotype},
+      </if>
+      <if test="videoframerate != null and videoframerate != ''" >
+        #{videoframerate},
+      </if>
+      <if test="autoopenav != null and autoopenav != ''" >
+        #{autoopenav},
+      </if>
+      <if test="createName != null and createName != ''" >
+        #{createName},
+      </if>
+      <if test="status != null and status != ''" >
+        #{status},
+      </if>
+      <if test="chattype != null and chattype != ''" >
+        #{chattype},
+      </if>
+      <if test="filenum != null " >
+        #{filenum},
+      </if>
+      now(),
+      now()
+    </trim>
+  </insert>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from talk_cloud_room
+    where pk_talk_cloud_room = #{pkTalkCloudRoom,jdbcType=VARCHAR}
+  </delete>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.TalkCloudRoom" >
+    update talk_cloud_room
+    <set >
+      <if test="roomname != null " >
+        room_name = #{roomname},
+      </if>
+      <if test="teacherUrl != null" >
+        teacher_url = #{teacherUrl},
+      </if>
+      <if test="studentUrl != null" >
+        student_url = #{studentUrl},
+      </if>
+      <if test="serial != null " >
+        serial = #{serial},
+      </if>
+      <if test="roomtype != null " >
+        room_type = #{roomtype},
+      </if>
+      <if test="starttime != null " >
+        start_time = #{starttime},
+      </if>
+      <if test="endtime != null " >
+        end_time = #{endtime},
+      </if>
+      <if test="chairmanpwd != null " >
+        chairman_pwd = #{chairmanpwd},
+      </if>
+      <if test="assistantpwd != null " >
+        assistant_pwd = #{assistantpwd},
+      </if>
+      <if test="patrolpwd != null " >
+        patrol_pwd = #{patrolpwd},
+      </if>
+      <if test="passwordrequired != null " >
+        password_required = #{passwordrequired},
+      </if>
+      <if test="confuserpwd != null " >
+        confuser_pwd = #{confuserpwd},
+      </if>
+      <if test="videotype != null  " >
+        video_type = #{videotype},
+      </if>
+      <if test="videoframerate != null" >
+        video_framerate = #{videoframerate},
+      </if>
+      <if test="autoopenav != null " >
+        auto_openav = #{autoopenav},
+      </if>
+      <if test="status != null " >
+        status = #{status},
+      </if>
+      <if test="chattype != null " >
+        chat_type = #{chattype},
+      </if>
+      <if test="updateTime != null " >
+        update_time = #{updateTime},
+      </if>
+      <if test="updateName != null " >
+        update_name = #{updateName},
+      </if>
+      <if test="filenum != null " >
+        filenum = #{filenum},
+      </if>
+    </set>
+    where pk_talk_cloud_room = #{pkTalkCloudRoom}
+  </update>
+  
+</mapper>

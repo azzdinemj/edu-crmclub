@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SysAutocodeMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SysAutocode" >
+    <id column="pk_sys_autocode" property="pkSysAutocode" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="prefix" property="prefix" jdbcType="VARCHAR" />
+    <result column="isline" property="isline" jdbcType="INTEGER" />
+    <result column="zero_width" property="zeroWidth" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="VARCHAR" />
+    <result column="kind" property="kind" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_sys_autocode, pk_domain, caption, prefix, isline, zero_width, date, kind, isvalid, 
+    sort, creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.SysAutocode" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_autocode
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkSysAutocode != null">
+      and pk_sys_autocode = #{pkSysAutocode}
+    </if>
+    <if test="caption != null and caption !='' ">
+      and caption LIKE "%"#{caption}"%"
+    </if>
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.SysAutocode" >
+    select
+    count(*)
+    from sys_autocode
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_autocode
+    where pk_sys_autocode = #{pkSysAutocode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_autocode
+    where pk_sys_autocode = #{pkSysAutocode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SysAutocode" >
+    insert into sys_autocode (pk_sys_autocode, pk_domain, caption, 
+      prefix, isline, zero_width, 
+      date, kind, isvalid, 
+      sort, creator, creation_date, 
+      modifier, lastedit_date)
+    values (#{pkSysAutocode,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}, 
+      #{prefix,jdbcType=VARCHAR}, #{isline,jdbcType=INTEGER}, #{zeroWidth,jdbcType=INTEGER}, 
+      #{date,jdbcType=VARCHAR}, #{kind,jdbcType=VARCHAR}, #{isvalid,jdbcType=INTEGER}, 
+      #{sort,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SysAutocode" >
+    insert into sys_autocode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSysAutocode != null" >
+        pk_sys_autocode,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="prefix != null" >
+        prefix,
+      </if>
+      <if test="isline != null" >
+        isline,
+      </if>
+      <if test="zeroWidth != null" >
+        zero_width,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="kind != null" >
+        kind,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSysAutocode != null" >
+        #{pkSysAutocode,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="prefix != null" >
+        #{prefix,jdbcType=VARCHAR},
+      </if>
+      <if test="isline != null" >
+        #{isline,jdbcType=INTEGER},
+      </if>
+      <if test="zeroWidth != null" >
+        #{zeroWidth,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SysAutocode" >
+    update sys_autocode
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="prefix != null" >
+        prefix = #{prefix,jdbcType=VARCHAR},
+      </if>
+      <if test="isline != null" >
+        isline = #{isline,jdbcType=INTEGER},
+      </if>
+      <if test="zeroWidth != null" >
+        zero_width = #{zeroWidth,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null" >
+        kind = #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_sys_autocode = #{pkSysAutocode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SysAutocode" >
+    update sys_autocode
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      prefix = #{prefix,jdbcType=VARCHAR},
+      isline = #{isline,jdbcType=INTEGER},
+      zero_width = #{zeroWidth,jdbcType=INTEGER},
+      date = #{date,jdbcType=VARCHAR},
+      kind = #{kind,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_sys_autocode = #{pkSysAutocode,jdbcType=VARCHAR}
+  </update>
+</mapper>

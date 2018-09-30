@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.ClassinfoStudentReportMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.ClassinfoStudentReport" >
+    <result column="className" property="classname" jdbcType="VARCHAR" />
+    <result column="headTeacherName" property="headteachername" jdbcType="VARCHAR" />
+    <result column="secondTeacherName" property="secondteachername" jdbcType="VARCHAR" />
+    <result column="stuBoardNum" property="stuboardnum" jdbcType="BIGINT" />
+    <result column="MM" property="mm" jdbcType="BIGINT" />
+    <result column="GG" property="gg" jdbcType="BIGINT" />
+    <result column="number" property="number" jdbcType="BIGINT" />
+    <result column="busStu" property="busStu" jdbcType="BIGINT" />
+    <result column="pk_classinfo" property="pkClassinfo" jdbcType="VARCHAR" />
+    <result column="head_teacher" property="headTeacher" jdbcType="VARCHAR" />
+    <result column="second_teacher" property="secondTeacher" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassinfoStudentReport" >
+    select
+    *
+    from classinfo_student_report
+    where 1=1
+    <if test="start != null and pageSize != null">
+      LIMIT #{start}, #{pageSize}
+    </if>
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.ClassinfoStudentReport" >
+    select
+    count(*)
+    from classinfo_student_report
+    where 1=1
+  </select>
+  <insert id="insert" parameterType="com.wuxue.model.ClassinfoStudentReport" >
+    insert into classinfo_student_report (className, headTeacherName, secondTeacherName, 
+      stuBoardNum, MM, GG, number, busStu,
+      pk_classinfo, head_teacher, second_teacher
+      )
+    values (#{classname,jdbcType=VARCHAR}, #{headteachername,jdbcType=VARCHAR}, #{secondteachername,jdbcType=VARCHAR}, 
+      #{stuboardnum,jdbcType=BIGINT}, #{mm,jdbcType=BIGINT}, #{gg,jdbcType=BIGINT}, #{number,jdbcType=BIGINT},  #{busStu,jdbcType=BIGINT},
+      #{pkClassinfo,jdbcType=VARCHAR}, #{headTeacher,jdbcType=VARCHAR}, #{secondTeacher,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.ClassinfoStudentReport" >
+    insert into classinfo_student_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classname != null" >
+        className,
+      </if>
+      <if test="headteachername != null" >
+        headTeacherName,
+      </if>
+      <if test="secondteachername != null" >
+        secondTeacherName,
+      </if>
+      <if test="stuboardnum != null" >
+        stuBoardNum,
+      </if>
+      <if test="mm != null" >
+        MM,
+      </if>
+      <if test="gg != null" >
+        GG,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="busStu != null" >
+        busStu,
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo,
+      </if>
+      <if test="headTeacher != null" >
+        head_teacher,
+      </if>
+      <if test="secondTeacher != null" >
+        second_teacher,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classname != null" >
+        #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="headteachername != null" >
+        #{headteachername,jdbcType=VARCHAR},
+      </if>
+      <if test="secondteachername != null" >
+        #{secondteachername,jdbcType=VARCHAR},
+      </if>
+      <if test="stuboardnum != null" >
+        #{stuboardnum,jdbcType=BIGINT},
+      </if>
+      <if test="mm != null" >
+        #{mm,jdbcType=BIGINT},
+      </if>
+      <if test="gg != null" >
+        #{gg,jdbcType=BIGINT},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=BIGINT},
+      </if>
+      <if test="busStu != null" >
+        #{busStu,jdbcType=BIGINT},
+      </if>
+      <if test="pkClassinfo != null" >
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="headTeacher != null" >
+        #{headTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="secondTeacher != null" >
+        #{secondTeacher,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

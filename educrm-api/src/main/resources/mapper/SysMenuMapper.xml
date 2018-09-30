@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SysMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SysMenu" >
+    <id column="pk_sys_menu" property="pkSysMenu" jdbcType="VARCHAR" />
+    <result column="pk_parent" property="pkParent" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="runmode" property="runmode" jdbcType="INTEGER" />
+    <result column="haschild" property="haschild" jdbcType="INTEGER" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="isdisplay" property="isdisplay" jdbcType="INTEGER" />
+    <result column="caption_eng" property="captionEng" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_sys_menu, pk_parent, caption, url, width, height, runmode, haschild, img, sort, 
+    isdisplay,caption_eng
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.SysMenu" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where 1=1
+    order by sort
+    <if test="start != null and pageSize != null">
+      LIMIT #{start}, #{pageSize}
+    </if>
+  </select>
+  <select id="selectByUser" resultMap="BaseResultMap" parameterType="com.wuxue.model.SysUser" >
+    select * from sys_menu
+    where pk_sys_menu in(
+    select pk_sys_menu from sys_power where pk_sys_role in(select pk_sys_role from sys_user_role where pk_sys_user=#{pkSysUser}) and pk_sys_button = 'onOpen')
+    or ifnull(pk_parent,'')='' order by sort
+  </select>
+  <select id="selectByUrl" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from sys_menu
+    where url =#{url}
+  </select>
+
+  <select id="selectparentisNull" resultMap="BaseResultMap" parameterType="com.wuxue.model.SysMenu" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where pk_parent is null  or pk_parent=""
+    <if test="caption != null and caption != ''">
+      and caption like "%"#{caption}"%"
+    </if>
+    order by sort
+    <if test="start != null and pageSize != null">
+      LIMIT #{start}, #{pageSize}
+    </if>
+  </select>
+
+  <select id="countByparentisNull" resultType="java.lang.Integer" parameterType="com.wuxue.model.SysMenu" >
+    select
+    count(*)
+    from sys_menu
+    where pk_parent is null  or pk_parent=""
+  </select>
+
+  <select id="selectparentisnotNull" resultMap="BaseResultMap" parameterType="com.wuxue.model.SysMenu" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where pk_parent is not null  and pk_parent!=""
+    <if test="caption != null and caption != ''">
+      and caption like "%"#{caption}"%"
+    </if>
+    order by sort
+    <if test="start != null and pageSize != null">
+      LIMIT #{start}, #{pageSize}
+    </if>
+  </select>
+
+  <select id="countByparentisnotNull" resultType="java.lang.Integer" parameterType="com.wuxue.model.SysMenu" >
+    select
+    count(*)
+    from sys_menu
+    where pk_parent is not null  and pk_parent!=""
+  </select>
+
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.SysMenu" >
+    select
+    count(*)
+    from sys_menu
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where pk_sys_menu = #{pkSysMenu,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_menu
+    where pk_sys_menu = #{pkSysMenu,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SysMenu" >
+    insert into sys_menu (pk_sys_menu, pk_parent, caption, 
+      url, width, height, 
+      runmode, haschild, img, 
+      sort, isdisplay,caption_eng)
+    values (#{pkSysMenu,jdbcType=VARCHAR}, #{pkParent,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{width,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, 
+      #{runmode,jdbcType=INTEGER}, #{haschild,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{isdisplay,jdbcType=INTEGER}), #{captionEng,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SysMenu" >
+    insert into sys_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSysMenu != null" >
+        pk_sys_menu,
+      </if>
+      <if test="pkParent != null" >
+        pk_parent,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="runmode != null" >
+        runmode,
+      </if>
+      <if test="haschild != null" >
+        haschild,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="isdisplay != null" >
+        isdisplay,
+      </if>
+      <if test="captionEng != null" >
+        caption_eng,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSysMenu != null" >
+        #{pkSysMenu,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParent != null" >
+        #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="runmode != null" >
+        #{runmode,jdbcType=INTEGER},
+      </if>
+      <if test="haschild != null" >
+        #{haschild,jdbcType=INTEGER},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="isdisplay != null" >
+        #{isdisplay,jdbcType=INTEGER},
+      </if>
+      <if test="captionEng != null" >
+        #{captionEng,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SysMenu" >
+    update sys_menu
+    <set >
+      <if test="pkParent != null" >
+        pk_parent = #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="runmode != null" >
+        runmode = #{runmode,jdbcType=INTEGER},
+      </if>
+      <if test="haschild != null" >
+        haschild = #{haschild,jdbcType=INTEGER},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="isdisplay != null" >
+        isdisplay = #{isdisplay,jdbcType=INTEGER},
+      </if>
+      <if test="captionEng != null" >
+        caption_eng = #{captionEng,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_sys_menu = #{pkSysMenu,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SysMenu" >
+    update sys_menu
+    set pk_parent = #{pkParent,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      width = #{width,jdbcType=INTEGER},
+      height = #{height,jdbcType=INTEGER},
+      runmode = #{runmode,jdbcType=INTEGER},
+      haschild = #{haschild,jdbcType=INTEGER},
+      img = #{img,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      isdisplay = #{isdisplay,jdbcType=INTEGER},
+       caption_eng = #{captionEng,jdbcType=VARCHAR}
+    where pk_sys_menu = #{pkSysMenu,jdbcType=VARCHAR}
+  </update>
+</mapper>

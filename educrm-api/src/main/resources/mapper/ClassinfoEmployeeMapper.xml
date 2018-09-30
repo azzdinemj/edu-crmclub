@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.ClassinfoEmployeeMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.ClassinfoEmployee" >
+    <id column="pk_classinfo" property="pkClassinfo" jdbcType="VARCHAR" />
+    <id column="pk_employee" property="pkEmployee" jdbcType="VARCHAR" />
+    <result column="pk_department" property="pkDepartment" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="kind" property="kind" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_classinfo, pk_employee, pk_department, isvalid, kind, memo, creator, creation_date, 
+    modifier, lastedit_date
+  </sql>
+  <select id="selectTeacher" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassinfoEmployee" >
+    select
+    a.pk_employee,b.pk_classinfo,b.isvalid
+    from employee a
+    left join classinfo_employee b
+    on
+    a.pk_employee=b.pk_employee
+    <if test="isvalid != null" >
+      and b.isvalid = #{isvalid}
+    </if>
+    where SUBSTR(job_post,1,1)='1'
+    <if test="caption != null and caption != ''" >
+      and pk_classinfo IN (SELECT pk_classinfo FROM classinfo where caption LIKE "%"#{caption}"%")
+    </if>
+    order by b.lastedit_date
+
+
+  </select>
+  <select id="selectClassinfoTeacher" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassinfoEmployee" >
+    select
+    a.pk_employee,b.pk_classinfo,b.isvalid
+    from employee a
+    left join classinfo_employee b
+    on
+    a.pk_employee=b.pk_employee
+    <if test="isvalid != null" >
+      and b.isvalid = #{isvalid}
+    </if>
+    where SUBSTR(job_post,1,1)='1'
+    <if test="pkClassinfo != null" >
+      and pk_classinfo = #{pkClassinfo}
+    </if>
+    order by b.pk_classinfo
+
+
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassinfoEmployee" >
+    select
+    <include refid="Base_Column_List" />
+    from classinfo_employee
+    where isvalid != 0
+    <if test="pkClassinfo != null" >
+      and pk_classinfo = #{pkClassinfo}
+    </if>
+    <if test="pkEmployee != null" >
+      and pk_employee = #{pkEmployee}
+    </if>
+  </select>
+  <select id="selectByTea" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from classinfo_employee
+    where pk_employee = #{pkEmployee,jdbcType=VARCHAR}  and isvalid !=0
+
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.ClassinfoEmployee" >
+    select
+    count(*)
+    from classinfo_employee
+    where 1=1
+    <if test="pkClassinfo != null" >
+      and pk_classinfo = #{pkClassinfo}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassinfoEmployeeKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from classinfo_employee
+    where 1=1
+    <if test="pkClassinfo != null and pkClassinfo != ''" >
+      and pk_classinfo = #{pkClassinfo}
+    </if>
+    <if test="pkEmployee != null and pkEmployee != ''" >
+      and pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wuxue.model.ClassinfoEmployeeKey" >
+    delete from classinfo_employee
+    where pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR}
+      and pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.ClassinfoEmployee" >
+    insert into classinfo_employee (pk_classinfo, pk_employee, pk_department, 
+      isvalid, kind, memo, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkClassinfo,jdbcType=VARCHAR}, #{pkEmployee,jdbcType=VARCHAR}, #{pkDepartment,jdbcType=VARCHAR}, 
+      #{isvalid,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.ClassinfoEmployee" >
+    insert into classinfo_employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkClassinfo != null" >
+        pk_classinfo,
+      </if>
+      <if test="pkEmployee != null" >
+        pk_employee,
+      </if>
+      <if test="pkDepartment != null" >
+        pk_department,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="kind != null" >
+        kind,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkClassinfo != null" >
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null" >
+        #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDepartment != null" >
+        #{pkDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.ClassinfoEmployee" >
+    update classinfo_employee
+    <set >
+      <if test="pkDepartment != null" >
+        pk_department = #{pkDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null" >
+        kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR}
+      and pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.ClassinfoEmployee" >
+    update classinfo_employee
+    set pk_department = #{pkDepartment,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      kind = #{kind,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR}
+      and pk_employee = #{pkEmployee,jdbcType=VARCHAR}
+  </update>
+    <select id="findClassInfoIdsByEmployeeId" resultType="java.lang.String" parameterType="java.lang.String">
+    select pk_classInfo from classinfo_employee where pk_employee =#{employeeId}
+  </select>
+</mapper>

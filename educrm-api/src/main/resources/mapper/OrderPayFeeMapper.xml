@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.OrderPayFeeMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.OrderPayFee" >
+    <id column="pk_order_pay_fee" property="pkOrderPayFee" jdbcType="INTEGER" />
+    <result column="pk_orderId" property="pkOrderid" jdbcType="VARCHAR" />
+    <result column="fee" property="fee" jdbcType="DECIMAL" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_order_pay_fee, pk_orderId, fee, type, creation_date,lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.OrderPayFee" >
+    select
+    <include refid="Base_Column_List" />
+    from order_pay_fee
+    where 1=1
+    <if test="pkOrderid != null" >
+      and pk_orderId = #{pkOrderid}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_pay_fee
+    where pk_order_pay_fee = #{pkOrderPayFee,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order_pay_fee
+    where pk_order_pay_fee = #{pkOrderPayFee,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.OrderPayFee" >
+    insert into order_pay_fee (pk_order_pay_fee, pk_orderId, fee, 
+      type)
+    values (#{pkOrderPayFee,jdbcType=INTEGER}, #{pkOrderid,jdbcType=VARCHAR}, #{fee,jdbcType=DECIMAL}, 
+      #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.OrderPayFee" >
+    insert into order_pay_fee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkOrderPayFee != null" >
+        pk_order_pay_fee,
+      </if>
+      <if test="pkOrderid != null" >
+        pk_orderId,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkOrderPayFee != null" >
+        #{pkOrderPayFee,jdbcType=INTEGER},
+      </if>
+      <if test="pkOrderid != null" >
+        #{pkOrderid,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.OrderPayFee" >
+    update order_pay_fee
+    <set >
+      <if test="pkOrderid != null" >
+        pk_orderId = #{pkOrderid,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_order_pay_fee = #{pkOrderPayFee,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.OrderPayFee" >
+    update order_pay_fee
+    set pk_orderId = #{pkOrderid,jdbcType=VARCHAR},
+      fee = #{fee,jdbcType=DECIMAL},
+      type = #{type,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_order_pay_fee = #{pkOrderPayFee,jdbcType=INTEGER}
+  </update>
+</mapper>

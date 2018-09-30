@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.DomainMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Domain" >
+    <id column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_parent" property="pkParent" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="short_code" property="shortCode" jdbcType="VARCHAR" />
+    <result column="short_caption" property="shortCaption" jdbcType="VARCHAR" />
+    <result column="person" property="person" jdbcType="VARCHAR" />
+    <result column="invoice_unit" property="invoiceUnit" jdbcType="VARCHAR" />
+    <result column="invoice_code" property="invoiceCode" jdbcType="VARCHAR" />
+    <result column="invoice_address" property="invoiceAddress" jdbcType="VARCHAR" />
+    <result column="invoice_phone" property="invoicePhone" jdbcType="VARCHAR" />
+    <result column="invoice_bank" property="invoiceBank" jdbcType="VARCHAR" />
+    <result column="invoice_bank_account" property="invoiceBankAccount" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="zip" property="zip" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="kind" property="kind" jdbcType="INTEGER" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_domain, pk_parent, caption, short_code, short_caption, person, invoice_unit, invoice_code, 
+    invoice_address, invoice_phone, invoice_bank, invoice_bank_account, phone, fax, email, 
+    zip, address, kind, isvalid, sort, memo, logo,creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.Domain" >
+    select
+    <include refid="Base_Column_List" />
+    from domain
+    where 1=1
+    <if test="isvalid != null and isvalid != null">
+      and isvalid=#{isvalid}
+    </if>
+    <if test="start != null and pageSize != null">
+      LIMIT #{start}, #{pageSize}
+    </if>
+
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.Domain" >
+    select
+    count(*)
+    from domain
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from domain
+    where pk_domain = #{pkDomain,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from domain
+    where pk_domain = #{pkDomain,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Domain" >
+    insert into domain (pk_domain, pk_parent, caption, 
+      short_code, short_caption, person, 
+      invoice_unit, invoice_code, invoice_address, 
+      invoice_phone, invoice_bank, invoice_bank_account, 
+      phone, fax, email, 
+      zip, address, kind, 
+      isvalid, sort, memo, logo,
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkDomain,jdbcType=VARCHAR}, #{pkParent,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}, 
+      #{shortCode,jdbcType=VARCHAR}, #{shortCaption,jdbcType=VARCHAR}, #{person,jdbcType=VARCHAR}, 
+      #{invoiceUnit,jdbcType=VARCHAR}, #{invoiceCode,jdbcType=VARCHAR}, #{invoiceAddress,jdbcType=VARCHAR}, 
+      #{invoicePhone,jdbcType=VARCHAR}, #{invoiceBank,jdbcType=VARCHAR}, #{invoiceBankAccount,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{zip,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{kind,jdbcType=INTEGER}, 
+      #{isvalid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR},  #{logo,jdbcType=VARCHAR},
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Domain" >
+    insert into domain
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkParent != null" >
+        pk_parent,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="shortCode != null" >
+        short_code,
+      </if>
+      <if test="shortCaption != null" >
+        short_caption,
+      </if>
+      <if test="person != null" >
+        person,
+      </if>
+      <if test="invoiceUnit != null" >
+        invoice_unit,
+      </if>
+      <if test="invoiceCode != null" >
+        invoice_code,
+      </if>
+      <if test="invoiceAddress != null" >
+        invoice_address,
+      </if>
+      <if test="invoicePhone != null" >
+        invoice_phone,
+      </if>
+      <if test="invoiceBank != null" >
+        invoice_bank,
+      </if>
+      <if test="invoiceBankAccount != null" >
+        invoice_bank_account,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="zip != null" >
+        zip,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="kind != null" >
+        kind,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParent != null" >
+        #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="shortCode != null" >
+        #{shortCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shortCaption != null" >
+        #{shortCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null" >
+        #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceUnit != null" >
+        #{invoiceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceCode != null" >
+        #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceAddress != null" >
+        #{invoiceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicePhone != null" >
+        #{invoicePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceBank != null" >
+        #{invoiceBank,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceBankAccount != null" >
+        #{invoiceBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Domain" >
+    update domain
+    <set >
+      <if test="pkParent != null" >
+        pk_parent = #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="shortCode != null" >
+        short_code = #{shortCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shortCaption != null" >
+        short_caption = #{shortCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null" >
+        person = #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceUnit != null" >
+        invoice_unit = #{invoiceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceCode != null" >
+        invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceAddress != null" >
+        invoice_address = #{invoiceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicePhone != null" >
+        invoice_phone = #{invoicePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceBank != null" >
+        invoice_bank = #{invoiceBank,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceBankAccount != null" >
+        invoice_bank_account = #{invoiceBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        zip = #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null" >
+        kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_domain = #{pkDomain,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Domain" >
+    update domain
+    set pk_parent = #{pkParent,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      short_code = #{shortCode,jdbcType=VARCHAR},
+      short_caption = #{shortCaption,jdbcType=VARCHAR},
+      person = #{person,jdbcType=VARCHAR},
+      invoice_unit = #{invoiceUnit,jdbcType=VARCHAR},
+      invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+      invoice_address = #{invoiceAddress,jdbcType=VARCHAR},
+      invoice_phone = #{invoicePhone,jdbcType=VARCHAR},
+      invoice_bank = #{invoiceBank,jdbcType=VARCHAR},
+      invoice_bank_account = #{invoiceBankAccount,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      zip = #{zip,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      kind = #{kind,jdbcType=INTEGER},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_domain = #{pkDomain,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.CourseEvaluateMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.CourseEvaluate" >
+    <id column="pk_course_evaluate" property="pkCourseEvaluate" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="pk_course" property="pkCourse" jdbcType="VARCHAR" />
+    <result column="cotent" property="cotent" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_course_evaluate, pk_student, pk_course, cotent, status, isdel, creator, creation_date, 
+    modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.CourseEvaluate" >
+    select
+    <include refid="Base_Column_List" />
+    from course_evaluate
+    where 1=1
+    <if test="pkStudent != null" >
+      and pk_student = #{pkStudent}
+    </if>
+    <if test="pkCourse != null" >
+      and pk_course = #{pkCourse}
+    </if>
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.CourseEvaluate" >
+    select
+    count(*)
+    from course_evaluate
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from course_evaluate
+    where pk_course_evaluate = #{pkCourseEvaluate,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from course_evaluate
+    where pk_course_evaluate = #{pkCourseEvaluate,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.CourseEvaluate" >
+    insert into course_evaluate (pk_course_evaluate, pk_student, pk_course, 
+      cotent, status, isdel, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkCourseEvaluate,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{pkCourse,jdbcType=VARCHAR}, 
+      #{cotent,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{isdel,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.CourseEvaluate" >
+    insert into course_evaluate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkCourseEvaluate != null" >
+        pk_course_evaluate,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkCourse != null" >
+        pk_course,
+      </if>
+      <if test="cotent != null" >
+        cotent,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkCourseEvaluate != null" >
+        #{pkCourseEvaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkCourse != null" >
+        #{pkCourse,jdbcType=VARCHAR},
+      </if>
+      <if test="cotent != null" >
+        #{cotent,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.CourseEvaluate" >
+    update course_evaluate
+    <set >
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkCourse != null" >
+        pk_course = #{pkCourse,jdbcType=VARCHAR},
+      </if>
+      <if test="cotent != null" >
+        cotent = #{cotent,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_course_evaluate = #{pkCourseEvaluate,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.CourseEvaluate" >
+    update course_evaluate
+    set pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_course = #{pkCourse,jdbcType=VARCHAR},
+      cotent = #{cotent,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_course_evaluate = #{pkCourseEvaluate,jdbcType=VARCHAR}
+  </update>
+</mapper>

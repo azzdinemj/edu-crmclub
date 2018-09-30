@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.SysAutocodeCounterMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SysAutocodeCounter">
+    <id column="pk_sys_autocode_counter" jdbcType="VARCHAR" property="pkSysAutocodeCounter" />
+    <result column="pk_sys_autocode" jdbcType="VARCHAR" property="pkSysAutocode" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="lastedit_date" jdbcType="TIMESTAMP" property="lasteditDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_sys_autocode_counter, pk_sys_autocode, date, num, creator, creation_date,
+    modifier, lastedit_date
+  </sql>
+  <select id="select" parameterType="com.wuxue.model.SysAutocodeCounter" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_autocode_counter
+    where 1=1
+    <if test="pkSysAutocode != null">
+      and pk_sys_autocode = #{pkSysAutocode}
+    </if>
+    <if test="date != null">
+      and date = #{date}
+    </if>
+    <if test="start != null and pageSize != null">
+      LIMIT #{start}, #{pageSize}
+    </if>
+  </select>
+  <select id="countBy" parameterType="com.wuxue.model.SysAutocodeCounter" resultType="java.lang.Integer">
+    select
+    count(*)
+    from sys_autocode_counter
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_autocode_counter
+    where pk_sys_autocode_counter = #{pkSysAutocodeCounter,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_autocode_counter
+    where pk_sys_autocode_counter = #{pkSysAutocodeCounter,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SysAutocodeCounter">
+    insert into sys_autocode_counter (pk_sys_autocode_counter, pk_sys_autocode, 
+      date, num, creator, creation_date,
+      modifier, lastedit_date)
+    values (#{pkSysAutocodeCounter,jdbcType=VARCHAR}, #{pkSysAutocode,jdbcType=VARCHAR}, 
+      #{date,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER},#{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP},
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SysAutocodeCounter">
+    insert into sys_autocode_counter
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkSysAutocodeCounter != null">
+        pk_sys_autocode_counter,
+      </if>
+      <if test="pkSysAutocode != null">
+        pk_sys_autocode,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkSysAutocodeCounter != null">
+        #{pkSysAutocodeCounter,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysAutocode != null">
+        #{pkSysAutocode,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SysAutocodeCounter">
+    update sys_autocode_counter
+    <set>
+      <if test="pkSysAutocode != null">
+        pk_sys_autocode = #{pkSysAutocode,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_sys_autocode_counter = #{pkSysAutocodeCounter,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SysAutocodeCounter">
+    update sys_autocode_counter
+    set pk_sys_autocode = #{pkSysAutocode,jdbcType=VARCHAR},
+      date = #{date,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_sys_autocode_counter = #{pkSysAutocodeCounter,jdbcType=VARCHAR}
+  </update>
+</mapper>

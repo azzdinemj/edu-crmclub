@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.ScheduleMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Schedule">
+    <id column="pk_schedule" jdbcType="VARCHAR" property="pkSchedule" />
+    <result column="pk_domain" jdbcType="VARCHAR" property="pkDomain" />
+    <result column="pk_product" jdbcType="VARCHAR" property="pkProduct" />
+    <result column="pk_student" jdbcType="VARCHAR" property="pkStudent" />
+    <result column="pk_employee" jdbcType="VARCHAR" property="pkEmployee" />
+    <result column="pk_class_time" jdbcType="VARCHAR" property="pkClassTime" />
+    <result column="pk_class_room" jdbcType="VARCHAR" property="pkClassRoom" />
+    <result column="lecture_type" jdbcType="INTEGER" property="lectureType" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+    <result column="classinfo_list" jdbcType="VARCHAR" property="classinfoList" />
+    <result column="notes_eng" jdbcType="VARCHAR" property="notesEng" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="lastedit_date" jdbcType="TIMESTAMP" property="lasteditDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="isdel" jdbcType="INTEGER" property="isdel" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="isfeedback" jdbcType="INTEGER" property="isfeedback" />
+
+    <result column="pk_talk_cloud_room" jdbcType="VARCHAR" property="pkTalkCloudRoom" />
+    <result column="product_inclass" jdbcType="INTEGER" property="productInclass" />
+    <result column="product_useclasshours" jdbcType="INTEGER" property="productUseclasshours" />
+    <result column="week_type" jdbcType="INTEGER" property="weekType" />
+
+
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_schedule, pk_domain, pk_product, pk_student, pk_employee, pk_class_time,pk_class_room, lecture_type,start_time,
+    end_time, notes, notes_eng, creator, creation_date, modifier, lastedit_date, status,type, 
+    isdel,isfeedback,pk_talk_cloud_room,product_inclass,product_useclasshours,week_type
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.Schedule" >
+    select
+    <include refid="Base_Column_List" />,( select sort from class_time where pk_class_time = schedule.pk_class_time) as sort
+    from schedule
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="type != null" >
+      and type = #{type}
+    </if>
+    <if test="pkStudent != null and pkStudent !=''" >
+      and pk_student = #{pkStudent}
+    </if>
+    <if test="pkClassRoom != null" >
+      and pk_class_room = #{pkClassRoom}
+    </if>
+    <if test="lectureType != null" >
+      and lecture_type = #{lectureType}
+    </if>
+    <if test="pkEmployee != null" >
+      and pk_employee = #{pkEmployee}
+    </if>
+    <if test="pkClassTime != null" >
+      and pk_class_time = #{pkClassTime}
+    </if>
+    <if test="status != null and status!=2 and status !=999" >
+      and status = #{status}
+    </if>
+    <if test="status != null and status==2" >
+      and status = 1 and isfeedback = 1
+    </if>
+    <if test="status != null and status==999" >
+      and pk_student in (${classinfoList})
+    </if>
+    <if test="fromDate != null">
+      <![CDATA[ and start_time >= #{fromDate} ]]>
+    </if>
+    <if test="toDate != null">
+      <![CDATA[ and end_time <= #{toDate} ]]>
+    </if>
+     <if test="startTime != null and endTime != null">
+      <![CDATA[ and ((#{startTime} <=  start_time  and  #{endTime} >= start_time ) or (#{startTime}>=start_time and #{endTime}<=end_time ) or (#{endTime}>=end_time and #{startTime}<=end_time)) ]]>
+    </if>
+
+    <if test="pkTalkCloudRoom != null" >
+      and pk_talk_cloud_room =#{pkTalkCloudRoom}
+    </if>
+    <if test="pkProduct != null" >
+      and pk_product =#{pkProduct}
+    </if>
+    <if test="productInclass != null" >
+      and product_inclass =#{productInclass}
+    </if>
+
+    ORDER  BY field(`status`,1,0),start_time ASC
+  </select>
+  <select id="selectElecSchedule" resultMap="BaseResultMap" parameterType="com.wuxue.model.Schedule" >
+    select
+    <include refid="Base_Column_List" />
+    from schedule
+    where pk_student IN (select pk_classinfo from classinfo where type= 3 AND status=1)
+
+    ORDER BY pk_student
+
+  </select>
+  <select id="findElective" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    SELECT
+      a.pk_schedule pkSchedule,
+      b.pk_classinfo pkClassinfo,
+      a.pk_employee pkEmployee,
+      c.caption employeeName,
+      a.pk_class_room pkClassRoom,
+      d.caption classRoomName,
+      a.start_time startTime,
+      a.end_time endTime,
+      f.caption caption,
+      b.num num,
+      b.existing_numbers existingNumbers,
+      WEEKDAY(a.start_time) + 1 weeknum,
+      e.caption timeCaotion,
+      b.double_grade doubleGrade,
+      f.pk_sys_dict_values pkProduct,
+      b.start_date startDate,
+	  b.end_date endDate,
+	  b.fee fee
+    FROM
+        (
+            SELECT
+                pk_classinfo,
+                caption,
+                num,
+                existing_numbers,
+                division,
+                double_grade,
+                start_date,
+				end_date,
+				fee
+            FROM
+                classinfo
+            WHERE
+                type = 3
+            AND pk_classinfo IN (
+                SELECT
+                    pk_classinfo
+                FROM
+                    classinfo
+                WHERE
+                    INSTR(
+                        double_grade,
+                        concat(
+                            ',',
+                            (
+                                SELECT
+                                    grade
+                                FROM
+                                    classinfo
+                                WHERE
+                                    pk_classinfo IN (
+                                        SELECT
+                                            pk_classinfo
+                                        FROM
+                                            classinfo_student
+                                        WHERE
+                                            pk_student = #{pkStudent,jdbcType=VARCHAR}
+                                    )
+                                AND type = 0
+                            ),
+                            ','
+                        )
+                    ) > 0
+            )
+        ) b
+    INNER JOIN `schedule` a ON b.pk_classinfo = a.pk_student
+    LEFT JOIN employee c ON a.pk_employee = c.pk_employee
+    LEFT JOIN class_room d ON a.pk_class_room = d.pk_class_room
+    LEFT JOIN class_time e ON e.type = b.division
+    AND DATE_FORMAT(a.start_time, '%H:%i') = e.start_time
+    AND DATE_FORMAT(a.end_time, '%H:%i') = e.end_time
+    LEFT JOIN sys_dict_values f
+    on f.pk_sys_dict_values= a.pk_product
+
+  </select>
+  <select id="selectClasByStudent" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from `schedule`
+    where pk_student
+    in
+    (SELECT pk_classinfo from classinfo_student where pk_student= #{pkStudent,jdbcType=VARCHAR}
+    and isvalid=1
+    and pk_classinfo in
+    (SELECT pk_classinfo from classinfo where isvalid=1)
+    )
+    /*AND type = 2*/
+  </select>
+  <select id="selectByPkClassinfo" resultMap="BaseResultMap" parameterType="com.wuxue.model.Schedule" >
+    select
+    <include refid="Base_Column_List" />
+    from schedule
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="type != null" >
+      and type = #{type}
+    </if>
+    <if test="pkStudent != null" >
+      and pk_student = #{pkStudent}
+    </if>
+  </select>
+
+  <!--查询 某一个学生没有预约过的课程记录-->
+  <select id="selectByNotOrder" resultMap="BaseResultMap" parameterType="com.wuxue.model.Schedule" >
+    select  * from `schedule`
+    where pk_product=#{pkProduct} and pk_schedule  not in (select pk_schedule from tk_product_order where pk_student=#{pkStudent} );
+  </select>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from schedule
+    where pk_schedule = #{pkSchedule,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from schedule
+    where pk_schedule = #{pkSchedule,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPkClassinfo" parameterType="java.lang.String">
+    delete from schedule
+    where pk_student = #{pkClassinfo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Schedule">
+    insert into schedule (pk_schedule, pk_domain, pk_product, 
+      pk_student, pk_employee, pk_class_time,pk_class_room,lecture_type,
+      start_time, end_time, notes, 
+      notes_eng, creator, creation_date, 
+      modifier, lastedit_date, status, type,
+      isdel,isfeedback,week_type)
+    values (#{pkSchedule,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkProduct,jdbcType=VARCHAR}, 
+      #{pkStudent,jdbcType=VARCHAR}, #{pkEmployee,jdbcType=VARCHAR},  #{pkClassTime,jdbcType=VARCHAR}, #{pkClassRoom,jdbcType=VARCHAR}, #{lectureType,jdbcType=INTEGER},
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{notes,jdbcType=VARCHAR}, 
+      #{notesEng,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},#{type,jdbcType=INTEGER}, 
+      #{isdel,jdbcType=INTEGER},#{isfeedback,jdbcType=INTEGER},#{weekType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Schedule">
+    insert into schedule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkSchedule != null">
+        pk_schedule,
+      </if>
+      <if test="pkDomain != null">
+        pk_domain,
+      </if>
+      <if test="pkProduct != null">
+        pk_product,
+      </if>
+      <if test="pkStudent != null">
+        pk_student,
+      </if>
+      <if test="pkEmployee != null">
+        pk_employee,
+      </if>
+      <if test="pkClassTime != null">
+        pk_class_time,
+      </if>
+      <if test="pkClassRoom != null">
+        pk_class_room,
+      </if>
+      <if test="lectureType != null">
+        lecture_type,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="notesEng != null">
+        notes_eng,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="isfeedback != null">
+        isfeedback,
+      </if>
+
+      <if test="pkTalkCloudRoom != null">
+        pk_talk_cloud_room,
+      </if>
+      <if test="productInclass != null">
+        product_inclass,
+      </if>
+      <if test="productUseclasshours != null">
+        product_useclasshours,
+      </if>
+      <if test="weekType != null">
+        week_type,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkSchedule != null">
+        #{pkSchedule,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null">
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkProduct != null">
+        #{pkProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null">
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null">
+        #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassTime != null">
+        #{pkClassTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassRoom != null">
+        #{pkClassRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="lectureType != null">
+        #{lectureType,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="notesEng != null">
+        #{notesEng,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+       <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="isfeedback != null">
+        #{isfeedback,jdbcType=INTEGER},
+      </if>
+
+      <if test="pkTalkCloudRoom != null">
+        #{pkTalkCloudRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="productInclass != null">
+        #{productInclass,jdbcType=INTEGER},
+      </if>
+      <if test="productUseclasshours != null">
+        #{productUseclasshours,jdbcType=INTEGER},
+      </if>
+      <if test="weekType != null">
+        #{weekType,jdbcType=INTEGER},
+      </if>
+
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Schedule">
+    update schedule
+    <set>
+      <if test="pkDomain != null">
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkProduct != null">
+        pk_product = #{pkProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null">
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null">
+        pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassTime != null">
+        pk_class_time = #{pkClassTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassRoom != null">
+        pk_class_room = #{pkClassRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="lectureType != null">
+        lecture_type = #{lectureType,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="notesEng != null">
+        notes_eng = #{notesEng,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+       <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="isfeedback != null">
+        isfeedback = #{isfeedback,jdbcType=INTEGER},
+      </if>
+
+      <if test="pkTalkCloudRoom != null">
+        pk_talk_cloud_room = #{pkTalkCloudRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="productInclass != null">
+        product_inclass = #{productInclass,jdbcType=INTEGER},
+      </if>
+      <if test="productUseclasshours != null">
+        product_useclasshours = #{productUseclasshours,jdbcType=INTEGER},
+      </if>
+      <if test="weekType != null">
+        week_type = #{weekType,jdbcType=INTEGER},
+      </if>
+
+    </set>
+    where pk_schedule = #{pkSchedule,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Schedule">
+    update schedule
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_product = #{pkProduct,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      pk_class_time = #{pkClassTime,jdbcType=VARCHAR},
+      pk_class_room = #{pkClassRoom,jdbcType=VARCHAR},
+      lecture_type = #{lectureType,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      notes = #{notes,jdbcType=VARCHAR},
+      notes_eng = #{notesEng,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+       `type` = #{type,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      isfeedback = #{isfeedback,jdbcType=INTEGER},
+
+      product_inclass=#{productInclass,jdbcType=INTEGER},
+        pk_talk_cloud_room=#{pkTalkCloudRoom,jdbcType=VARCHAR},
+        product_useclasshours=#{productUseclasshours,jdbcType=INTEGER},
+        week_type=#{weekType,jdbcType=INTEGER}
+    where pk_schedule = #{pkSchedule,jdbcType=VARCHAR}
+  </update>
+</mapper>

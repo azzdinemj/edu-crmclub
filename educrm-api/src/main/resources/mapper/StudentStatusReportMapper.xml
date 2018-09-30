@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.StudentStatusReportMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.StudentStatusReport" >
+    <result column="istype" property="istype" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="BIGINT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.wuxue.model.StudentStatusReport" >
+    insert into student_status_report (istype, number)
+    values (#{istype,jdbcType=INTEGER}, #{number,jdbcType=BIGINT})
+  </insert>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.StudentStatusReport" >
+    select
+    *
+    from student_status_report
+    where 1=1
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.StudentStatusReport" >
+    select
+    count(*)
+    from student_status_report
+    where 1=1
+  </select>
+  <insert id="insertSelective" parameterType="com.wuxue.model.StudentStatusReport" >
+    insert into student_status_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="istype != null" >
+        istype,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="istype != null" >
+        #{istype,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

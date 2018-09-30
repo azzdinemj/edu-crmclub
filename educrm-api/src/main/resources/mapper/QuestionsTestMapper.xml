@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.QuestionsTestMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.QuestionsTest" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="pk_questions_item" property="pkQuestionsItem" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="testid" property="testid" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="istrue" property="istrue" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pk_student, pk_questions_item, `type`, answer, testid, create_date,istrue
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.QuestionsTest" >
+    select
+    <include refid="Base_Column_List" />
+    from questions_test
+    where 1=1
+    <if test="type!=null ">
+    and  `type`=#{type}
+    </if>
+    <if test="testid != null ">
+      and testid=#{testid}
+    </if>
+    <if test="pkStudent!=null ">
+    and   pk_student=#{pkStudent}
+    </if>
+    <if test="istrue!=null ">
+      and   istrue=#{istrue}
+    </if>
+    ORDER  by  create_date DESC
+  </select>
+
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.QuestionsTest" >
+    select
+    count(*)
+    from questions_test
+    where 1=1
+    <if test="testid != null and testid!='' ">
+     and testid=#{testid}
+    </if>
+    <if test="type != null and type!='' ">
+      and `type`=#{type}
+    </if>
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from questions_test
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from questions_test
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.QuestionsTest" >
+    insert into questions_test (id, pk_student, pk_questions_item, 
+      type, answer, testid, 
+      create_date,istrue)
+    values (#{id,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{pkQuestionsItem,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{answer,jdbcType=VARCHAR}, #{testid,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP},#{istrue,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.QuestionsTest" >
+    insert into questions_test
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkQuestionsItem != null" >
+        pk_questions_item,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="testid != null" >
+        testid,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="istrue != null" >
+        istrue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkQuestionsItem != null" >
+        #{pkQuestionsItem,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="testid != null" >
+        #{testid,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="istrue != null" >
+        #{istrue,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.QuestionsTest" >
+    update questions_test
+    <set >
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkQuestionsItem != null" >
+        pk_questions_item = #{pkQuestionsItem,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="testid != null" >
+        testid = #{testid,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="istrue != null" >
+        istrue = #{istrue,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.QuestionsTest" >
+    update questions_test
+    set pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_questions_item = #{pkQuestionsItem,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=INTEGER},
+      answer = #{answer,jdbcType=VARCHAR},
+      testid = #{testid,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+       isture = #{isture,jdbcType=INTEGER},
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

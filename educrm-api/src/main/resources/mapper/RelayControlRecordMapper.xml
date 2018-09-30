@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.RelayControlRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.shuttle.RelayControlRecord" >
+    <id column="pk_relay_control_record" property="pkRelayControlRecord" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="qr_code" property="qrCode" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="notice_date" property="noticeDate" jdbcType="TIMESTAMP" />
+    <result column="pk_linkman" property="pkLinkman" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_relay_control_record, pk_domain, qr_code, pk_student, result, notice_date, pk_linkman
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from relay_control_record
+    where pk_relay_control_record = #{pkRelayControlRecord,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from relay_control_record
+    where pk_relay_control_record = #{pkRelayControlRecord,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.shuttle.RelayControlRecord" >
+    insert into relay_control_record (pk_relay_control_record, pk_domain, qr_code, 
+      pk_student, result, notice_date, 
+      pk_linkman)
+    values (#{pkRelayControlRecord,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{qrCode,jdbcType=VARCHAR}, 
+      #{pkStudent,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, #{noticeDate,jdbcType=TIMESTAMP}, 
+      #{pkLinkman,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.shuttle.RelayControlRecord" >
+    insert into relay_control_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkRelayControlRecord != null" >
+        pk_relay_control_record,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="qrCode != null" >
+        qr_code,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="noticeDate != null" >
+        notice_date,
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkRelayControlRecord != null" >
+        #{pkRelayControlRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCode != null" >
+        #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeDate != null" >
+        #{noticeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkLinkman != null" >
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.shuttle.RelayControlRecord" >
+    update relay_control_record
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCode != null" >
+        qr_code = #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeDate != null" >
+        notice_date = #{noticeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_relay_control_record = #{pkRelayControlRecord,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.shuttle.RelayControlRecord" >
+    update relay_control_record
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      qr_code = #{qrCode,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      notice_date = #{noticeDate,jdbcType=TIMESTAMP},
+      pk_linkman = #{pkLinkman,jdbcType=VARCHAR}
+    where pk_relay_control_record = #{pkRelayControlRecord,jdbcType=VARCHAR}
+  </update>
+</mapper>

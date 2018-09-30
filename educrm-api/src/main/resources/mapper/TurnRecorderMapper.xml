@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.TurnRecorderMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.shuttle.TurnRecorder" >
+    <id column="pk_turn_recorder" property="pkTurnRecorder" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+    <result column="traffic_type" property="trafficType" jdbcType="INTEGER" />
+    <result column="traffic_date" property="trafficDate" jdbcType="TIMESTAMP" />
+    <result column="traffic_direction" property="trafficDirection" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_turn_recorder, pk_domain, code, employee_id, traffic_type, traffic_date, traffic_direction
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from turn_recorder
+    where pk_turn_recorder = #{pkTurnRecorder,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from turn_recorder
+    where pk_turn_recorder = #{pkTurnRecorder,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.shuttle.TurnRecorder" >
+    insert into turn_recorder (pk_turn_recorder, pk_domain, code, 
+      employee_id, traffic_type, traffic_date, 
+      traffic_direction)
+    values (#{pkTurnRecorder,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{employeeId,jdbcType=VARCHAR}, #{trafficType,jdbcType=INTEGER}, #{trafficDate,jdbcType=TIMESTAMP}, 
+      #{trafficDirection,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.shuttle.TurnRecorder" >
+    insert into turn_recorder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkTurnRecorder != null" >
+        pk_turn_recorder,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="employeeId != null" >
+        employee_id,
+      </if>
+      <if test="trafficType != null" >
+        traffic_type,
+      </if>
+      <if test="trafficDate != null" >
+        traffic_date,
+      </if>
+      <if test="trafficDirection != null" >
+        traffic_direction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkTurnRecorder != null" >
+        #{pkTurnRecorder,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficType != null" >
+        #{trafficType,jdbcType=INTEGER},
+      </if>
+      <if test="trafficDate != null" >
+        #{trafficDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trafficDirection != null" >
+        #{trafficDirection,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.shuttle.TurnRecorder" >
+    update turn_recorder
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        employee_id = #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficType != null" >
+        traffic_type = #{trafficType,jdbcType=INTEGER},
+      </if>
+      <if test="trafficDate != null" >
+        traffic_date = #{trafficDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trafficDirection != null" >
+        traffic_direction = #{trafficDirection,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_turn_recorder = #{pkTurnRecorder,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.shuttle.TurnRecorder" >
+    update turn_recorder
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      employee_id = #{employeeId,jdbcType=VARCHAR},
+      traffic_type = #{trafficType,jdbcType=INTEGER},
+      traffic_date = #{trafficDate,jdbcType=TIMESTAMP},
+      traffic_direction = #{trafficDirection,jdbcType=VARCHAR}
+    where pk_turn_recorder = #{pkTurnRecorder,jdbcType=VARCHAR}
+  </update>
+</mapper>

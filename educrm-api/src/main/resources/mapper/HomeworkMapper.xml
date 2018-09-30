@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.HomeworkMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Homework" >
+    <id column="pk_homework" property="pkHomework" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="classinfo" property="classinfo" jdbcType="VARCHAR" />
+    <result column="homework_date" property="homeworkDate" jdbcType="TIMESTAMP" />
+    <result column="grade_num" property="gradeNum" jdbcType="INTEGER" />
+    <result column="work_type" property="workType" jdbcType="VARCHAR" />
+    <result column="homework_content" property="homeworkContent" jdbcType="VARCHAR" />
+    <result column="homework_title" property="homeworkTitle" jdbcType="VARCHAR" />
+    <result column="send_date" property="sendDate" jdbcType="TIMESTAMP" />
+    <result column="send_type" property="sendType" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_homework, pk_domain, code, classinfo, homework_date, grade_num, work_type, homework_content, 
+    send_date, creator, creation_date, lastedit_date, modifier,send_type,homework_title
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.Homework" >
+    select
+    <include refid="Base_Column_List" />
+    from homework
+    where 1=1
+    <if test="classinfo != null" >
+      and classinfo = #{classinfo}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from homework
+    where pk_homework = #{pkHomework,jdbcType=VARCHAR}
+  </select>
+  <select id="selectStuWork" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    SELECT
+    <include refid="Base_Column_List" />
+     from homework
+    where classinfo = (SELECT pk_classinfo from classinfo where pk_classinfo in
+    (SELECT pk_classinfo from classinfo_student where pk_student=#{pkStudent,jdbcType=VARCHAR} and isvalid=1) and type=0  ) AND
+    work_type=#{workType,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByHeadTea" resultMap="BaseResultMap" parameterType="com.wuxue.model.Homework" >
+    SELECT * from homework where (classinfo in
+      (SELECT pk_classinfo from classinfo where head_teacher=(SELECT pk_employee from employee where sys_user=#{creator}))
+      or creator = #{creator}) and work_type =#{workType}
+  </select>
+  <select id="selectByTea" resultMap="BaseResultMap" parameterType="com.wuxue.model.Homework" >
+   SELECT
+    <include refid="Base_Column_List" />
+    from homework
+    where 1=1
+    <if test="workType != null and workType != ''">
+      and work_type=#{workType}
+    </if>
+    <if test="creator != null and creator != ''">
+      and creator=#{creator}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from homework
+    where pk_homework = #{pkHomework,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Homework" >
+    insert into homework (pk_homework, pk_domain, code, 
+      classinfo, homework_date, grade_num, 
+      work_type, homework_content, send_date, 
+      creator, creation_date, lastedit_date, 
+      modifier,send_type,homework_title)
+    values (#{pkHomework,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{classinfo,jdbcType=VARCHAR}, #{homeworkDate,jdbcType=TIMESTAMP}, #{gradeNum,jdbcType=INTEGER}, 
+      #{workType,jdbcType=VARCHAR}, #{homeworkContent,jdbcType=VARCHAR}, #{sendDate,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lasteditDate,jdbcType=TIMESTAMP},
+      #{modifier,jdbcType=VARCHAR},#{sendType,jdbcType=INTEGER},#{homeworkTitle,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Homework" >
+    insert into homework
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkHomework != null" >
+        pk_homework,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="classinfo != null" >
+        classinfo,
+      </if>
+      <if test="homeworkDate != null" >
+        homework_date,
+      </if>
+      <if test="gradeNum != null" >
+        grade_num,
+      </if>
+      <if test="workType != null" >
+        work_type,
+      </if>
+      <if test="homeworkContent != null" >
+        homework_content,
+      </if>
+      <if test="sendDate != null" >
+        send_date,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="sendType != null" >
+        send_type,
+      </if>
+      <if test="homeworkTitle != null" >
+        homework_title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkHomework != null" >
+        #{pkHomework,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="classinfo != null" >
+        #{classinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkDate != null" >
+        #{homeworkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gradeNum != null" >
+        #{gradeNum,jdbcType=INTEGER},
+      </if>
+      <if test="workType != null" >
+        #{workType,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkContent != null" >
+        #{homeworkContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sendDate != null" >
+        #{sendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="sendType != null" >
+        #{sendType,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkTitle != null" >
+        #{homeworkTitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Homework" >
+    update homework
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="classinfo != null" >
+        classinfo = #{classinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkDate != null" >
+        homework_date = #{homeworkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gradeNum != null" >
+        grade_num = #{gradeNum,jdbcType=INTEGER},
+      </if>
+      <if test="workType != null" >
+        work_type = #{workType,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkContent != null" >
+        homework_content = #{homeworkContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sendDate != null" >
+        send_date = #{sendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="sendType != null" >
+        send_type = #{sendType,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkTitle != null" >
+        homework_title = #{homeworkTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_homework = #{pkHomework,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Homework" >
+    update homework
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      classinfo = #{classinfo,jdbcType=VARCHAR},
+      homework_date = #{homeworkDate,jdbcType=TIMESTAMP},
+      grade_num = #{gradeNum,jdbcType=INTEGER},
+      work_type = #{workType,jdbcType=VARCHAR},
+      homework_content = #{homeworkContent,jdbcType=VARCHAR},
+      send_date = #{sendDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      send_type = #{sendType,jdbcType=INTEGER},
+      homework_Title = #{homeworkTitle,jdbcType=VARCHAR}
+    where pk_homework = #{pkHomework,jdbcType=VARCHAR}
+  </update>
+</mapper>

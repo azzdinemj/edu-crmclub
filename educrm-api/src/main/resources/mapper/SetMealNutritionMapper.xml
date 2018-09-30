@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SetMealNutritionMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SetMealNutrition" >
+    <id column="pk_meal_nutrition" property="pkMealNutrition" jdbcType="VARCHAR" />
+    <result column="pk_set_meal" property="pkSetMeal" jdbcType="VARCHAR" />
+    <result column="meal_nutrition_id" property="mealNutritionId" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="DECIMAL" />
+    <result column="proportion" property="proportion" jdbcType="DECIMAL" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_meal_nutrition, pk_set_meal, meal_nutrition_id, content, proportion, isvalid, 
+    creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from set_meal_nutrition
+    where pk_meal_nutrition = #{pkMealNutrition,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from set_meal_nutrition
+    where pk_meal_nutrition = #{pkMealNutrition,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SetMealNutrition" >
+    insert into set_meal_nutrition (pk_meal_nutrition, pk_set_meal, meal_nutrition_id, 
+      content, proportion, isvalid, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkMealNutrition,jdbcType=VARCHAR}, #{pkSetMeal,jdbcType=VARCHAR}, #{mealNutritionId,jdbcType=VARCHAR}, 
+      #{content,jdbcType=DECIMAL}, #{proportion,jdbcType=DECIMAL}, #{isvalid,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SetMealNutrition" >
+    insert into set_meal_nutrition
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkMealNutrition != null" >
+        pk_meal_nutrition,
+      </if>
+      <if test="pkSetMeal != null" >
+        pk_set_meal,
+      </if>
+      <if test="mealNutritionId != null" >
+        meal_nutrition_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="proportion != null" >
+        proportion,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkMealNutrition != null" >
+        #{pkMealNutrition,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSetMeal != null" >
+        #{pkSetMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="mealNutritionId != null" >
+        #{mealNutritionId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=DECIMAL},
+      </if>
+      <if test="proportion != null" >
+        #{proportion,jdbcType=DECIMAL},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SetMealNutrition" >
+    update set_meal_nutrition
+    <set >
+      <if test="pkSetMeal != null" >
+        pk_set_meal = #{pkSetMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="mealNutritionId != null" >
+        meal_nutrition_id = #{mealNutritionId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=DECIMAL},
+      </if>
+      <if test="proportion != null" >
+        proportion = #{proportion,jdbcType=DECIMAL},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_meal_nutrition = #{pkMealNutrition,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SetMealNutrition" >
+    update set_meal_nutrition
+    set pk_set_meal = #{pkSetMeal,jdbcType=VARCHAR},
+      meal_nutrition_id = #{mealNutritionId,jdbcType=VARCHAR},
+      content = #{content,jdbcType=DECIMAL},
+      proportion = #{proportion,jdbcType=DECIMAL},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_meal_nutrition = #{pkMealNutrition,jdbcType=VARCHAR}
+  </update>
+</mapper>

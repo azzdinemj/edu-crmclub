@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.NoticeRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.shuttle.NoticeRecord" >
+    <id column="pk_notice_record" property="pkNoticeRecord" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="pk_notification_record" property="pkNotificationRecord" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="pk_school_bus" property="pkSchoolBus" jdbcType="VARCHAR" />
+    <result column="line_num" property="lineNum" jdbcType="VARCHAR" />
+    <result column="return_value" property="returnValue" jdbcType="INTEGER" />
+    <result column="wx_notice_status" property="wxNoticeStatus" jdbcType="INTEGER" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_notice_record, pk_domain, code, pk_notification_record, date, pk_school_bus, line_num, 
+    return_value, wx_notice_status,num
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.shuttle.NoticeRecord" >
+    select
+    <include refid="Base_Column_List" />
+    from notice_record
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice_record
+    where pk_notice_record = #{pkNoticeRecord,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from notice_record
+    where pk_notice_record = #{pkNoticeRecord,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.shuttle.NoticeRecord" >
+    insert into notice_record (pk_notice_record, pk_domain, code, 
+      pk_notification_record, date, pk_school_bus, 
+      line_num, return_value, wx_notice_status,num
+      )
+    values (#{pkNoticeRecord,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{pkNotificationRecord,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, #{pkSchoolBus,jdbcType=VARCHAR}, 
+      #{lineNum,jdbcType=VARCHAR}, #{returnValue,jdbcType=INTEGER},  #{wxNoticeStatus,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.shuttle.NoticeRecord" >
+    insert into notice_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkNoticeRecord != null" >
+        pk_notice_record,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="pkNotificationRecord != null" >
+        pk_notification_record,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="pkSchoolBus != null" >
+        pk_school_bus,
+      </if>
+      <if test="lineNum != null" >
+        line_num,
+      </if>
+      <if test="returnValue != null" >
+        return_value,
+      </if>
+      <if test="wxNoticeStatus != null" >
+        wx_notice_status,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkNoticeRecord != null" >
+        #{pkNoticeRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkNotificationRecord != null" >
+        #{pkNotificationRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkSchoolBus != null" >
+        #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="lineNum != null" >
+        #{lineNum,jdbcType=VARCHAR},
+      </if>
+      <if test="returnValue != null" >
+        #{returnValue,jdbcType=INTEGER},
+      </if>
+      <if test="wxNoticeStatus != null" >
+        #{wxNoticeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.shuttle.NoticeRecord" >
+    update notice_record
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkNotificationRecord != null" >
+        pk_notification_record = #{pkNotificationRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkSchoolBus != null" >
+        pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="lineNum != null" >
+        line_num = #{lineNum,jdbcType=VARCHAR},
+      </if>
+      <if test="returnValue != null" >
+        return_value = #{returnValue,jdbcType=INTEGER},
+      </if>
+      <if test="wxNoticeStatus != null" >
+        wx_notice_status = #{wxNoticeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_notice_record = #{pkNoticeRecord,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.shuttle.NoticeRecord" >
+    update notice_record
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      pk_notification_record = #{pkNotificationRecord,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      line_num = #{lineNum,jdbcType=VARCHAR},
+      return_value = #{returnValue,jdbcType=INTEGER},
+      wx_notice_status = #{wxNoticeStatus,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER}
+    where pk_notice_record = #{pkNoticeRecord,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectNoticeRecordByIndexNo" resultType="java.lang.String">
+    select line_num from notice_record where 1=1
+
+    <if test="ids != null and ids.size > 0">
+      and line_num  in
+      <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+    and date between #{startTime} and #{endTime}
+
+  </select>
+</mapper>

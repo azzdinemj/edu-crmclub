@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.DivisionGradeMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.DivisionGrade" >
+    <id column="pk_division_grade" property="pkDivisionGrade" jdbcType="INTEGER" />
+    <result column="division_id" property="divisionId" jdbcType="VARCHAR" />
+    <result column="grade_name" property="gradeName" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_division_grade, division_id, grade_name, sort, creator, creation_date, modifier, 
+    lastedit_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from division_grade
+    where pk_division_grade = #{pkDivisionGrade,jdbcType=INTEGER}
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.DivisionGrade" >
+    select
+    count(grade_name)
+    from division_grade
+    where 1=1
+    <if test="divisionId">
+      and division_id=#{divisionId}
+    </if>
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from division_grade
+    where 1=1
+    <if test="divisionId != null and divisionId != ''">
+      and division_id = #{divisionId}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wuxue.model.DivisionGrade" >
+    delete from division_grade
+    where pk_division_grade = #{pkDivisionGrade,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.DivisionGrade" >
+    insert into division_grade (pk_division_grade, division_id, grade_name, 
+      sort, creator, creation_date, 
+      modifier, lastedit_date)
+    values (#{pkDivisionGrade,jdbcType=INTEGER}, #{divisionId,jdbcType=VARCHAR}, #{gradeName,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.DivisionGrade" >
+    insert into division_grade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDivisionGrade != null" >
+        pk_division_grade,
+      </if>
+      <if test="divisionId != null" >
+        division_id,
+      </if>
+      <if test="gradeName != null" >
+        grade_name,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDivisionGrade != null" >
+        #{pkDivisionGrade,jdbcType=INTEGER},
+      </if>
+      <if test="divisionId != null" >
+        #{divisionId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeName != null" >
+        #{gradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.DivisionGrade" >
+    update division_grade
+    <set >
+      <if test="divisionId != null" >
+        division_id = #{divisionId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeName != null" >
+        grade_name = #{gradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_division_grade = #{pkDivisionGrade,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.DivisionGrade" >
+    update division_grade
+    set division_id = #{divisionId,jdbcType=VARCHAR},
+      grade_name = #{gradeName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_division_grade = #{pkDivisionGrade,jdbcType=INTEGER}
+  </update>
+</mapper>

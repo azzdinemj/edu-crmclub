@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.FinanceReportMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.FinanceReport" >
+    <result column="domainName" property="domainname" jdbcType="VARCHAR" />
+    <result column="gradeName" property="gradename" jdbcType="VARCHAR" />
+    <result column="programName" property="programname" jdbcType="VARCHAR" />
+    <result column="income" property="income" jdbcType="DECIMAL" />
+    <result column="refund" property="refund" jdbcType="DECIMAL" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="program" property="program" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.FinanceReport" >
+    select
+    *
+    from finance_report
+    where 1=1
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.FinanceReport" >
+    select
+    count(*)
+    from finance_report
+    where 1=1
+  </select>
+  <insert id="insert" parameterType="com.wuxue.model.FinanceReport" >
+    insert into finance_report (domainName, gradeName, programName, 
+      income, refund, pk_domain, 
+      grade, program)
+    values (#{domainname,jdbcType=VARCHAR}, #{gradename,jdbcType=VARCHAR}, #{programname,jdbcType=VARCHAR}, 
+      #{income,jdbcType=DECIMAL}, #{refund,jdbcType=DECIMAL}, #{pkDomain,jdbcType=VARCHAR}, 
+      #{grade,jdbcType=VARCHAR}, #{program,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.FinanceReport" >
+    insert into finance_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="domainname != null" >
+        domainName,
+      </if>
+      <if test="gradename != null" >
+        gradeName,
+      </if>
+      <if test="programname != null" >
+        programName,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+      <if test="refund != null" >
+        refund,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="program != null" >
+        program,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="domainname != null" >
+        #{domainname,jdbcType=VARCHAR},
+      </if>
+      <if test="gradename != null" >
+        #{gradename,jdbcType=VARCHAR},
+      </if>
+      <if test="programname != null" >
+        #{programname,jdbcType=VARCHAR},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=DECIMAL},
+      </if>
+      <if test="refund != null" >
+        #{refund,jdbcType=DECIMAL},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="program != null" >
+        #{program,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

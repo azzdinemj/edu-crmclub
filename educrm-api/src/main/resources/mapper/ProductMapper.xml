@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Product">
+    <id column="pk_product" jdbcType="VARCHAR" property="pkProduct" />
+    <result column="pk_domain" jdbcType="VARCHAR" property="pkDomain" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="caption" jdbcType="VARCHAR" property="caption" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+    <result column="comfirm_date" jdbcType="TIMESTAMP" property="comfirmDate" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="lastedit_date" jdbcType="TIMESTAMP" property="lasteditDate" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="isdel" jdbcType="INTEGER" property="isdel" />
+
+    <result column="product_num" jdbcType="INTEGER" property="productNum" />
+    <result column="product_type" jdbcType="VARCHAR" property="productType" />
+    <result column="product_level" jdbcType="VARCHAR" property="productLevel" />
+    <result column="product_classhours" jdbcType="INTEGER" property="productClasshours" />
+    <result column="product_totalclass" jdbcType="INTEGER" property="productTotalclass" />
+    <result column="product_typetalkcloudroom" jdbcType="INTEGER" property="productTypetalkcloudroom" />
+
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="memo" jdbcType="LONGVARCHAR" property="memo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_product, pk_domain, subject, caption, notes, comfirm_date, creator, creation_date,
+    modifier, lastedit_date, `type`, status, isdel,product_num,product_type,product_level,
+    product_classhours,product_totalclass,product_typetalkcloudroom,img,memo
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.Product" >
+    select
+    <include refid="Base_Column_List" />
+    from product
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="caption != null" >
+      and caption LIKE "%"#{caption}"%"
+    </if>
+    <if test="productTypetalkcloudroom != null  " >
+      and product_typetalkcloudroom =#{productTypetalkcloudroom}
+    </if>
+    <if test="status != null  " >
+      and status =#{status}
+    </if>
+    <if test="productType != null  " >
+      and product_type =#{productType}
+    </if>
+
+    <!--<if test="start != null and pageSize != null">-->
+    <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+  </select>
+  <select id="selectBy" resultMap="BaseResultMap" parameterType="com.wuxue.model.Product" >
+    select
+    <include refid="Base_Column_List" />
+    from product
+    where 1=1
+    and status != 0
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="caption != null" >
+      and caption LIKE "%"#{caption}"%"
+    </if>
+    <!--<if test="start != null and pageSize != null">-->
+    <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from product
+    where pk_product = #{pkProduct,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from product
+    where pk_product = #{pkProduct,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Product">
+    insert into product (pk_product, pk_domain, subject,
+    caption, notes, comfirm_date,
+    creator, creation_date, modifier,
+    lastedit_date, `type`, status,
+    isdel)
+    values (#{pkProduct,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR},
+    #{caption,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, #{comfirmDate,jdbcType=TIMESTAMP},
+    #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR},
+    #{lasteditDate,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+    #{isdel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Product">
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkProduct != null">
+        pk_product,
+      </if>
+      <if test="pkDomain != null">
+        pk_domain,
+      </if>
+      <if test="subject != null">
+        subject,
+      </if>
+      <if test="caption != null">
+        caption,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="comfirmDate != null">
+        comfirm_date,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+
+
+      <if test="productNum != null">
+        product_num,
+      </if>
+      <if test="productType != null">
+        product_type,
+      </if>
+      <if test="productLevel != null">
+        product_level,
+      </if>
+      <if test="productClasshours != null">
+        product_classhours,
+      </if>
+      <if test="productTotalclass != null">
+        product_totalclass,
+      </if>
+      <if test="productTypetalkcloudroom != null">
+        product_typetalkcloudroom,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkProduct != null">
+        #{pkProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null">
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null">
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="comfirmDate != null">
+        #{comfirmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=INTEGER},
+      </if>
+
+
+      <if test="productNum != null">
+        #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null">
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="productLevel != null">
+        #{productLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="productClasshours != null">
+        #{productClasshours,jdbcType=INTEGER},
+      </if>
+      <if test="productTotalclass != null">
+        #{productTotalclass,jdbcType=INTEGER},
+      </if>
+      <if test="productTypetalkcloudroom != null">
+        #{productTypetalkcloudroom,jdbcType=INTEGER},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Product">
+    update product
+    <set>
+      <if test="pkDomain != null">
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null">
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="comfirmDate != null">
+        comfirm_date = #{comfirmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+
+
+
+      <if test="productNum != null">
+        product_num = #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null">
+        product_type = #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="productLevel != null">
+        product_level = #{productLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="productClasshours != null">
+        product_classhours = #{productClasshours,jdbcType=INTEGER},
+      </if>
+      <if test="productTotalclass != null">
+        product_totalclass = #{productTotalclass,jdbcType=INTEGER},
+      </if>
+      <if test="productTypetalkcloudroom != null">
+        product_typetalkcloudroom = #{productTypetalkcloudroom,jdbcType=INTEGER},
+      </if>
+      <if test="img != null">
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+
+    </set>
+    where pk_product = #{pkProduct,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Product">
+    update product
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      subject = #{subject,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR},
+      comfirm_date = #{comfirmDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      `type` = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+
+      product_num=#{productNum,jdbcType=INTEGER},
+      product_type=#{productType,jdbcType=VARCHAR},
+      product_level=#{productLevel,jdbcType=VARCHAR},
+      product_classhours=#{productClasshours,jdbcType=INTEGER},
+      product_totalclass=#{productTotalclass,jdbcType=INTEGER},
+      product_typetalkcloudroom=#{productTypetalkcloudroom,jdbcType=INTEGER},
+      img=#{img,jdbcType=VARCHAR},
+      memo=#{memo,jdbcType=LONGVARCHAR}
+    where pk_product = #{pkProduct,jdbcType=VARCHAR}
+  </update>
+</mapper>

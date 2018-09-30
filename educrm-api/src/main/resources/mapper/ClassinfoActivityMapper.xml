@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.ClassinfoActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.ClassinfoActivity" >
+    <id column="pk_classinfo_activity" property="pkClassinfoActivity" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_classinfo" property="pkClassinfo" jdbcType="VARCHAR" />
+    <result column="pk_expense_item" property="pkExpenseItem" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+    <result column="issubmit" property="issubmit" jdbcType="INTEGER" />
+    <result column="submitor" property="submitor" jdbcType="VARCHAR" />
+    <result column="submit_date" property="submitDate" jdbcType="TIMESTAMP" />
+    <result column="isaudit" property="isaudit" jdbcType="INTEGER" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+    <result column="iscomfirm" property="iscomfirm" jdbcType="INTEGER" />
+    <result column="confirmor" property="confirmor" jdbcType="VARCHAR" />
+    <result column="comfirm_date" property="comfirmDate" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_classinfo_activity, pk_domain, pk_classinfo, pk_expense_item, activity_type, activity_name, 
+    start_date, end_date, cost, notes, issubmit, submitor, submit_date, isaudit, auditor, 
+    audit_date, iscomfirm, confirmor, comfirm_date, creator, creation_date, modifier, 
+    lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassinfoActivity" >
+    select
+    <include refid="Base_Column_List" />
+    from classinfo_activity
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.ClassinfoActivity" >
+    select
+    count(*)
+    from classinfo_activity
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from classinfo_activity
+    where pk_classinfo_activity = #{pkClassinfoActivity,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from classinfo_activity
+    where pk_classinfo_activity = #{pkClassinfoActivity,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.ClassinfoActivity" >
+    insert into classinfo_activity (pk_classinfo_activity, pk_domain, pk_classinfo, 
+      pk_expense_item, activity_type, activity_name, 
+      start_date, end_date, cost, 
+      notes, issubmit, submitor, 
+      submit_date, isaudit, auditor, 
+      audit_date, iscomfirm, confirmor, 
+      comfirm_date, creator, creation_date, 
+      modifier, lastedit_date)
+    values (#{pkClassinfoActivity,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkClassinfo,jdbcType=VARCHAR}, 
+      #{pkExpenseItem,jdbcType=VARCHAR}, #{activityType,jdbcType=VARCHAR}, #{activityName,jdbcType=VARCHAR}, 
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{cost,jdbcType=DECIMAL}, 
+      #{notes,jdbcType=VARCHAR}, #{issubmit,jdbcType=INTEGER}, #{submitor,jdbcType=VARCHAR}, 
+      #{submitDate,jdbcType=TIMESTAMP}, #{isaudit,jdbcType=INTEGER}, #{auditor,jdbcType=VARCHAR}, 
+      #{auditDate,jdbcType=TIMESTAMP}, #{iscomfirm,jdbcType=INTEGER}, #{confirmor,jdbcType=VARCHAR}, 
+      #{comfirmDate,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.ClassinfoActivity" >
+    insert into classinfo_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkClassinfoActivity != null" >
+        pk_classinfo_activity,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo,
+      </if>
+      <if test="pkExpenseItem != null" >
+        pk_expense_item,
+      </if>
+      <if test="activityType != null" >
+        activity_type,
+      </if>
+      <if test="activityName != null" >
+        activity_name,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="notes != null" >
+        notes,
+      </if>
+      <if test="issubmit != null" >
+        issubmit,
+      </if>
+      <if test="submitor != null" >
+        submitor,
+      </if>
+      <if test="submitDate != null" >
+        submit_date,
+      </if>
+      <if test="isaudit != null" >
+        isaudit,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditDate != null" >
+        audit_date,
+      </if>
+      <if test="iscomfirm != null" >
+        iscomfirm,
+      </if>
+      <if test="confirmor != null" >
+        confirmor,
+      </if>
+      <if test="comfirmDate != null" >
+        comfirm_date,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkClassinfoActivity != null" >
+        #{pkClassinfoActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null" >
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pkExpenseItem != null" >
+        #{pkExpenseItem,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmit != null" >
+        #{issubmit,jdbcType=INTEGER},
+      </if>
+      <if test="submitor != null" >
+        #{submitor,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isaudit != null" >
+        #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iscomfirm != null" >
+        #{iscomfirm,jdbcType=INTEGER},
+      </if>
+      <if test="confirmor != null" >
+        #{confirmor,jdbcType=VARCHAR},
+      </if>
+      <if test="comfirmDate != null" >
+        #{comfirmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.ClassinfoActivity" >
+    update classinfo_activity
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pkExpenseItem != null" >
+        pk_expense_item = #{pkExpenseItem,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        activity_type = #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null" >
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmit != null" >
+        issubmit = #{issubmit,jdbcType=INTEGER},
+      </if>
+      <if test="submitor != null" >
+        submitor = #{submitor,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isaudit != null" >
+        isaudit = #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iscomfirm != null" >
+        iscomfirm = #{iscomfirm,jdbcType=INTEGER},
+      </if>
+      <if test="confirmor != null" >
+        confirmor = #{confirmor,jdbcType=VARCHAR},
+      </if>
+      <if test="comfirmDate != null" >
+        comfirm_date = #{comfirmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_classinfo_activity = #{pkClassinfoActivity,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.ClassinfoActivity" >
+    update classinfo_activity
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      pk_expense_item = #{pkExpenseItem,jdbcType=VARCHAR},
+      activity_type = #{activityType,jdbcType=VARCHAR},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      cost = #{cost,jdbcType=DECIMAL},
+      notes = #{notes,jdbcType=VARCHAR},
+      issubmit = #{issubmit,jdbcType=INTEGER},
+      submitor = #{submitor,jdbcType=VARCHAR},
+      submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      isaudit = #{isaudit,jdbcType=INTEGER},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      iscomfirm = #{iscomfirm,jdbcType=INTEGER},
+      confirmor = #{confirmor,jdbcType=VARCHAR},
+      comfirm_date = #{comfirmDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_classinfo_activity = #{pkClassinfoActivity,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SchoolBusStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SchoolBusStudent" >
+    <id column="pk_schoo_bus_student" property="pkSchooBusStudent" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="pk_school_bus" property="pkSchoolBus" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="ride_date" property="rideDate" jdbcType="TIMESTAMP" />
+    <result column="expire_date" property="expireDate" jdbcType="TIMESTAMP" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="studentMap" type="com.wuxue.model.Student">
+    <id column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="nation" property="nation" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="student_list">
+    pk_student,caption,code,nation,sex,grade
+  </sql>
+  <sql id="Base_Column_List" >
+    pk_schoo_bus_student, pk_domain, code, pk_school_bus, pk_student, isvalid, date, 
+    ride_date, expire_date, memo, creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="selectStudent" resultMap="studentMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="student_list" />
+    from student
+    WHERE  pk_student in (SELECT pk_student form school_bus_student where pk_schoo_bus_student= #{pkSchooBusStudent,jdbcType=VARCHAR})
+
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from school_bus_student
+    where pk_schoo_bus_student = #{pkSchooBusStudent,jdbcType=VARCHAR}
+
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.SchoolBusStudent">
+    select
+    <include refid="Base_Column_List" />
+    from school_bus_student
+    where pk_school_bus=#{pkSchoolBus,jdbcType=VARCHAR}
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain,jdbcType=VARCHAR}
+    </if>
+    <if test="isvalid != null" >
+      and isvalid = #{isvalid,jdbcType=INTEGER}
+    </if>
+  </select>
+  <select id="selectBySSPrimaryKey" resultMap="BaseResultMap" parameterType="com.wuxue.model.SchoolBusStudent" >
+    select
+    <include refid="Base_Column_List" />
+    from school_bus_student
+    where pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR}
+    <if test="isvalid != null" >
+      and isvalid = #{isvalid,jdbcType=INTEGER}
+    </if>
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain,jdbcType=VARCHAR}
+    </if>
+    order by lastedit_date DESC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from school_bus_student
+    where pk_schoo_bus_student = #{pkSchooBusStudent,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SchoolBusStudent" >
+    insert into school_bus_student (pk_schoo_bus_student, pk_domain, code, 
+      pk_school_bus, pk_student, isvalid, 
+      date, ride_date, expire_date, 
+      memo, creator, creation_date, 
+      modifier, lastedit_date)
+    values (#{pkSchooBusStudent,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{pkSchoolBus,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{isvalid,jdbcType=INTEGER}, 
+      #{date,jdbcType=TIMESTAMP}, #{rideDate,jdbcType=TIMESTAMP}, #{expireDate,jdbcType=TIMESTAMP}, 
+      #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SchoolBusStudent" >
+    insert into school_bus_student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSchooBusStudent != null" >
+        pk_schoo_bus_student,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="pkSchoolBus != null" >
+        pk_school_bus,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="rideDate != null" >
+        ride_date,
+      </if>
+      <if test="expireDate != null" >
+        expire_date,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSchooBusStudent != null" >
+        #{pkSchooBusStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBus != null" >
+        #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rideDate != null" >
+        #{rideDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDate != null" >
+        #{expireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SchoolBusStudent" >
+    update school_bus_student
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBus != null" >
+        pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rideDate != null" >
+        ride_date = #{rideDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDate != null" >
+        expire_date = #{expireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_schoo_bus_student = #{pkSchooBusStudent,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SchoolBusStudent" >
+    update school_bus_student
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      date = #{date,jdbcType=TIMESTAMP},
+      ride_date = #{rideDate,jdbcType=TIMESTAMP},
+      expire_date = #{expireDate,jdbcType=TIMESTAMP},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_schoo_bus_student = #{pkSchooBusStudent,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

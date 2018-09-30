@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.ReviewMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Review" >
+    <id column="pk_review" property="pkReview" jdbcType="VARCHAR" />
+    <result column="pk_data" property="pkData" jdbcType="VARCHAR" />
+    <result column="pk_data_caption" property="pkDataCaption" jdbcType="VARCHAR" />
+    <result column="cotent" property="cotent" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_review, pk_data,pk_data_caption, cotent, type, status, isdel, creator, creation_date, modifier,
+    lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.Review" >
+    select
+    <include refid="Base_Column_List" />
+    from review
+    where 1=1
+    <if test="pkData != null" >
+     and pk_data=#{pkData,jdbcType=VARCHAR}
+    </if>
+    <if test="pkDataCaption != null and pkDataCaption!=''" >
+      and pk_data_caption like "%"#{pkDataCaption,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="type != null" >
+      and `type`=#{type,jdbcType=INTEGER}
+    </if>
+    <if test="isdel != null" >
+      and isdel=#{isdel,jdbcType=INTEGER}
+    </if>
+    <if test="status != null and status == 101" >
+      and status != 0
+    </if>
+    <if test="status != null and status == 102" >
+      and status != 1
+    </if>
+    ORDER  BY  creation_date DESC
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.Review" >
+    select
+    count(*)
+    from review
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from review
+    where pk_review = #{pkReview,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from review
+    where pk_review = #{pkReview,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Review" >
+    insert into review (pk_review, pk_data, pk_data_caption,cotent,
+      type, status, isdel, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkReview,jdbcType=VARCHAR}, #{pkData,jdbcType=VARCHAR},#{pkDataCaption,jdbcType=VARCHAR}, #{cotent,jdbcType=VARCHAR},
+      #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{isdel,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Review" >
+    insert into review
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkReview != null" >
+        pk_review,
+      </if>
+      <if test="pkData != null" >
+        pk_data,
+      </if>
+      <if test="pkDataCaption != null" >
+        pk_data_caption,
+      </if>
+      <if test="cotent != null" >
+        cotent,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkReview != null" >
+        #{pkReview,jdbcType=VARCHAR},
+      </if>
+      <if test="pkData != null" >
+        #{pkData,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDataCaption != null" >
+        #{pkDataCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="cotent != null" >
+        #{cotent,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Review" >
+    update review
+    <set >
+      <if test="pkData != null" >
+        pk_data = #{pkData,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDataCaption != null" >
+        pk_data_caption = #{pkDataCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="cotent != null" >
+        cotent = #{cotent,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_review = #{pkReview,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Review" >
+    update review
+    set pk_data = #{pkData,jdbcType=VARCHAR},
+     pk_data_caption = #{pkDataCaption,jdbcType=VARCHAR},
+      cotent = #{cotent,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_review = #{pkReview,jdbcType=VARCHAR}
+  </update>
+</mapper>

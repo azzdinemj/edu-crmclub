@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.StudentNutritionAnalysisMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.junhwa.StudentNutritionAnalysis">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <id column="pk_student" jdbcType="VARCHAR" property="pkStudent" />
+    <id column="nutrition_id" jdbcType="VARCHAR" property="nutritionId" />
+    <id column="period_type" jdbcType="TINYINT" property="periodType" />
+    <id column="calc_year" jdbcType="VARCHAR" property="calcYear" />
+    <id column="calc_month" jdbcType="TINYINT" property="calcMonth" />
+    <id column="calc_season" jdbcType="TINYINT" property="calcSeason" />
+    <id column="calc_week" jdbcType="TINYINT" property="calcWeek" />
+    <result column="realmount" jdbcType="DECIMAL" property="realmount" />
+    <result column="standmount_low" jdbcType="DECIMAL" property="standmountLow" />
+    <result column="standmount_high" jdbcType="DECIMAL" property="standmountHigh" />
+    <result column="diffmount" jdbcType="DECIMAL" property="diffmount" />
+    <result column="diff_per" jdbcType="DECIMAL" property="diffPer" />
+    <result column="suggest_set" jdbcType="VARCHAR" property="suggestSet" />
+    <result column="createdtime" jdbcType="TIMESTAMP" property="createdtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    pk_student, nutrition_id, period_type, calc_year, calc_month, calc_season, calc_week, 
+    realmount, standmount_low, standmount_high, diffmount, diff_per, suggest_set, createdtime
+  </sql>
+  <select id="selectByExample" parameterType="com.wuxue.model.junhwa.StudentNutritionAnalysisExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student_nutrition_analysis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startIndex != null and startIndex >= 0">
+      limit #{startIndex} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.wuxue.model.junhwa.StudentNutritionAnalysisKey" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from student_nutrition_analysis
+    where pk_student = #{pkStudent,jdbcType=VARCHAR}
+      and nutrition_id = #{nutritionId,jdbcType=VARCHAR}
+      and period_type = #{periodType,jdbcType=TINYINT}
+      and calc_year = #{calcYear,jdbcType=VARCHAR}
+      and calc_month = #{calcMonth,jdbcType=TINYINT}
+      and calc_season = #{calcSeason,jdbcType=TINYINT}
+      and calc_week = #{calcWeek,jdbcType=TINYINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wuxue.model.junhwa.StudentNutritionAnalysisKey">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    delete from student_nutrition_analysis
+    where pk_student = #{pkStudent,jdbcType=VARCHAR}
+      and nutrition_id = #{nutritionId,jdbcType=VARCHAR}
+      and period_type = #{periodType,jdbcType=TINYINT}
+      and calc_year = #{calcYear,jdbcType=VARCHAR}
+      and calc_month = #{calcMonth,jdbcType=TINYINT}
+      and calc_season = #{calcSeason,jdbcType=TINYINT}
+      and calc_week = #{calcWeek,jdbcType=TINYINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wuxue.model.junhwa.StudentNutritionAnalysisExample">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    delete from student_nutrition_analysis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.junhwa.StudentNutritionAnalysis">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    insert into student_nutrition_analysis (pk_student, nutrition_id, period_type, 
+      calc_year, calc_month, calc_season, 
+      calc_week, realmount, standmount_low, 
+      standmount_high, diffmount, diff_per, 
+      suggest_set, createdtime)
+    values (#{pkStudent,jdbcType=VARCHAR}, #{nutritionId,jdbcType=VARCHAR}, #{periodType,jdbcType=TINYINT}, 
+      #{calcYear,jdbcType=VARCHAR}, #{calcMonth,jdbcType=TINYINT}, #{calcSeason,jdbcType=TINYINT}, 
+      #{calcWeek,jdbcType=TINYINT}, #{realmount,jdbcType=DECIMAL}, #{standmountLow,jdbcType=DECIMAL}, 
+      #{standmountHigh,jdbcType=DECIMAL}, #{diffmount,jdbcType=DECIMAL}, #{diffPer,jdbcType=DECIMAL}, 
+      #{suggestSet,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.junhwa.StudentNutritionAnalysis">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    insert into student_nutrition_analysis
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkStudent != null">
+        pk_student,
+      </if>
+      <if test="nutritionId != null">
+        nutrition_id,
+      </if>
+      <if test="periodType != null">
+        period_type,
+      </if>
+      <if test="calcYear != null">
+        calc_year,
+      </if>
+      <if test="calcMonth != null">
+        calc_month,
+      </if>
+      <if test="calcSeason != null">
+        calc_season,
+      </if>
+      <if test="calcWeek != null">
+        calc_week,
+      </if>
+      <if test="realmount != null">
+        realmount,
+      </if>
+      <if test="standmountLow != null">
+        standmount_low,
+      </if>
+      <if test="standmountHigh != null">
+        standmount_high,
+      </if>
+      <if test="diffmount != null">
+        diffmount,
+      </if>
+      <if test="diffPer != null">
+        diff_per,
+      </if>
+      <if test="suggestSet != null">
+        suggest_set,
+      </if>
+      <if test="createdtime != null">
+        createdtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkStudent != null">
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="nutritionId != null">
+        #{nutritionId,jdbcType=VARCHAR},
+      </if>
+      <if test="periodType != null">
+        #{periodType,jdbcType=TINYINT},
+      </if>
+      <if test="calcYear != null">
+        #{calcYear,jdbcType=VARCHAR},
+      </if>
+      <if test="calcMonth != null">
+        #{calcMonth,jdbcType=TINYINT},
+      </if>
+      <if test="calcSeason != null">
+        #{calcSeason,jdbcType=TINYINT},
+      </if>
+      <if test="calcWeek != null">
+        #{calcWeek,jdbcType=TINYINT},
+      </if>
+      <if test="realmount != null">
+        #{realmount,jdbcType=DECIMAL},
+      </if>
+      <if test="standmountLow != null">
+        #{standmountLow,jdbcType=DECIMAL},
+      </if>
+      <if test="standmountHigh != null">
+        #{standmountHigh,jdbcType=DECIMAL},
+      </if>
+      <if test="diffmount != null">
+        #{diffmount,jdbcType=DECIMAL},
+      </if>
+      <if test="diffPer != null">
+        #{diffPer,jdbcType=DECIMAL},
+      </if>
+      <if test="suggestSet != null">
+        #{suggestSet,jdbcType=VARCHAR},
+      </if>
+      <if test="createdtime != null">
+        #{createdtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wuxue.model.junhwa.StudentNutritionAnalysisExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select count(*) from student_nutrition_analysis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update student_nutrition_analysis
+    <set>
+      <if test="record.pkStudent != null">
+        pk_student = #{record.pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nutritionId != null">
+        nutrition_id = #{record.nutritionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.periodType != null">
+        period_type = #{record.periodType,jdbcType=TINYINT},
+      </if>
+      <if test="record.calcYear != null">
+        calc_year = #{record.calcYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.calcMonth != null">
+        calc_month = #{record.calcMonth,jdbcType=TINYINT},
+      </if>
+      <if test="record.calcSeason != null">
+        calc_season = #{record.calcSeason,jdbcType=TINYINT},
+      </if>
+      <if test="record.calcWeek != null">
+        calc_week = #{record.calcWeek,jdbcType=TINYINT},
+      </if>
+      <if test="record.realmount != null">
+        realmount = #{record.realmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.standmountLow != null">
+        standmount_low = #{record.standmountLow,jdbcType=DECIMAL},
+      </if>
+      <if test="record.standmountHigh != null">
+        standmount_high = #{record.standmountHigh,jdbcType=DECIMAL},
+      </if>
+      <if test="record.diffmount != null">
+        diffmount = #{record.diffmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.diffPer != null">
+        diff_per = #{record.diffPer,jdbcType=DECIMAL},
+      </if>
+      <if test="record.suggestSet != null">
+        suggest_set = #{record.suggestSet,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdtime != null">
+        createdtime = #{record.createdtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update student_nutrition_analysis
+    set pk_student = #{record.pkStudent,jdbcType=VARCHAR},
+      nutrition_id = #{record.nutritionId,jdbcType=VARCHAR},
+      period_type = #{record.periodType,jdbcType=TINYINT},
+      calc_year = #{record.calcYear,jdbcType=VARCHAR},
+      calc_month = #{record.calcMonth,jdbcType=TINYINT},
+      calc_season = #{record.calcSeason,jdbcType=TINYINT},
+      calc_week = #{record.calcWeek,jdbcType=TINYINT},
+      realmount = #{record.realmount,jdbcType=DECIMAL},
+      standmount_low = #{record.standmountLow,jdbcType=DECIMAL},
+      standmount_high = #{record.standmountHigh,jdbcType=DECIMAL},
+      diffmount = #{record.diffmount,jdbcType=DECIMAL},
+      diff_per = #{record.diffPer,jdbcType=DECIMAL},
+      suggest_set = #{record.suggestSet,jdbcType=VARCHAR},
+      createdtime = #{record.createdtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.junhwa.StudentNutritionAnalysis">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update student_nutrition_analysis
+    <set>
+      <if test="realmount != null">
+        realmount = #{realmount,jdbcType=DECIMAL},
+      </if>
+      <if test="standmountLow != null">
+        standmount_low = #{standmountLow,jdbcType=DECIMAL},
+      </if>
+      <if test="standmountHigh != null">
+        standmount_high = #{standmountHigh,jdbcType=DECIMAL},
+      </if>
+      <if test="diffmount != null">
+        diffmount = #{diffmount,jdbcType=DECIMAL},
+      </if>
+      <if test="diffPer != null">
+        diff_per = #{diffPer,jdbcType=DECIMAL},
+      </if>
+      <if test="suggestSet != null">
+        suggest_set = #{suggestSet,jdbcType=VARCHAR},
+      </if>
+      <if test="createdtime != null">
+        createdtime = #{createdtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_student = #{pkStudent,jdbcType=VARCHAR}
+      and nutrition_id = #{nutritionId,jdbcType=VARCHAR}
+      and period_type = #{periodType,jdbcType=TINYINT}
+      and calc_year = #{calcYear,jdbcType=VARCHAR}
+      and calc_month = #{calcMonth,jdbcType=TINYINT}
+      and calc_season = #{calcSeason,jdbcType=TINYINT}
+      and calc_week = #{calcWeek,jdbcType=TINYINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.junhwa.StudentNutritionAnalysis">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update student_nutrition_analysis
+    set realmount = #{realmount,jdbcType=DECIMAL},
+      standmount_low = #{standmountLow,jdbcType=DECIMAL},
+      standmount_high = #{standmountHigh,jdbcType=DECIMAL},
+      diffmount = #{diffmount,jdbcType=DECIMAL},
+      diff_per = #{diffPer,jdbcType=DECIMAL},
+      suggest_set = #{suggestSet,jdbcType=VARCHAR},
+      createdtime = #{createdtime,jdbcType=TIMESTAMP}
+    where pk_student = #{pkStudent,jdbcType=VARCHAR}
+      and nutrition_id = #{nutritionId,jdbcType=VARCHAR}
+      and period_type = #{periodType,jdbcType=TINYINT}
+      and calc_year = #{calcYear,jdbcType=VARCHAR}
+      and calc_month = #{calcMonth,jdbcType=TINYINT}
+      and calc_season = #{calcSeason,jdbcType=TINYINT}
+      and calc_week = #{calcWeek,jdbcType=TINYINT}
+  </update>
+</mapper>

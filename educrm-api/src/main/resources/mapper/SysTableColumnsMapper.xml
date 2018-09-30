@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SysTableColumnsMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SysTableColumns" >
+    <id column="pk_sys_table_columns" property="pkSysTableColumns" jdbcType="VARCHAR" />
+    <result column="pk_sys_table_column" property="pkSysTableColumn" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="data" property="data" jdbcType="VARCHAR" />
+    <result column="visible" property="visible" jdbcType="INTEGER" />
+    <result column="display" property="display" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="render" property="render" jdbcType="VARCHAR" />
+    <result column="text_align" property="textAlign" jdbcType="VARCHAR" />
+    <result column="caption_eng" property="captionEng" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_sys_table_columns, pk_sys_table_column, caption, data, visible, display, sort, 
+    width, render, text_align, caption_eng
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_table_columns
+    where pk_sys_table_columns = #{pkSysTableColumns,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParentKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_table_columns
+    where pk_sys_table_column = #{pkSysTableColumn,jdbcType=VARCHAR}
+    order by sort
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_table_columns
+    where pk_sys_table_columns = #{pkSysTableColumns,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SysTableColumns" >
+    insert into sys_table_columns (pk_sys_table_columns, pk_sys_table_column, 
+      caption, data, visible, 
+      display, sort, width, 
+      render, text_align, caption_eng
+      )
+    values (#{pkSysTableColumns,jdbcType=VARCHAR}, #{pkSysTableColumn,jdbcType=VARCHAR}, 
+      #{caption,jdbcType=VARCHAR}, #{data,jdbcType=VARCHAR}, #{visible,jdbcType=INTEGER}, 
+      #{display,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{width,jdbcType=INTEGER}, 
+      #{render,jdbcType=VARCHAR}, #{textAlign,jdbcType=VARCHAR}, #{captionEng,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SysTableColumns" >
+    insert into sys_table_columns
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSysTableColumns != null" >
+        pk_sys_table_columns,
+      </if>
+      <if test="pkSysTableColumn != null" >
+        pk_sys_table_column,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="data != null" >
+        data,
+      </if>
+      <if test="visible != null" >
+        visible,
+      </if>
+      <if test="display != null" >
+        display,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="render != null" >
+        render,
+      </if>
+      <if test="textAlign != null" >
+        text_align,
+      </if>
+      <if test="captionEng != null" >
+        caption_eng,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSysTableColumns != null" >
+        #{pkSysTableColumns,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysTableColumn != null" >
+        #{pkSysTableColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null" >
+        #{data,jdbcType=VARCHAR},
+      </if>
+      <if test="visible != null" >
+        #{visible,jdbcType=INTEGER},
+      </if>
+      <if test="display != null" >
+        #{display,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="render != null" >
+        #{render,jdbcType=VARCHAR},
+      </if>
+      <if test="textAlign != null" >
+        #{textAlign,jdbcType=VARCHAR},
+      </if>
+      <if test="captionEng != null" >
+        #{captionEng,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SysTableColumns" >
+    update sys_table_columns
+    <set >
+      <if test="pkSysTableColumn != null" >
+        pk_sys_table_column = #{pkSysTableColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null" >
+        data = #{data,jdbcType=VARCHAR},
+      </if>
+      <if test="visible != null" >
+        visible = #{visible,jdbcType=INTEGER},
+      </if>
+      <if test="display != null" >
+        display = #{display,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="render != null" >
+        render = #{render,jdbcType=VARCHAR},
+      </if>
+      <if test="textAlign != null" >
+        text_align = #{textAlign,jdbcType=VARCHAR},
+      </if>
+      <if test="captionEng != null" >
+        caption_eng = #{captionEng,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_sys_table_columns = #{pkSysTableColumns,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SysTableColumns" >
+    update sys_table_columns
+    set pk_sys_table_column = #{pkSysTableColumn,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      data = #{data,jdbcType=VARCHAR},
+      visible = #{visible,jdbcType=INTEGER},
+      display = #{display,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      width = #{width,jdbcType=INTEGER},
+      render = #{render,jdbcType=VARCHAR},
+      text_align = #{textAlign,jdbcType=VARCHAR},
+      caption_eng = #{captionEng,jdbcType=VARCHAR}
+    where pk_sys_table_columns = #{pkSysTableColumns,jdbcType=VARCHAR}
+  </update>
+</mapper>

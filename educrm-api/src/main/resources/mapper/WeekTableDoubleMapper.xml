@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.WeekTableDoubleMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.WeekTableDouble" >
+    <result column="coursename" property="coursename" jdbcType="VARCHAR" />
+    <result column="employeename" property="employeename" jdbcType="VARCHAR" />
+    <result column="roomname" property="roomname" jdbcType="VARCHAR" />
+    <result column="classinfoname" property="classinfoname" jdbcType="VARCHAR" />
+    <result column="classinfoid" property="classinfoid" jdbcType="VARCHAR" />
+    <result column="employeeid" property="employeeid" jdbcType="VARCHAR" />
+    <result column="weekdaynum" property="weekdaynum" jdbcType="INTEGER" />
+    <result column="classtimetype" property="classtimetype" jdbcType="INTEGER" />
+    <result column="timename" property="timename" jdbcType="VARCHAR" />
+    <result column="weektype" property="weektype" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    coursename,employeename,roomname,classinfoid,weekdaynum,classtimetype,timename,weektype,employeeid,classinfoname
+
+  </sql>
+
+  <select id="selectarrearsStudent" resultMap="BaseResultMap" parameterType="com.wuxue.model.WeekTableDouble">
+    select
+    <include refid="Base_Column_List" />
+    from week_table_double
+    where 1=1
+    <if test="classtimetype != null" >
+      and classtimetype = #{classtimetype}
+    </if>
+    <if test="classinfoid != null" >
+      and classinfoid = #{classinfoid}
+    </if>
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.WeekTableDouble">
+    select
+      classinfoid,weekdaynum,classtimetype,group_concat(coursename,"/",employeename,"/",roomname,"/",weektype) as caption
+      from week_table_double
+      where
+      classinfoid=#{classinfoid,jdbcType=VARCHAR}
+      and classtimetype=#{classtimetype,jdbcType=INTEGER}
+      group by classinfoid,weekdaynum,classtimetype;
+  </select>
+  <select id="selectByEmployee" resultMap="BaseResultMap" parameterType="com.wuxue.model.WeekTableDouble">
+    select
+      classinfoid,weekdaynum,classtimetype,group_concat(coursename,"/",classinfoname,"/",roomname,"/",weektype) as caption
+      from week_table_double
+      where
+      employeeid=#{employeeid,jdbcType=VARCHAR}
+      and classtimetype=#{classtimetype,jdbcType=INTEGER}
+      group by classinfoid,weekdaynum,classtimetype;
+  </select>
+
+  <insert id="insert" parameterType="com.wuxue.model.WeekTableDouble" >
+    insert into week_table_double (coursename, employeename, roomname, 
+      classinfoid, weekdaynum, classtimetype, 
+      timename, weektype,employeeid,classinfoname)
+    values (#{coursename,jdbcType=VARCHAR}, #{employeename,jdbcType=VARCHAR}, #{roomname,jdbcType=VARCHAR}, 
+      #{classinfoid,jdbcType=VARCHAR}, #{weekdaynum,jdbcType=INTEGER}, #{classtimetype,jdbcType=INTEGER},
+      #{timename,jdbcType=VARCHAR}, #{weektype,jdbcType=INTEGER},#{employeeid,jdbcType=VARCHAR},#{classinfoname,jdbcType=VARCHAR})
+  </insert>
+  <delete id="deleteByPkClassinfo" parameterType="java.lang.String" >
+    delete from week_table_double
+    where classinfoid = #{classinfoid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertBySchedule" parameterType="java.lang.String" >
+    insert into week_table_double(coursename,employeename,roomname,classinfoid,weekdaynum,classtimetype,timename,weektype,employeeid,classinfoname)
+    (select c.caption,b.caption,d.caption,a.pk_student,DATE_FORMAT(a.start_time, '%w'),f.sort,f.caption,a.week_type,a.pk_employee,e.caption
+    from
+    schedule a
+    LEFT JOIN
+    employee b on a.pk_employee=b.pk_employee
+    LEFT JOIN
+    sys_dict_values c on a.pk_product=c.pk_sys_dict_values
+    left JOIN
+    class_room d on a.pk_class_room=d.pk_class_room
+    left join
+    classinfo e on a.pk_student=e.pk_classinfo
+    left join
+    class_time f on e.division=f.type and hour(a.start_time)=hour(f.start_time) and minute(a.start_time)=minute(f.start_time)
+    where a.pk_student=#{classinfoid,jdbcType=VARCHAR});
+  </insert>
+
+
+  <insert id="insertSelective" parameterType="com.wuxue.model.WeekTableDouble" >
+    insert into week_table_double
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coursename != null" >
+        coursename,
+      </if>
+      <if test="employeename != null" >
+        employeename,
+      </if>
+      <if test="roomname != null" >
+        roomname,
+      </if>
+      <if test="classinfoid != null" >
+        classinfoid,
+      </if>
+      <if test="weekdaynum != null" >
+        weekdaynum,
+      </if>
+      <if test="classtimetype != null" >
+        classtimetype,
+      </if>
+      <if test="timename != null" >
+        timename,
+      </if>
+      <if test="weektype != null" >
+        weektype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coursename != null" >
+        #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="employeename != null" >
+        #{employeename,jdbcType=VARCHAR},
+      </if>
+      <if test="roomname != null" >
+        #{roomname,jdbcType=VARCHAR},
+      </if>
+      <if test="classinfoid != null" >
+        #{classinfoid,jdbcType=VARCHAR},
+      </if>
+      <if test="weekdaynum != null" >
+        #{weekdaynum,jdbcType=INTEGER},
+      </if>
+      <if test="classtimetype != null" >
+        #{classtimetype,jdbcType=INTEGER},
+      </if>
+      <if test="timename != null" >
+        #{timename,jdbcType=VARCHAR},
+      </if>
+      <if test="weektype != null" >
+        #{weektype,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SysUserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SysUserRoleKey" >
+    <id column="pk_sys_user" property="pkSysUser" jdbcType="VARCHAR" />
+    <id column="pk_sys_role" property="pkSysRole" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.SysUserRoleKey" >
+    select
+    *
+    from sys_user_role
+    where 1=1
+    <if test="pkSysUser != null" >
+      and pk_sys_user = #{pkSysUser}
+    </if>
+    <if test="pkSysRole != null" >
+      and pk_sys_role = #{pkSysRole}
+    </if>
+    <if test="start != null and pageSize != null">
+      LIMIT #{start}, #{pageSize}
+    </if>
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.SysUserRoleKey" >
+    select
+    count(*)
+    from sys_user_role
+    where 1=1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wuxue.model.SysUserRoleKey" >
+    delete from sys_user_role
+    where pk_sys_user = #{pkSysUser,jdbcType=VARCHAR}
+      and pk_sys_role = #{pkSysRole,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SysUserRoleKey" >
+    insert into sys_user_role (pk_sys_user, pk_sys_role)
+    values (#{pkSysUser,jdbcType=VARCHAR}, #{pkSysRole,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SysUserRoleKey" >
+    insert into sys_user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSysUser != null" >
+        pk_sys_user,
+      </if>
+      <if test="pkSysRole != null" >
+        pk_sys_role,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSysUser != null" >
+        #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysRole != null" >
+        #{pkSysRole,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

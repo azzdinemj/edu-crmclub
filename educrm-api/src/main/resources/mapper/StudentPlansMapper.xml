@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.StudentPlansMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.StudentPlans" >
+    <id column="pk_student_plans" property="pkStudentPlans" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="target_countries" property="targetCountries" jdbcType="VARCHAR" />
+    <result column="college_choosing" property="collegeChoosing" jdbcType="VARCHAR" />
+    <result column="subjects_like" property="subjectsLike" jdbcType="VARCHAR" />
+    <result column="subjects_good" property="subjectsGood" jdbcType="VARCHAR" />
+    <result column="majors_want" property="majorsWant" jdbcType="VARCHAR" />
+    <result column="work_want" property="workWant" jdbcType="VARCHAR" />
+    <result column="ofter_college_graduation" property="ofterCollegeGraduation" jdbcType="VARCHAR" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_student_plans, pk_domain, pk_student, target_countries, college_choosing, subjects_like, 
+    subjects_good, majors_want, work_want, ofter_college_graduation, notes, creator, 
+    creation_date, modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.StudentPlans" >
+    select
+    <include refid="Base_Column_List" />
+    from student_plans
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkStudent != null" >
+      and pk_student = #{pkStudent}
+    </if>
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.StudentPlans" >
+    select
+    count(*)
+    from student_plans
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_plans
+    where pk_student_plans = #{pkStudentPlans,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student_plans
+    where pk_student = #{pkStudentPlans,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.StudentPlans" >
+    insert into student_plans (pk_student_plans, pk_domain, pk_student, 
+      target_countries, college_choosing, subjects_like, 
+      subjects_good, majors_want, work_want, 
+      ofter_college_graduation, notes, creator, 
+      creation_date, modifier, lastedit_date
+      )
+    values (#{pkStudentPlans,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, 
+      #{targetCountries,jdbcType=VARCHAR}, #{collegeChoosing,jdbcType=VARCHAR}, #{subjectsLike,jdbcType=VARCHAR}, 
+      #{subjectsGood,jdbcType=VARCHAR}, #{majorsWant,jdbcType=VARCHAR}, #{workWant,jdbcType=VARCHAR}, 
+      #{ofterCollegeGraduation,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.StudentPlans" >
+    insert into student_plans
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkStudentPlans != null" >
+        pk_student_plans,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="targetCountries != null" >
+        target_countries,
+      </if>
+      <if test="collegeChoosing != null" >
+        college_choosing,
+      </if>
+      <if test="subjectsLike != null" >
+        subjects_like,
+      </if>
+      <if test="subjectsGood != null" >
+        subjects_good,
+      </if>
+      <if test="majorsWant != null" >
+        majors_want,
+      </if>
+      <if test="workWant != null" >
+        work_want,
+      </if>
+      <if test="ofterCollegeGraduation != null" >
+        ofter_college_graduation,
+      </if>
+      <if test="notes != null" >
+        notes,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkStudentPlans != null" >
+        #{pkStudentPlans,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="targetCountries != null" >
+        #{targetCountries,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeChoosing != null" >
+        #{collegeChoosing,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectsLike != null" >
+        #{subjectsLike,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectsGood != null" >
+        #{subjectsGood,jdbcType=VARCHAR},
+      </if>
+      <if test="majorsWant != null" >
+        #{majorsWant,jdbcType=VARCHAR},
+      </if>
+      <if test="workWant != null" >
+        #{workWant,jdbcType=VARCHAR},
+      </if>
+      <if test="ofterCollegeGraduation != null" >
+        #{ofterCollegeGraduation,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.StudentPlans" >
+    update student_plans
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="targetCountries != null" >
+        target_countries = #{targetCountries,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeChoosing != null" >
+        college_choosing = #{collegeChoosing,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectsLike != null" >
+        subjects_like = #{subjectsLike,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectsGood != null" >
+        subjects_good = #{subjectsGood,jdbcType=VARCHAR},
+      </if>
+      <if test="majorsWant != null" >
+        majors_want = #{majorsWant,jdbcType=VARCHAR},
+      </if>
+      <if test="workWant != null" >
+        work_want = #{workWant,jdbcType=VARCHAR},
+      </if>
+      <if test="ofterCollegeGraduation != null" >
+        ofter_college_graduation = #{ofterCollegeGraduation,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_student_plans = #{pkStudentPlans,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.StudentPlans" >
+    update student_plans
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      target_countries = #{targetCountries,jdbcType=VARCHAR},
+      college_choosing = #{collegeChoosing,jdbcType=VARCHAR},
+      subjects_like = #{subjectsLike,jdbcType=VARCHAR},
+      subjects_good = #{subjectsGood,jdbcType=VARCHAR},
+      majors_want = #{majorsWant,jdbcType=VARCHAR},
+      work_want = #{workWant,jdbcType=VARCHAR},
+      ofter_college_graduation = #{ofterCollegeGraduation,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_student_plans = #{pkStudentPlans,jdbcType=VARCHAR}
+  </update>
+</mapper>

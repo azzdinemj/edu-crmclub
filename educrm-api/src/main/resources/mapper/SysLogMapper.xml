@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SysLogMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SysLog" >
+    <id column="pk_sys_log" property="pkSysLog" jdbcType="VARCHAR" />
+    <result column="request" property="request" jdbcType="VARCHAR" />
+    <result column="response" property="response" jdbcType="VARCHAR" />
+    <result column="old_field" property="oldField" jdbcType="VARCHAR" />
+    <result column="old_field_value" property="oldFieldValue" jdbcType="VARCHAR" />
+    <result column="new_field" property="newField" jdbcType="VARCHAR" />
+    <result column="new_field_value" property="newFieldValue" jdbcType="VARCHAR" />
+    <result column="kind" property="kind" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+    <result column="pk_id" property="pkId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_sys_log, request, response, old_field, old_field_value, new_field, new_field_value, 
+    kind, operator, datetime, table_name,pk_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_log
+    where pk_sys_log = #{pkSysLog,jdbcType=VARCHAR}
+  </select>
+   <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.SysLog" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_log
+    where 1=1
+    
+   
+    <if test="pkId != null" >
+      and pk_id = #{pkId}
+    </if>
+    <if test="tableName != null" >
+      and table_name = #{tableName}
+    </if>
+    
+    ORDER  BY datetime DESC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_log
+    where pk_sys_log = #{pkSysLog,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SysLog" >
+    insert into sys_log (pk_sys_log, request, response, 
+      old_field, old_field_value, new_field, 
+      new_field_value, kind, operator, 
+      datetime, table_name,pk_id)
+    values (#{pkSysLog,jdbcType=VARCHAR}, #{request,jdbcType=VARCHAR}, #{response,jdbcType=VARCHAR}, 
+      #{oldField,jdbcType=VARCHAR}, #{oldFieldValue,jdbcType=VARCHAR}, #{newField,jdbcType=VARCHAR}, 
+      #{newFieldValue,jdbcType=VARCHAR}, #{kind,jdbcType=INTEGER}, #{operator,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP}, #{tableName,jdbcType=VARCHAR}, #{pkId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SysLog" >
+    insert into sys_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSysLog != null" >
+        pk_sys_log,
+      </if>
+      <if test="request != null" >
+        request,
+      </if>
+      <if test="response != null" >
+        response,
+      </if>
+      <if test="oldField != null" >
+        old_field,
+      </if>
+      <if test="oldFieldValue != null" >
+        old_field_value,
+      </if>
+      <if test="newField != null" >
+        new_field,
+      </if>
+      <if test="newFieldValue != null" >
+        new_field_value,
+      </if>
+      <if test="kind != null" >
+        kind,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="datetime != null" >
+        datetime,
+      </if>
+      <if test="tableName != null" >
+        table_name,
+      </if>
+       <if test="pkId != null" >
+        pk_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSysLog != null" >
+        #{pkSysLog,jdbcType=VARCHAR},
+      </if>
+      <if test="request != null" >
+        #{request,jdbcType=VARCHAR},
+      </if>
+      <if test="response != null" >
+        #{response,jdbcType=VARCHAR},
+      </if>
+      <if test="oldField != null" >
+        #{oldField,jdbcType=VARCHAR},
+      </if>
+      <if test="oldFieldValue != null" >
+        #{oldFieldValue,jdbcType=VARCHAR},
+      </if>
+      <if test="newField != null" >
+        #{newField,jdbcType=VARCHAR},
+      </if>
+      <if test="newFieldValue != null" >
+        #{newFieldValue,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tableName != null" >
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="pkId != null" >
+        #{pkId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SysLog" >
+    update sys_log
+    <set >
+      <if test="request != null" >
+        request = #{request,jdbcType=VARCHAR},
+      </if>
+      <if test="response != null" >
+        response = #{response,jdbcType=VARCHAR},
+      </if>
+      <if test="oldField != null" >
+        old_field = #{oldField,jdbcType=VARCHAR},
+      </if>
+      <if test="oldFieldValue != null" >
+        old_field_value = #{oldFieldValue,jdbcType=VARCHAR},
+      </if>
+      <if test="newField != null" >
+        new_field = #{newField,jdbcType=VARCHAR},
+      </if>
+      <if test="newFieldValue != null" >
+        new_field_value = #{newFieldValue,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null" >
+        kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tableName != null" >
+        table_name = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="pkId != null" >
+        pk_id = #{tableName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_sys_log = #{pkSysLog,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SysLog" >
+    update sys_log
+    set request = #{request,jdbcType=VARCHAR},
+      response = #{response,jdbcType=VARCHAR},
+      old_field = #{oldField,jdbcType=VARCHAR},
+      old_field_value = #{oldFieldValue,jdbcType=VARCHAR},
+      new_field = #{newField,jdbcType=VARCHAR},
+      new_field_value = #{newFieldValue,jdbcType=VARCHAR},
+      kind = #{kind,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=VARCHAR},
+      datetime = #{datetime,jdbcType=TIMESTAMP},
+      table_name = #{tableName,jdbcType=VARCHAR},
+      pk_id = #{pkId,jdbcType=VARCHAR}
+    where pk_sys_log = #{pkSysLog,jdbcType=VARCHAR}
+  </update>
+</mapper>

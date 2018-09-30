@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.LookAnalysisMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.LookAnalysis" >
+    <id column="pk_look_analysis" property="pkLookAnalysis" jdbcType="VARCHAR" />
+    <result column="pk_nut_con_analysis" property="pkNutConAnalysis" jdbcType="VARCHAR" />
+    <result column="pk_linkman" property="pkLinkman" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="view_date" property="viewDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_look_analysis, pk_nut_con_analysis, pk_linkman, pk_student, view_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from look_analysis
+    where pk_look_analysis = #{pkLookAnalysis,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from look_analysis
+    where pk_look_analysis = #{pkLookAnalysis,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.LookAnalysis" >
+    insert into look_analysis (pk_look_analysis, pk_nut_con_analysis, 
+      pk_linkman, pk_student, view_date
+      )
+    values (#{pkLookAnalysis,jdbcType=VARCHAR}, #{pkNutConAnalysis,jdbcType=VARCHAR}, 
+      #{pkLinkman,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{viewDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.LookAnalysis" >
+    insert into look_analysis
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkLookAnalysis != null" >
+        pk_look_analysis,
+      </if>
+      <if test="pkNutConAnalysis != null" >
+        pk_nut_con_analysis,
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="viewDate != null" >
+        view_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkLookAnalysis != null" >
+        #{pkLookAnalysis,jdbcType=VARCHAR},
+      </if>
+      <if test="pkNutConAnalysis != null" >
+        #{pkNutConAnalysis,jdbcType=VARCHAR},
+      </if>
+      <if test="pkLinkman != null" >
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="viewDate != null" >
+        #{viewDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.LookAnalysis" >
+    update look_analysis
+    <set >
+      <if test="pkNutConAnalysis != null" >
+        pk_nut_con_analysis = #{pkNutConAnalysis,jdbcType=VARCHAR},
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="viewDate != null" >
+        view_date = #{viewDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_look_analysis = #{pkLookAnalysis,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.LookAnalysis" >
+    update look_analysis
+    set pk_nut_con_analysis = #{pkNutConAnalysis,jdbcType=VARCHAR},
+      pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      view_date = #{viewDate,jdbcType=TIMESTAMP}
+    where pk_look_analysis = #{pkLookAnalysis,jdbcType=VARCHAR}
+  </update>
+</mapper>

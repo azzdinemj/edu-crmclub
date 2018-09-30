@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.WxUnionidMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.WxUnionid" >
+    <id column="pk_unionid" property="pkUnionid" jdbcType="VARCHAR" />
+    <result column="unionid" property="unionid" jdbcType="VARCHAR" />
+    <result column="xcx_openid" property="xcxOpenid" jdbcType="VARCHAR" />
+    <result column="gzh_openid" property="gzhOpenid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_unionid, unionid, xcx_openid, gzh_openid
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.WxUnionid" >
+    select
+    <include refid="Base_Column_List" />
+    from wx_unionid
+    where 1=1
+    <if test="unionid != null" >
+      and unionid = #{unionid}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_unionid
+    where pk_unionid = #{pkUnionid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_unionid
+    where pk_unionid = #{pkUnionid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.WxUnionid" >
+    insert into wx_unionid (pk_unionid, unionid, xcx_openid, 
+      gzh_openid)
+    values (#{pkUnionid,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}, #{xcxOpenid,jdbcType=VARCHAR}, 
+      #{gzhOpenid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.WxUnionid" >
+    insert into wx_unionid
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkUnionid != null" >
+        pk_unionid,
+      </if>
+      <if test="unionid != null" >
+        unionid,
+      </if>
+      <if test="xcxOpenid != null" >
+        xcx_openid,
+      </if>
+      <if test="gzhOpenid != null" >
+        gzh_openid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkUnionid != null" >
+        #{pkUnionid,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null" >
+        #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="xcxOpenid != null" >
+        #{xcxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="gzhOpenid != null" >
+        #{gzhOpenid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.WxUnionid" >
+    update wx_unionid
+    <set >
+      <if test="unionid != null" >
+        unionid = #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="xcxOpenid != null" >
+        xcx_openid = #{xcxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="gzhOpenid != null" >
+        gzh_openid = #{gzhOpenid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_unionid = #{pkUnionid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.WxUnionid" >
+    update wx_unionid
+    set unionid = #{unionid,jdbcType=VARCHAR},
+      xcx_openid = #{xcxOpenid,jdbcType=VARCHAR},
+      gzh_openid = #{gzhOpenid,jdbcType=VARCHAR}
+    where pk_unionid = #{pkUnionid,jdbcType=VARCHAR}
+  </update>
+</mapper>

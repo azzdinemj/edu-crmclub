@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.StudentInterviewRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.StudentInterviewRecord" >
+    <id column="pk_student_interview_record" property="pkStudentInterviewRecord" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="what" property="what" jdbcType="VARCHAR" />
+    <result column="advices" property="advices" jdbcType="VARCHAR" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+    <result column="is_type" property="isType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_student_interview_record, pk_domain, pk_student, grade, date, what, advices, notes, 
+    creator, creation_date, modifier, lastedit_date,is_type
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.StudentInterviewRecord" >
+    select
+    <include refid="Base_Column_List" />
+    from student_interview_record
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkStudent != null" >
+      and pk_student = #{pkStudent}
+    </if>
+    <if test="isType != null ">
+      and is_Type = #{isType}
+    </if>
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.StudentInterviewRecord" >
+    select
+    count(*)
+    from student_interview_record
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_interview_record
+    where pk_student_interview_record = #{pkStudentInterviewRecord,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student_interview_record
+    where pk_student_interview_record = #{pkStudentInterviewRecord,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.StudentInterviewRecord" >
+    insert into student_interview_record (pk_student_interview_record, pk_domain, 
+      pk_student, grade, date, 
+      what, advices, notes, 
+      creator, creation_date, modifier, 
+      lastedit_date,is_type)
+    values (#{pkStudentInterviewRecord,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, 
+      #{pkStudent,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, 
+      #{what,jdbcType=VARCHAR}, #{advices,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP},#{isType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.StudentInterviewRecord" >
+    insert into student_interview_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkStudentInterviewRecord != null" >
+        pk_student_interview_record,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="what != null" >
+        what,
+      </if>
+      <if test="advices != null" >
+        advices,
+      </if>
+      <if test="notes != null" >
+        notes,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="isType != null" >
+        is_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkStudentInterviewRecord != null" >
+        #{pkStudentInterviewRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="what != null" >
+        #{what,jdbcType=VARCHAR},
+      </if>
+      <if test="advices != null" >
+        #{advices,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isType != null" >
+        #{isType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.StudentInterviewRecord" >
+    update student_interview_record
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="what != null" >
+        what = #{what,jdbcType=VARCHAR},
+      </if>
+      <if test="advices != null" >
+        advices = #{advices,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isType != null" >
+        is_type = #{isType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_student_interview_record = #{pkStudentInterviewRecord,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.StudentInterviewRecord" >
+    update student_interview_record
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      what = #{what,jdbcType=VARCHAR},
+      advices = #{advices,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      is_type = #{isType,jdbcType=INTEGER}
+    where pk_student_interview_record = #{pkStudentInterviewRecord,jdbcType=VARCHAR}
+  </update>
+</mapper>

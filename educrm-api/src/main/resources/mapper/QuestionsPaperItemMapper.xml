@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.QuestionsPaperItemMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.QuestionsPaperItem" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="explain" property="explain" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="SMALLINT" />
+    <result column="itemsnum" property="itemsnum" jdbcType="INTEGER" />
+    <result column="regdate" property="regdate" jdbcType="TIMESTAMP" />
+    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wuxue.model.QuestionsPaperItem" extends="BaseResultMap" >
+    <result column="items" property="items" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pid, title, explain, `type`, itemsnum, regdate, modifydate, status, version, isdel,
+    sort
+  </sql>
+  <sql id="Blob_Column_List" >
+    items
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.QuestionsPaperItem" >
+    select
+    <include refid="Base_Column_List" />,
+    <include refid="Blob_Column_List" />
+    from questions_paper_item
+    where 1=1
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from questions_paper_item
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from questions_paper_item
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.QuestionsPaperItem" >
+    insert into questions_paper_item (id, pid, title, 
+      explain, `type`, itemsnum,
+      regdate, modifydate, status, 
+      version, isdel, sort, 
+      items)
+    values (#{id,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{explain,jdbcType=VARCHAR}, #{type,jdbcType=SMALLINT}, #{itemsnum,jdbcType=INTEGER}, 
+      #{regdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{version,jdbcType=INTEGER}, #{isdel,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
+      #{items,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.QuestionsPaperItem" >
+    insert into questions_paper_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="explain != null" >
+        explain,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="itemsnum != null" >
+        itemsnum,
+      </if>
+      <if test="regdate != null" >
+        regdate,
+      </if>
+      <if test="modifydate != null" >
+        modifydate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="items != null" >
+        items,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="explain != null" >
+        #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="itemsnum != null" >
+        #{itemsnum,jdbcType=INTEGER},
+      </if>
+      <if test="regdate != null" >
+        #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="items != null" >
+        #{items,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.QuestionsPaperItem" >
+    update questions_paper_item
+    <set >
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="explain != null" >
+        explain = #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="itemsnum != null" >
+        itemsnum = #{itemsnum,jdbcType=INTEGER},
+      </if>
+      <if test="regdate != null" >
+        regdate = #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="items != null" >
+        items = #{items,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wuxue.model.QuestionsPaperItem" >
+    update questions_paper_item
+    set pid = #{pid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      explain = #{explain,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=SMALLINT},
+      itemsnum = #{itemsnum,jdbcType=INTEGER},
+      regdate = #{regdate,jdbcType=TIMESTAMP},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      items = #{items,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.QuestionsPaperItem" >
+    update questions_paper_item
+    set pid = #{pid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      explain = #{explain,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=SMALLINT},
+      itemsnum = #{itemsnum,jdbcType=INTEGER},
+      regdate = #{regdate,jdbcType=TIMESTAMP},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

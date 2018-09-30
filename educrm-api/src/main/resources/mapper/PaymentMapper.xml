@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.PaymentMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Payment" >
+    <id column="pk_payment" property="pkPayment" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_parent" property="pkParent" jdbcType="VARCHAR" />
+    <result column="pk_sys_user" property="pkSysUser" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="pk_expense_item" property="pkExpenseItem" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="payment_method" property="paymentMethod" jdbcType="VARCHAR" />
+    <result column="bank_account_caption" property="bankAccountCaption" jdbcType="VARCHAR" />
+    <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="bank_caption" property="bankCaption" jdbcType="VARCHAR" />
+    <result column="bank_address" property="bankAddress" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+    <result column="issubmit" property="issubmit" jdbcType="INTEGER" />
+    <result column="submitor" property="submitor" jdbcType="VARCHAR" />
+    <result column="submit_date" property="submitDate" jdbcType="TIMESTAMP" />
+    <result column="isaudit" property="isaudit" jdbcType="INTEGER" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_payment, pk_domain, pk_parent, pk_sys_user, pk_student, pk_expense_item, code, 
+    payment_method, bank_account_caption, bank_account, bank_caption, bank_address, date, 
+    cost, money, notes, issubmit, submitor, submit_date, isaudit, auditor, audit_date, 
+    creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.Payment" >
+    select
+    <include refid="Base_Column_List" />
+    from payment
+    where 1=1
+    <if test="pkParent != null" >
+      and pk_parent = #{pkParent}
+    </if>
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="code != null and code !=''" >
+      and code = #{code}
+    </if>
+    <if test="caption != null and caption !=''" >
+      and pk_student IN (SELECT pk_student FROM student where caption LIKE "%"#{caption}"%")
+    </if>
+    <if test="fromDate != null">
+      <![CDATA[ and date >= #{fromDate} ]]>
+    </if>
+    <if test="toDate != null">
+      <![CDATA[ and date <= #{toDate} ]]>
+    </if>
+    order by lastedit_date DESC
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.Payment" >
+    select
+    count(*)
+    from payment
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from payment
+    where pk_payment = #{pkPayment,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from payment
+    where pk_payment = #{pkPayment,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Payment" >
+    insert into payment (pk_payment, pk_domain, pk_parent, 
+      pk_sys_user, pk_student, pk_expense_item, 
+      code, payment_method, bank_account_caption, 
+      bank_account, bank_caption, bank_address, 
+      date, cost, money, 
+      notes, issubmit, submitor, 
+      submit_date, isaudit, auditor, 
+      audit_date, creator, creation_date, 
+      modifier, lastedit_date)
+    values (#{pkPayment,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkParent,jdbcType=VARCHAR}, 
+      #{pkSysUser,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{pkExpenseItem,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{paymentMethod,jdbcType=VARCHAR}, #{bankAccountCaption,jdbcType=VARCHAR}, 
+      #{bankAccount,jdbcType=VARCHAR}, #{bankCaption,jdbcType=VARCHAR}, #{bankAddress,jdbcType=VARCHAR}, 
+      #{date,jdbcType=TIMESTAMP}, #{cost,jdbcType=DECIMAL}, #{money,jdbcType=DECIMAL}, 
+      #{notes,jdbcType=VARCHAR}, #{issubmit,jdbcType=INTEGER}, #{submitor,jdbcType=VARCHAR}, 
+      #{submitDate,jdbcType=TIMESTAMP}, #{isaudit,jdbcType=INTEGER}, #{auditor,jdbcType=VARCHAR}, 
+      #{auditDate,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Payment" >
+    insert into payment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkPayment != null" >
+        pk_payment,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkParent != null" >
+        pk_parent,
+      </if>
+      <if test="pkSysUser != null" >
+        pk_sys_user,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkExpenseItem != null" >
+        pk_expense_item,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="paymentMethod != null" >
+        payment_method,
+      </if>
+      <if test="bankAccountCaption != null" >
+        bank_account_caption,
+      </if>
+      <if test="bankAccount != null" >
+        bank_account,
+      </if>
+      <if test="bankCaption != null" >
+        bank_caption,
+      </if>
+      <if test="bankAddress != null" >
+        bank_address,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="notes != null" >
+        notes,
+      </if>
+      <if test="issubmit != null" >
+        issubmit,
+      </if>
+      <if test="submitor != null" >
+        submitor,
+      </if>
+      <if test="submitDate != null" >
+        submit_date,
+      </if>
+      <if test="isaudit != null" >
+        isaudit,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditDate != null" >
+        audit_date,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkPayment != null" >
+        #{pkPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParent != null" >
+        #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysUser != null" >
+        #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkExpenseItem != null" >
+        #{pkExpenseItem,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentMethod != null" >
+        #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountCaption != null" >
+        #{bankAccountCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCaption != null" >
+        #{bankCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAddress != null" >
+        #{bankAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmit != null" >
+        #{issubmit,jdbcType=INTEGER},
+      </if>
+      <if test="submitor != null" >
+        #{submitor,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isaudit != null" >
+        #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Payment" >
+    update payment
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParent != null" >
+        pk_parent = #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysUser != null" >
+        pk_sys_user = #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkExpenseItem != null" >
+        pk_expense_item = #{pkExpenseItem,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentMethod != null" >
+        payment_method = #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountCaption != null" >
+        bank_account_caption = #{bankAccountCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCaption != null" >
+        bank_caption = #{bankCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAddress != null" >
+        bank_address = #{bankAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmit != null" >
+        issubmit = #{issubmit,jdbcType=INTEGER},
+      </if>
+      <if test="submitor != null" >
+        submitor = #{submitor,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isaudit != null" >
+        isaudit = #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_payment = #{pkPayment,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Payment" >
+    update payment
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_parent = #{pkParent,jdbcType=VARCHAR},
+      pk_sys_user = #{pkSysUser,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_expense_item = #{pkExpenseItem,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      payment_method = #{paymentMethod,jdbcType=VARCHAR},
+      bank_account_caption = #{bankAccountCaption,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      bank_caption = #{bankCaption,jdbcType=VARCHAR},
+      bank_address = #{bankAddress,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      cost = #{cost,jdbcType=DECIMAL},
+      money = #{money,jdbcType=DECIMAL},
+      notes = #{notes,jdbcType=VARCHAR},
+      issubmit = #{issubmit,jdbcType=INTEGER},
+      submitor = #{submitor,jdbcType=VARCHAR},
+      submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      isaudit = #{isaudit,jdbcType=INTEGER},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_payment = #{pkPayment,jdbcType=VARCHAR}
+  </update>
+</mapper>

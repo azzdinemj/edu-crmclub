@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.OrderPayMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.OrderPay" >
+    <id column="pk_order_pay" property="pkOrderPay" jdbcType="VARCHAR" />
+    <result column="pk_orderId" property="pkOrderid" jdbcType="VARCHAR" />
+    <result column="pk_parent_pay" property="pkParentPay" jdbcType="VARCHAR" />
+    <result column="pk_parent_pay_list" property="pkParentPayList" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_order_pay, pk_orderId, pk_parent_pay
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.OrderPay" >
+    select
+    <include refid="Base_Column_List" />
+    from order_pay
+    where 1=1
+    <if test="pkOrderid != null" >
+      and pk_orderId = #{pkOrderid}
+    </if>
+    <if test="pkParentPay != null" >
+      and pk_parent_pay = #{pkParentPay}
+    </if>
+    <if test="pkParentPayList != null" >
+      and pk_parent_pay in (${pkParentPayList})
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_pay
+    where pk_order_pay = #{pkOrderPay,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from order_pay
+    where pk_order_pay = #{pkOrderPay,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.OrderPay" >
+    insert into order_pay (pk_order_pay, pk_orderId, pk_parent_pay
+      )
+    values (#{pkOrderPay,jdbcType=VARCHAR}, #{pkOrderid,jdbcType=VARCHAR}, #{pkParentPay,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.OrderPay" >
+    insert into order_pay
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkOrderPay != null" >
+        pk_order_pay,
+      </if>
+      <if test="pkOrderid != null" >
+        pk_orderId,
+      </if>
+      <if test="pkParentPay != null" >
+        pk_parent_pay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkOrderPay != null" >
+        #{pkOrderPay,jdbcType=VARCHAR},
+      </if>
+      <if test="pkOrderid != null" >
+        #{pkOrderid,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParentPay != null" >
+        #{pkParentPay,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.OrderPay" >
+    update order_pay
+    <set >
+      <if test="pkOrderid != null" >
+        pk_orderId = #{pkOrderid,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParentPay != null" >
+        pk_parent_pay = #{pkParentPay,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_order_pay = #{pkOrderPay,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.OrderPay" >
+    update order_pay
+    set pk_orderId = #{pkOrderid,jdbcType=VARCHAR},
+      pk_parent_pay = #{pkParentPay,jdbcType=VARCHAR}
+    where pk_order_pay = #{pkOrderPay,jdbcType=VARCHAR}
+  </update>
+</mapper>

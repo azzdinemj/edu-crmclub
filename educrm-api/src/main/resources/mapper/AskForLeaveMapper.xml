@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.AskForLeaveMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.AskForLeave" >
+    <id column="pk_ask_for_leave" property="pkAskForLeave" jdbcType="VARCHAR" />
+    <result column="pk_student_employee" property="pkStudentEmployee" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="types" property="types" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="status_remark" property="statusRemark" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+    <result column="pk_subject" property="pkSubject" jdbcType="VARCHAR" />
+    <result column="stu_emp_caption" property="stuEmpCaption" jdbcType="VARCHAR" />
+    <result column="pk_linkman" property="pkLinkman" jdbcType="VARCHAR" />
+    <result column="isaudit" property="isaudit" jdbcType="INTEGER" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_ask_for_leave, pk_student_employee, start_time, end_time, types, remark, status, 
+    status_remark, creator, creation_date, modifier, lastedit_date,pk_subject,stu_emp_caption,
+    pk_linkman,isaudit,isvalid
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.AskForLeave">
+    SELECT
+    <include refid="Base_Column_List" />
+    from ask_for_leave
+    where 1=1
+    <if test="types!=null and types!=''">
+     and types=#{types}
+    </if>
+    <if test="pkLinkman!=null and pkLinkman!=''">
+     and pk_linkman=#{pkLinkman}
+    </if>
+    <if test="stuEmpCaption!=null and stuEmpCaption!=''">
+      and stu_emp_caption  like "%"#{stuEmpCaption}"%"
+    </if>
+    order by creation_date DESC
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ask_for_leave
+    where pk_ask_for_leave = #{pkAskForLeave,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ask_for_leave
+    where pk_ask_for_leave = #{pkAskForLeave,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.AskForLeave" >
+    insert into ask_for_leave (pk_ask_for_leave, pk_student_employee, 
+      start_time, end_time, types, 
+      remark, status, status_remark, 
+      creator, creation_date, modifier,pk_subject,stu_emp_caption,
+      lastedit_date,isaudit,pk_linkman,isvalid)
+    values (#{pkAskForLeave,jdbcType=VARCHAR}, #{pkStudentEmployee,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{types,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{statusRemark,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{pkSubject,jdbcType=VARCHAR}, #{stuEmpCaption,jdbcType=VARCHAR},#{lasteditDate,jdbcType=TIMESTAMP},
+      #{isaudit,jdbcType=INTEGER},#{pkLinkman,jdbcType=VARCHAR},#{isvalid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.AskForLeave" >
+    insert into ask_for_leave
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkAskForLeave != null" >
+        pk_ask_for_leave,
+      </if>
+      <if test="pkStudentEmployee != null" >
+        pk_student_employee,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="types != null" >
+        types,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="statusRemark != null" >
+        status_remark,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="pkSubject != null" >
+        pk_subject,
+      </if>
+      <if test="stuEmpCaption != null" >
+        stu_emp_caption,
+      </if>
+      <if test="isaudit != null" >
+        isaudit,
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkAskForLeave != null" >
+        #{pkAskForLeave,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudentEmployee != null" >
+        #{pkStudentEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="types != null" >
+        #{types,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="statusRemark != null" >
+        #{statusRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkSubject != null" >
+        #{pkSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="stuEmpCaption != null" >
+        #{stuEmpCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="isaudit != null" >
+        #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="pkLinkman != null" >
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.AskForLeave" >
+    update ask_for_leave
+    <set >
+      <if test="pkStudentEmployee != null" >
+        pk_student_employee = #{pkStudentEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="types != null" >
+        types = #{types,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="statusRemark != null" >
+        status_remark = #{statusRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkSubject != null" >
+        pk_subject = #{pkSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="stuEmpCaption != null" >
+        stu_emp_caption = #{stuEmpCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="isaudit != null" >
+        isaudit = #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_ask_for_leave = #{pkAskForLeave,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.AskForLeave" >
+    update ask_for_leave
+    set pk_student_employee = #{pkStudentEmployee,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      types = #{types,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      status_remark = #{statusRemark,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      pk_subject = #{pkSubject,jdbcType=VARCHAR},
+      stu_emp_caption = #{stuEmpCaption,jdbcType=VARCHAR},
+      isaudit = #{isaudit,jdbcType=INTEGER},
+      pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=INTEGER}
+    where pk_ask_for_leave = #{pkAskForLeave,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAskForLeaveStudentList"  resultType="java.lang.String">
+    select pk_student_employee  from ask_for_leave
+    where   start_time <![CDATA[ <= ]]> #{time}
+    and end_time <![CDATA[ >= ]]> #{time}
+      and status =0
+    <if test="ids != null and ids.size > 0">
+      and pk_student_employee in
+      <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+  </select>
+</mapper>

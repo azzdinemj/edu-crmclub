@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.MarketReportMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.MarketReport" >
+    <result column="program" property="program" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="mm" property="mm" jdbcType="BIGINT" />
+    <result column="gg" property="gg" jdbcType="BIGINT" />
+    <result column="numbers" property="numbers" jdbcType="BIGINT" />
+  </resultMap>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.MarketReport" >
+    select
+    *
+    from market_report
+    where 1=1
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.MarketReport" >
+    select
+    count(*)
+    from finance_report
+    where 1=1
+  </select>
+  <insert id="insert" parameterType="com.wuxue.model.MarketReport" >
+    insert into market_report (program, caption, mm, 
+      gg, numbers)
+    values (#{program,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}, #{mm,jdbcType=BIGINT}, 
+      #{gg,jdbcType=BIGINT}, #{numbers,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.MarketReport" >
+    insert into market_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="program != null" >
+        program,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="mm != null" >
+        mm,
+      </if>
+      <if test="gg != null" >
+        gg,
+      </if>
+      <if test="numbers != null" >
+        numbers,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="program != null" >
+        #{program,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="mm != null" >
+        #{mm,jdbcType=BIGINT},
+      </if>
+      <if test="gg != null" >
+        #{gg,jdbcType=BIGINT},
+      </if>
+      <if test="numbers != null" >
+        #{numbers,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

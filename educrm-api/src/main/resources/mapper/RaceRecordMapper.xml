@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.RaceRecordMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.junhwa.RaceRecord">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <id column="race_id" jdbcType="VARCHAR" property="raceId" />
+    <result column="race_name" jdbcType="VARCHAR" property="raceName" />
+    <result column="sponsor" jdbcType="VARCHAR" property="sponsor" />
+    <result column="race_date" jdbcType="TIMESTAMP" property="raceDate" />
+    <result column="max_honor" jdbcType="VARCHAR" property="maxHonor" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="pk_classinfo" jdbcType="VARCHAR" property="pkClassinfo" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="lastedit_date" jdbcType="TIMESTAMP" property="lasteditDate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="class_name" jdbcType="VARCHAR" property="className" />
+    <collection property="raceAwardsList" ofType="com.wuxue.model.junhwa.RaceAwards">
+        <result column="awards_id" jdbcType="VARCHAR" property="awardsId" />
+        <result column="awards_name" jdbcType="VARCHAR" property="awardsName" />
+        <collection property="awardsStudentList" ofType="com.wuxue.model.junhwa.AwardsStudent">
+            <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+            <result column="caption" jdbcType="VARCHAR" property="studentName" />
+        </collection>
+    </collection>
+    <collection property="activityImgList" ofType="com.wuxue.model.junhwa.ActivityImg">
+      <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+      <result column="img_order" jdbcType="INTEGER" property="imgOrder" />
+    </collection>
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    race_id, race_name, sponsor, race_date, max_honor, description, pk_classinfo, creation_date,
+    creator, lastedit_date, modifier
+  </sql>
+  <select id="selectByExample" parameterType="com.wuxue.model.junhwa.RaceRecordExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_race_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startIndex != null and startIndex &gt;= 0">
+      limit #{startIndex} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select
+    <include refid="Base_Column_List" />
+    from t_race_record
+    where race_id = #{raceId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    delete from t_race_record
+    where race_id = #{raceId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wuxue.model.junhwa.RaceRecordExample">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    delete from t_race_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.junhwa.RaceRecord">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    insert into t_race_record (race_id, race_name, sponsor,
+      race_date, max_honor, description,
+      pk_classinfo, creation_date, creator,
+      lastedit_date, modifier)
+    values (#{raceId,jdbcType=VARCHAR}, #{raceName,jdbcType=VARCHAR}, #{sponsor,jdbcType=VARCHAR},
+      #{raceDate,jdbcType=TIMESTAMP}, #{maxHonor,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{pkClassinfo,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR},
+      #{lasteditDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.junhwa.RaceRecord">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    insert into t_race_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="raceId != null">
+        race_id,
+      </if>
+      <if test="raceName != null">
+        race_name,
+      </if>
+      <if test="sponsor != null">
+        sponsor,
+      </if>
+      <if test="raceDate != null">
+        race_date,
+      </if>
+      <if test="maxHonor != null">
+        max_honor,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="pkClassinfo != null">
+        pk_classinfo,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="raceId != null">
+        #{raceId,jdbcType=VARCHAR},
+      </if>
+      <if test="raceName != null">
+        #{raceName,jdbcType=VARCHAR},
+      </if>
+      <if test="sponsor != null">
+        #{sponsor,jdbcType=VARCHAR},
+      </if>
+      <if test="raceDate != null">
+        #{raceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maxHonor != null">
+        #{maxHonor,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null">
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wuxue.model.junhwa.RaceRecordExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select count(*) from t_race_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update t_race_record
+    <set>
+      <if test="record.raceId != null">
+        race_id = #{record.raceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.raceName != null">
+        race_name = #{record.raceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sponsor != null">
+        sponsor = #{record.sponsor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.raceDate != null">
+        race_date = #{record.raceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.maxHonor != null">
+        max_honor = #{record.maxHonor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pkClassinfo != null">
+        pk_classinfo = #{record.pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null">
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lasteditDate != null">
+        lastedit_date = #{record.lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifier != null">
+        modifier = #{record.modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update t_race_record
+    set race_id = #{record.raceId,jdbcType=VARCHAR},
+      race_name = #{record.raceName,jdbcType=VARCHAR},
+      sponsor = #{record.sponsor,jdbcType=VARCHAR},
+      race_date = #{record.raceDate,jdbcType=TIMESTAMP},
+      max_honor = #{record.maxHonor,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      pk_classinfo = #{record.pkClassinfo,jdbcType=VARCHAR},
+      creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      lastedit_date = #{record.lasteditDate,jdbcType=TIMESTAMP},
+      modifier = #{record.modifier,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.junhwa.RaceRecord">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update t_race_record
+    <set>
+      <if test="raceName != null">
+        race_name = #{raceName,jdbcType=VARCHAR},
+      </if>
+      <if test="sponsor != null">
+        sponsor = #{sponsor,jdbcType=VARCHAR},
+      </if>
+      <if test="raceDate != null">
+        race_date = #{raceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maxHonor != null">
+        max_honor = #{maxHonor,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null">
+        pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where race_id = #{raceId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.junhwa.RaceRecord">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update t_race_record
+    set race_name = #{raceName,jdbcType=VARCHAR},
+      sponsor = #{sponsor,jdbcType=VARCHAR},
+      race_date = #{raceDate,jdbcType=TIMESTAMP},
+      max_honor = #{maxHonor,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where race_id = #{raceId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectRaceRecordByClassIds" resultMap="BaseResultMap">
+    select rr.*,ra.awards_name,tas.student_id,s.caption ,
+    ai.img_url,ai.img_order
+    from t_race_record rr
+    left join t_activity_img ai on ai.rel_id = rr.race_id
+    left join t_race_awards ra on ra.race_id = rr.race_id
+    left join t_awards_student tas on tas.awards_id = ra.awards_id
+    left join student s on s.pk_student = tas.student_id
+    where 1=1
+    <if test="ids != null and ids.size > 0">
+      and rr.pk_classinfo in
+      <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+    order by race_date desc
+  </select>
+  <select id="selectRaceRecordInfoByRaceId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select rr.*,ra.awards_id,ra.awards_name,s.pk_student student_id,s.caption,c.caption class_name from t_race_record rr
+    left join t_race_awards  ra on rr.race_id = ra.race_id
+    left join  t_awards_student tas on ra.awards_id = tas.awards_id
+    left join student s on s.pk_student = tas.student_id
+    left join classinfo c on  c.pk_classinfo = rr.pk_classinfo
+    where rr.race_id =#{raceId}
+  </select>
+
+  <select id="selectStudentAwardsListByStudentId" resultType="com.wuxue.base.ResultEntity">
+    select tas.student_id,rr.race_id raceId,rr.race_name raceName,ra.awards_name awardsName from t_awards_student tas
+    left join  t_race_awards ra on tas.awards_id = ra.awards_id
+    left join t_race_record rr on ra.race_id = rr.race_id
+    where  tas.student_id=#{studentId} order by rr.race_date desc
+  </select>
+</mapper>

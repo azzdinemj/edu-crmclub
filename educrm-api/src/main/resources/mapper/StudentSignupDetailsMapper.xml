@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.StudentSignupDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.StudentSignupDetails">
+    <id column="pk_student_signup_details" jdbcType="VARCHAR" property="pkStudentSignupDetails" />
+    <result column="pk_domain" jdbcType="VARCHAR" property="pkDomain" />
+    <result column="pk_student_signup" jdbcType="VARCHAR" property="pkStudentSignup" />
+    <result column="pk_expense_item" jdbcType="VARCHAR" property="pkExpenseItem" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_student_signup_details, pk_domain, pk_student_signup, pk_expense_item, money, 
+    memo, currency, unit, num
+  </sql>
+  <select id="select" parameterType="com.wuxue.model.StudentSignupDetails" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student_signup_details
+    where 1=1
+    <if test="pkDomain != null">
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkStudentSignup != null">
+      and pk_student_signup = #{pkStudentSignup}
+    </if>
+  </select>
+  <select id="countBy" parameterType="com.wuxue.model.StudentSignupDetails" resultType="java.lang.Integer">
+    select
+    count(*)
+    from student_signup_details
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student_signup_details
+    where pk_student_signup_details = #{pkStudentSignupDetails,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from student_signup_details
+    where pk_student_signup = #{pkStudentSignupDetails,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.StudentSignupDetails">
+    insert into student_signup_details (pk_student_signup_details, pk_domain, 
+      pk_student_signup, pk_expense_item, money, 
+      memo, currency, unit, 
+      num)
+    values (#{pkStudentSignupDetails,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, 
+      #{pkStudentSignup,jdbcType=VARCHAR}, #{pkExpenseItem,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, 
+      #{memo,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.StudentSignupDetails">
+    insert into student_signup_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkStudentSignupDetails != null">
+        pk_student_signup_details,
+      </if>
+      <if test="pkDomain != null">
+        pk_domain,
+      </if>
+      <if test="pkStudentSignup != null">
+        pk_student_signup,
+      </if>
+      <if test="pkExpenseItem != null">
+        pk_expense_item,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkStudentSignupDetails != null">
+        #{pkStudentSignupDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null">
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudentSignup != null">
+        #{pkStudentSignup,jdbcType=VARCHAR},
+      </if>
+      <if test="pkExpenseItem != null">
+        #{pkExpenseItem,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.StudentSignupDetails">
+    update student_signup_details
+    <set>
+      <if test="pkDomain != null">
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudentSignup != null">
+        pk_student_signup = #{pkStudentSignup,jdbcType=VARCHAR},
+      </if>
+      <if test="pkExpenseItem != null">
+        pk_expense_item = #{pkExpenseItem,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_student_signup_details = #{pkStudentSignupDetails,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.StudentSignupDetails">
+    update student_signup_details
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_student_signup = #{pkStudentSignup,jdbcType=VARCHAR},
+      pk_expense_item = #{pkExpenseItem,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL},
+      memo = #{memo,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER}
+    where pk_student_signup_details = #{pkStudentSignupDetails,jdbcType=VARCHAR}
+  </update>
+</mapper>

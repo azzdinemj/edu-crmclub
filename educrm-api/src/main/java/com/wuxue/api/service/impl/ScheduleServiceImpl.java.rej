@@ -1,0 +1,79 @@
+diff a/wuxue-api/src/main/java/com/wuxue/api/service/impl/ScheduleServiceImpl.java b/wuxue-api/src/main/java/com/wuxue/api/service/impl/ScheduleServiceImpl.java	(rejected hunks)
+@@ -67,33 +67,62 @@
+         	Schedule byPrimaryKey = scheduleMapper.selectByPrimaryKey(primaryKey);
+ 
+         	Student student=studentMapper.selectByPrimaryKey(byPrimaryKey.getPkStudent());
+-            byPrimaryKey.put(Light.STUDENTOBJ,student.getCaption());
++        	if(student!=null){
++                byPrimaryKey.put(Light.STUDENTOBJ,student.getCaption());
++            }else{
++                byPrimaryKey.put(Light.STUDENTOBJ,null);
++            }
++
+             Product product=productMapper.selectByPrimaryKey(byPrimaryKey.getPkProduct());
+-            byPrimaryKey.put(Light.PRODUCTOBJ,product.getCaption());
++            if(product!=null){
++                byPrimaryKey.put(Light.PRODUCTOBJ,product.getCaption());
++            }else{
++                byPrimaryKey.put(Light.PRODUCTOBJ,null);
++            }
++
+             Employee employee=employeeMapper.selectByPrimaryKey(byPrimaryKey.getPkEmployee());
+-            byPrimaryKey.put(Light.EMPLOYEEOBJ,employee.getCaption());
++            if(employee!=null){
++                byPrimaryKey.put(Light.EMPLOYEEOBJ,employee.getCaption());
++            }else{
++                byPrimaryKey.put(Light.EMPLOYEEOBJ,null);
++            }
++
+             ClassRoom classRoom=classRoomMapper.selectByPrimaryKey(byPrimaryKey.getPkClassRoom());
+-            byPrimaryKey.put(Light.CLASSROOMOBJ,classRoom.getCaption());
+-           // utilsService.setSysUserKeyValue(byPrimaryKey,byPrimaryKey.getCreator(), LinkEntity.CREATOR_ENTITY);
+-           // utilsService.setSysUserKeyValue(byPrimaryKey,byPrimaryKey.getModifier(),LinkEntity.MODIFIER_ENTITY);
+-           // utilsService.setSysUserKeyValue(byPrimaryKey,byPrimaryKey.getSubmitor(),LinkEntity.SUBMITOR_ENTITY);
+-           // utilsService.setSysUserKeyValue(byPrimaryKey,byPrimaryKey.getAuditor(),LinkEntity.AUDITOR_ENTITY);
+-           // utilsService.setSysUserKeyValue(byPrimaryKey,byPrimaryKey.getCancel(),LinkEntity.CANCEL_ENTITY);
+-           // utilsService.setStudentKeyValue(byPrimaryKey,byPrimaryKey.getPkStudent(),LinkEntity.STUDENT_ENTITY);
+-          //  utilsService.setEmployeeKeyValue(byPrimaryKey,byPrimaryKey.getPkSysUser(),LinkEntity.EMP_ENTITY);
++            if(classRoom!=null){
++                byPrimaryKey.put(Light.CLASSROOMOBJ,classRoom.getCaption());
++            }else{
++                byPrimaryKey.put(Light.CLASSROOMOBJ,null);
++            }
++
+             response.setData(byPrimaryKey);
+         }else{
+             List<Schedule> scheduleList = scheduleMapper.select(schedule);
+             if (scheduleList.size() > 0) {
+                 for (Schedule list : scheduleList) {
+                     Student student=studentMapper.selectByPrimaryKey(list.getPkStudent());
+-                    list.put(Light.STUDENTOBJ,student.getCaption());
++                    if(student!=null){
++                        list.put(Light.STUDENTOBJ,student.getCaption());
++                    }else{
++                        list.put(Light.STUDENTOBJ,null);
++                    }
+                     Product product=productMapper.selectByPrimaryKey(list.getPkProduct());
+-                    list.put(Light.PRODUCTOBJ,product.getCaption());
++                    if(product!=null){
++                        list.put(Light.PRODUCTOBJ,product.getCaption());
++                    }else{
++                        list.put(Light.PRODUCTOBJ,null);
++                    }
+                     Employee employee=employeeMapper.selectByPrimaryKey(list.getPkEmployee());
+-                    list.put(Light.EMPLOYEEOBJ,employee.getCaption());
++                    if(employee!=null){
++                        list.put(Light.EMPLOYEEOBJ,employee.getCaption());
++                    }else{
++                        list.put(Light.EMPLOYEEOBJ,null);
++                    }
+                     ClassRoom classRoom=classRoomMapper.selectByPrimaryKey(list.getPkClassRoom());
+-                    list.put(Light.CLASSROOMOBJ,classRoom.getCaption());
++                    if(classRoom!=null){
++                        list.put(Light.CLASSROOMOBJ,classRoom.getCaption());
++                    }else{
++                        list.put(Light.CLASSROOMOBJ,null);
++                    }
+                 }
+             }
+             response.setData(scheduleList);

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.EmployeeHomeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.EmployeeHomeInfo" >
+    <id column="pk_employee_home_info" property="pkEmployeeHomeInfo" jdbcType="VARCHAR" />
+    <result column="pk_employee" property="pkEmployee" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="relationship" property="relationship" jdbcType="VARCHAR" />
+    <result column="job_unit" property="jobUnit" jdbcType="VARCHAR" />
+    <result column="job_title" property="jobTitle" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_employee_home_info, pk_employee, name, relationship, job_unit, job_title, phone, 
+    memo, creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.EmployeeHomeInfo" >
+    select
+    <include refid="Base_Column_List" />
+    from employee_home_info
+    where 1=1
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+    <if test="pkEmployee != null" >
+      and pk_employee = #{pkEmployee}
+    </if>
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.EmployeeHomeInfo" >
+    select
+    count(*)
+    from employee_home_info
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from employee_home_info
+    where pk_employee_home_info = #{pkEmployeeHomeInfo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from employee_home_info
+    where pk_employee_home_info = #{pkEmployeeHomeInfo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.EmployeeHomeInfo" >
+    insert into employee_home_info (pk_employee_home_info, pk_employee, name, 
+      relationship, job_unit, job_title, 
+      phone, memo, creator, 
+      creation_date, modifier, lastedit_date
+      )
+    values (#{pkEmployeeHomeInfo,jdbcType=VARCHAR}, #{pkEmployee,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{relationship,jdbcType=VARCHAR}, #{jobUnit,jdbcType=VARCHAR}, #{jobTitle,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.EmployeeHomeInfo" >
+    insert into employee_home_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkEmployeeHomeInfo != null" >
+        pk_employee_home_info,
+      </if>
+      <if test="pkEmployee != null" >
+        pk_employee,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="relationship != null" >
+        relationship,
+      </if>
+      <if test="jobUnit != null" >
+        job_unit,
+      </if>
+      <if test="jobTitle != null" >
+        job_title,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkEmployeeHomeInfo != null" >
+        #{pkEmployeeHomeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null" >
+        #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="relationship != null" >
+        #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="jobUnit != null" >
+        #{jobUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.EmployeeHomeInfo" >
+    update employee_home_info
+    <set >
+      <if test="pkEmployee != null" >
+        pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="relationship != null" >
+        relationship = #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="jobUnit != null" >
+        job_unit = #{jobUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        job_title = #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_employee_home_info = #{pkEmployeeHomeInfo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.EmployeeHomeInfo" >
+    update employee_home_info
+    set pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      relationship = #{relationship,jdbcType=VARCHAR},
+      job_unit = #{jobUnit,jdbcType=VARCHAR},
+      job_title = #{jobTitle,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_employee_home_info = #{pkEmployeeHomeInfo,jdbcType=VARCHAR}
+  </update>
+</mapper>

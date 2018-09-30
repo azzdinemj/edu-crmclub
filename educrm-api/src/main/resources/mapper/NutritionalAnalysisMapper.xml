@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.NutritionalAnalysisMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.NutritionalAnalysis" >
+    <id column="pk_nut_con_analysis" property="pkNutConAnalysis" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="date_type" property="dateType" jdbcType="INTEGER" />
+    <result column="analysis_date" property="analysisDate" jdbcType="TIMESTAMP" />
+    <result column="analysis_results" property="analysisResults" jdbcType="BIT" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_nut_con_analysis, pk_domain, pk_student, date_type, analysis_date, analysis_results, 
+    isvalid, creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from nutritional_analysis
+    where pk_nut_con_analysis = #{pkNutConAnalysis,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from nutritional_analysis
+    where pk_nut_con_analysis = #{pkNutConAnalysis,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.NutritionalAnalysis" >
+    insert into nutritional_analysis (pk_nut_con_analysis, pk_domain, pk_student, 
+      date_type, analysis_date, analysis_results, 
+      isvalid, creator, creation_date, 
+      modifier, lastedit_date)
+    values (#{pkNutConAnalysis,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, 
+      #{dateType,jdbcType=INTEGER}, #{analysisDate,jdbcType=TIMESTAMP}, #{analysisResults,jdbcType=BIT}, 
+      #{isvalid,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.NutritionalAnalysis" >
+    insert into nutritional_analysis
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkNutConAnalysis != null" >
+        pk_nut_con_analysis,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="dateType != null" >
+        date_type,
+      </if>
+      <if test="analysisDate != null" >
+        analysis_date,
+      </if>
+      <if test="analysisResults != null" >
+        analysis_results,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkNutConAnalysis != null" >
+        #{pkNutConAnalysis,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="dateType != null" >
+        #{dateType,jdbcType=INTEGER},
+      </if>
+      <if test="analysisDate != null" >
+        #{analysisDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="analysisResults != null" >
+        #{analysisResults,jdbcType=BIT},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.NutritionalAnalysis" >
+    update nutritional_analysis
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="dateType != null" >
+        date_type = #{dateType,jdbcType=INTEGER},
+      </if>
+      <if test="analysisDate != null" >
+        analysis_date = #{analysisDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="analysisResults != null" >
+        analysis_results = #{analysisResults,jdbcType=BIT},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_nut_con_analysis = #{pkNutConAnalysis,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.NutritionalAnalysis" >
+    update nutritional_analysis
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      date_type = #{dateType,jdbcType=INTEGER},
+      analysis_date = #{analysisDate,jdbcType=TIMESTAMP},
+      analysis_results = #{analysisResults,jdbcType=BIT},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_nut_con_analysis = #{pkNutConAnalysis,jdbcType=VARCHAR}
+  </update>
+</mapper>

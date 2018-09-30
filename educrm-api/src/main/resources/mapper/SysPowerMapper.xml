@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SysPowerMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SysPowerKey" >
+    <id column="pk_sys_role" property="pkSysRole" jdbcType="VARCHAR" />
+    <id column="pk_sys_menu" property="pkSysMenu" jdbcType="VARCHAR" />
+    <id column="pk_sys_button" property="pkSysButton" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.SysPowerKey" >
+    select
+    *
+    from sys_power
+    where 1=1
+    <if test="pkSysRole != null" >
+      and pk_sys_role = #{pkSysRole}
+    </if>
+    <if test="pkSysMenu != null" >
+      and pk_sys_menu = #{pkSysMenu}
+    </if>
+    <if test="pkSysButton != null" >
+      and pk_sys_button = #{pkSysButton}
+    </if>
+    <if test="start != null and pageSize != null">
+      LIMIT #{start}, #{pageSize}
+    </if>
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.SysPowerKey" >
+    select
+    count(*)
+    from sys_power
+    where 1=1
+  </select>
+  <select id="selectforURL" resultMap="BaseResultMap" >
+    select
+      *
+    from sys_power
+    where 1=1
+    and pk_sys_menu = (SELECT pk_sys_menu from sys_menu where url =#{url,jdbcType=VARCHAR} )
+    and pk_sys_role = (SELECT pk_sys_role from sys_user_role where pk_sys_user = #{userCode,jdbcType=VARCHAR})
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wuxue.model.SysPowerKey" >
+    delete from sys_power
+    where pk_sys_role = #{pkSysRole,jdbcType=VARCHAR}
+      and pk_sys_menu = #{pkSysMenu,jdbcType=VARCHAR}
+      and pk_sys_button = #{pkSysButton,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SysPowerKey" >
+    insert into sys_power (pk_sys_role, pk_sys_menu, pk_sys_button
+      )
+    values (#{pkSysRole,jdbcType=VARCHAR}, #{pkSysMenu,jdbcType=VARCHAR}, #{pkSysButton,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SysPowerKey" >
+    insert into sys_power
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSysRole != null" >
+        pk_sys_role,
+      </if>
+      <if test="pkSysMenu != null" >
+        pk_sys_menu,
+      </if>
+      <if test="pkSysButton != null" >
+        pk_sys_button,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSysRole != null" >
+        #{pkSysRole,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysMenu != null" >
+        #{pkSysMenu,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysButton != null" >
+        #{pkSysButton,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

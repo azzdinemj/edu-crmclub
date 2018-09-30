@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.SchoolBusMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SchoolBus">
+    <id column="pk_school_bus" jdbcType="VARCHAR" property="pkSchoolBus" />
+    <result column="pk_domain" jdbcType="VARCHAR" property="pkDomain" />
+    <result column="caption" jdbcType="VARCHAR" property="caption" />
+    <result column="bus_code" jdbcType="VARCHAR" property="busCode" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="current_num" jdbcType="INTEGER" property="currentNum" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="isvalid" jdbcType="INTEGER" property="isvalid" />
+    <result column="expenses" jdbcType="DECIMAL" property="expenses" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="lastedit_date" jdbcType="TIMESTAMP" property="lasteditDate" />
+    <result column="kind" jdbcType="VARCHAR" property="kind" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="school_depart_date" jdbcType="TIMESTAMP" property="schoolDepartDate" />
+    <result column="school_depart_place" jdbcType="VARCHAR" property="schoolDepartPlace" />
+    <result column="offsch_depart_date" jdbcType="TIMESTAMP" property="offschDepartDate" />
+    <result column="offsch_depart_place" jdbcType="VARCHAR" property="offschDepartPlace" />
+    <result column="driver" jdbcType="VARCHAR" property="driver" />
+    <result column="guardian_teacher" jdbcType="VARCHAR" property="guardianTeacher" />
+    <collection property="studens" ofType="com.wuxue.model.Student">
+      <result column="pk_student" jdbcType="VARCHAR" property="pkStudent" />
+      <result column="studentName" jdbcType="VARCHAR" property="caption" />
+      <result column="code" jdbcType="VARCHAR" property="code" />
+      <result column="img" jdbcType="VARCHAR" property="img" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_school_bus, pk_domain, caption, bus_code, num, current_num,
+    sort, isvalid, expenses, creator, creation_date, modifier, lastedit_date,kind,
+    memo, school_depart_date,school_depart_place,offsch_depart_date,offsch_depart_place,
+    driver,guardian_teacher
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.SchoolBus">
+    select
+    <include refid="Base_Column_List" />
+    from school_bus
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="caption != null and caption !=''" >
+      and caption LIKE "%"#{caption}"%"
+    </if>
+    ORDER BY lastedit_date DESC
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from school_bus
+    where pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from school_bus
+    where pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SchoolBus">
+    insert into school_bus (pk_school_bus, pk_domain,
+      caption, bus_code,
+      num, current_num, sort, 
+      isvalid, expenses, creator, 
+      creation_date, modifier, lastedit_date,kind,
+      memo, school_depart_date,school_depart_place,offsch_depart_date,offsch_depart_place,
+      driver,guardian_teacher
+      )
+    values (#{pkSchoolBus,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR},
+      #{caption,jdbcType=VARCHAR}, #{busCode,jdbcType=VARCHAR},
+      #{num,jdbcType=INTEGER}, #{currentNum,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
+      #{isvalid,jdbcType=INTEGER}, #{expenses,jdbcType=DECIMAL}, #{creator,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP},
+      #{kind,jdbcType=VARCHAR},#{memo,jdbcType=VARCHAR},#{schoolDepartDate,jdbcType=TIMESTAMP},#{schoolDepartPlace,jdbcType=VARCHAR},
+      #{offschDepartDate,jdbcType=TIMESTAMP},#{offschDepartPlace,jdbcType=VARCHAR},#{driver,jdbcType=VARCHAR},
+      #{guardianTeacher,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SchoolBus">
+    insert into school_bus
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkSchoolBus != null">
+        pk_school_bus,
+      </if>
+      <if test="pkDomain != null">
+        pk_domain,
+      </if>
+      <if test="caption != null">
+        caption,
+      </if>
+      <if test="busCode != null">
+        bus_code,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="currentNum != null">
+        current_num,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="isvalid != null">
+        isvalid,
+      </if>
+      <if test="expenses != null">
+        expenses,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date,
+      </if>
+      <if test="kind != null">
+        kind,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="schoolDepartDate != null">
+        school_depart_date,
+      </if>
+      <if test="schoolDepartPlace != null">
+        school_depart_place,
+      </if>
+      <if test="offschDepartDate != null">
+        offsch_depart_date,
+      </if>
+      <if test="offschDepartPlace != null">
+        offsch_depart_place,
+      </if>
+      <if test="driver != null">
+        driver,
+      </if>
+      <if test="guardianTeacher != null">
+        guardian_teacher,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkSchoolBus != null">
+        #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null">
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null">
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="busCode != null">
+        #{busCode,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="currentNum != null">
+        #{currentNum,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null">
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="expenses != null">
+        #{expenses,jdbcType=DECIMAL},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kind != null">
+        #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolDepartDate != null">
+        #{schoolDepartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="schoolDepartPlace != null">
+        #{schoolDepartPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="offschDepartDate != null">
+        #{offschDepartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offschDepartPlace != null">
+        #{offschDepartPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="driver != null">
+        #{driver,jdbcType=VARCHAR},
+      </if>
+      <if test="guardianTeacher != null">
+        #{guardianTeacher,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SchoolBus">
+    update school_bus
+    <set>
+      <if test="pkDomain != null">
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null">
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="busCode != null">
+        bus_code = #{busCode,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="currentNum != null">
+        current_num = #{currentNum,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null">
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="expenses != null">
+        expenses = #{expenses,jdbcType=DECIMAL},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kind != null">
+        kind = #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolDepartDate != null">
+        school_depart_date = #{schoolDepartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="schoolDepartPlace != null">
+        school_depart_place = #{schoolDepartPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="offschDepartDate != null">
+        offsch_depart_date = #{offschDepartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offschDepartPlace != null">
+        offsch_depart_place = #{offschDepartPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="driver != null">
+        driver = #{driver,jdbcType=VARCHAR},
+      </if>
+      <if test="guardianTeacher != null">
+        guardian_teacher = #{guardianTeacher,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SchoolBus">
+    update school_bus
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      bus_code = #{busCode,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      current_num = #{currentNum,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      expenses = #{expenses,jdbcType=DECIMAL},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      kind = #{kind,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      school_depart_date = #{schoolDepartDate,jdbcType=TIMESTAMP},
+      school_depart_place = #{schoolDepartPlace,jdbcType=VARCHAR},
+      offsch_depart_date = #{offschDepartDate,jdbcType=TIMESTAMP},
+      offsch_depart_place = #{offschDepartPlace,jdbcType=VARCHAR},
+      driver = #{driver,jdbcType=VARCHAR},
+      guardian_teacher = #{guardianTeacher,jdbcType=VARCHAR}
+    where pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findStudentInfosByBusId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select sb.pk_school_bus ,sb.num num,sb.current_num ,
+     s.pk_student,s.caption studentName,s.code ,s.img
+     from school_bus sb 
+    left join school_bus_student sbs on sb.pk_school_bus = sbs.pk_school_bus
+    left join student s on sbs.pk_student = s.pk_student
+    where sb.pk_school_bus=#{pkSchoolBus}
+   </select>
+
+  <select id="findBusIdByUserId" parameterType="java.lang.String" resultType="com.wuxue.base.ResultEntity">
+    select pk_school_bus schoolbusId from school_bus where guardian_teacher = #{userId} and isvalid = 1
+  </select>
+</mapper>

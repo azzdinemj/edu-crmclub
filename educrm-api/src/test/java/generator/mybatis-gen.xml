@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!-- MYSQL -->
+    <classPathEntry
+            location="/Users/tanluoyu/.m2/repository/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar"/>
+
+    <context id="tbc-hss" targetRuntime="MyBatis3">
+
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+        <!-- 增加分页处理 -->
+        <plugin type="com.wuxue.api.utils.plugins.MysqlPaginationPlugin"></plugin>
+
+        <commentGenerator type="com.wuxue.api.utils.plugins.MyCommentGenerator">
+            <property name="suppressDate" value="true"/>
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+        <!-- mysql -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        userId="root" password="shmy6451"
+                        connectionURL="jdbc:mysql://119.27.172.73:3306/wuxuedb"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- bean 实体类 生成包 -->
+        <javaModelGenerator targetPackage="com.wuxue.model.junhwa"
+                            targetProject="wuxue-model/src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="false" />
+        </javaModelGenerator>
+
+        <!-- mybatis Sql配置文件 -->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="wuxue-api/src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!-- mapper Dao接口类 -->
+        <javaClientGenerator targetPackage="com.wuxue.api.mapper"
+                             targetProject="wuxue-api/src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true" />
+            <property name="methodNameCalculator" value="extended" />
+        </javaClientGenerator>
+
+        <!-- 需要生成的表的名称 -->
+        <!--<table tableName="t_els_course_category" domainObjectName="HssCourseCategory">-->
+        <!--</table>-->
+
+        <!--<table tableName="t_class_activity" domainObjectName="ClassActivity"></table>-->
+        <!--<table tableName="t_race_awards" domainObjectName="RaceAwards"></table>-->
+        <!--<table tableName="t_race_record" domainObjectName="RaceRecord"></table>-->
+        <!--<table tableName="t_awards_student" domainObjectName="AwardsStudent"></table>-->
+        <!--<table tableName="student_nutrition_analysis" domainObjectName="StudentNutritionAnalysis"></table>-->
+
+
+    </context>
+
+</generatorConfiguration>
+

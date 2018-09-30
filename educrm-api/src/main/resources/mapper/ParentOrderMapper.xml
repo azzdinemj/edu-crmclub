@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.ParentOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.ParentOrder" >
+    <id column="pk_order" property="pkOrder" jdbcType="VARCHAR" />
+    <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
+    <result column="meal_date" property="mealDate" jdbcType="TIMESTAMP" />
+    <result column="pk_linkman" property="pkLinkman" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="set_meal_id" property="setMealId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="ispay" property="ispay" jdbcType="INTEGER" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="MealCountResultMap" type="com.wuxue.model.MealCount" >
+    <result column="set_meal_id" property="setMealId" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="meal_date" property="mealDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="OrderForRecord" type="com.wuxue.model.ParentOrder" >
+    <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+    <result column="set_meal_name" property="setMealName" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="meal_date" property="mealDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_order, order_date, meal_date, pk_linkman, pk_student, set_meal_id, type, cost, 
+    ispay, isvalid, longitude, latitude, creation_date, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.ParentOrder" >
+    select
+    <include refid="Base_Column_List" />
+    from parent_order
+    where isvalid != 0
+    <if test="pkStudent != null and pkStudent!= ''">
+      and pk_student=#{pkStudent}
+    </if>
+    <if test="type != null">
+      and type=#{type}
+    </if>
+    <if test="mealDate != null" >
+      and STR_TO_DATE(meal_date,'%Y-%m-%d') = STR_TO_DATE(#{mealDate},'%Y-%m-%d')
+    </if>
+    <if test="fromDate != null">
+      <![CDATA[ and meal_date >= #{fromDate} ]]>
+    </if>
+    <if test="toDate != null">
+      <![CDATA[ and meal_date <= #{toDate} ]]>
+    </if>
+  </select>
+  <select id="selectForCanteen" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    SELECT o.meal_date,o.type FROM parent_pay p LEFT JOIN
+    (SELECT *
+    from parent_order
+    where set_meal_id in
+    (SELECT pk_set_meal from canteen_setmeal where pk_canteen = #{pkCanteen,jdbcType=VARCHAR})) o
+    ON
+    o.pk_order =p.pk_order where 1=1 <![CDATA[ and meal_date >= #{fromDate} ]]> <![CDATA[ and meal_date < #{toDate} ]]>
+    ORDER BY o.meal_date;
+    <!--<if test="fromDate != null">-->
+      <!--<![CDATA[ and meal_date >= #{fromDate} ]]>-->
+    <!--</if>-->
+    <!--<if test="toDate != null">-->
+      <!--<![CDATA[ and meal_date <= #{toDate} ]]>-->
+    <!--</if>-->
+  </select>
+  <select id="selectNotOrderList" resultMap="MealCountResultMap" parameterType="com.wuxue.model.ParentOrder" >
+    SELECT
+        pk_linkman
+    FROM
+        student_linkman
+    WHERE
+	pk_student IN ( SELECT pk_student FROM student WHERE istype = 1 AND pk_student NOT IN ( SELECT pk_student FROM parent_order where 1=1
+    <if test="mealDate != null" >
+      and STR_TO_DATE(meal_date,'%Y-%m-%d') = STR_TO_DATE(#{mealDate},'%Y-%m-%d')
+    </if>
+	) )
+  </select>
+  <select id="selectByType" resultMap="MealCountResultMap" parameterType="java.util.Map" >
+    SELECT
+    o.set_meal_id set_meal_id,count(o.set_meal_id) num ,o.meal_date meal_date
+    from parent_pay p
+    LEFT JOIN
+      (SELECT * from parent_order WHERE set_meal_id in (SELECT c.pk_set_meal FROM canteen_setmeal c where c.pk_canteen=#{pkCanteen,jdbcType=VARCHAR})) o
+
+      ON p.pk_order=o.pk_order where o.type=#{type,jdbcType=INTEGER} <![CDATA[ and meal_date >= #{fromDate} ]]> <![CDATA[ and meal_date < #{toDate} ]]>
+      GROUP BY o.set_meal_id
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from parent_order
+    where pk_order = #{pkOrder,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByStudent" resultMap="BaseResultMap" parameterType="com.wuxue.model.ParentOrder" >
+    select
+    <include refid="Base_Column_List" />
+    from parent_order
+    where pk_student = #{pkStudent,jdbcType=VARCHAR} AND type = #{type,jdbcType=INTEGER}
+    and  datediff(meal_date,#{mealDate,jdbcType=TIMESTAMP})=0
+
+  </select>
+  <select id="selectForRecord" resultMap="OrderForRecord" parameterType="com.wuxue.model.ParentOrder" >
+    SELECT
+     s.pk_student pkStudent,s.caption student_name,s.sex sex,p.meal_date meal_date,p.type type,m.set_meal_name  set_meal_name
+    from
+    (select * from parent_order where 1=1
+    <if test="studentName != null and studentName != ''">
+      and pk_student IN (select pk_student from student d where d.caption LIKE "%"#{studentName,jdbcType=VARCHAR}"%")
+    </if>
+    ) p
+    LEFT JOIN
+    student s
+    ON
+    p.pk_student = s.pk_student
+    LEFT JOIN
+    set_meal m
+    ON
+    p.set_meal_id = m.pk_set_meal
+    where 1=1
+    <if test="fromDate != null">
+      <![CDATA[ and meal_date >= #{fromDate} ]]>
+    </if>
+    <if test="toDate != null">
+      <![CDATA[ and meal_date <= #{toDate} ]]>
+    </if>
+    <if test="type != null">
+      and p.type=#{type}
+    </if>
+    <if test="pkClassinfo != null and pkClassinfo != ''">
+      and p.pk_student in (SELECT pk_student from classinfo_student where pk_classinfo=#{pkClassinfo})
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from parent_order
+    where pk_order = #{pkOrder,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.ParentOrder" >
+    insert into parent_order (pk_order, order_date, meal_date, 
+      pk_linkman, pk_student, set_meal_id, 
+      type, cost, ispay, 
+      isvalid, longitude, latitude, 
+      creation_date, lastedit_date)
+    values (#{pkOrder,jdbcType=VARCHAR}, #{orderDate,jdbcType=TIMESTAMP}, #{mealDate,jdbcType=TIMESTAMP}, 
+      #{pkLinkman,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{setMealId,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{cost,jdbcType=DECIMAL}, #{ispay,jdbcType=INTEGER}, 
+      #{isvalid,jdbcType=INTEGER}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.ParentOrder" >
+    insert into parent_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkOrder != null" >
+        pk_order,
+      </if>
+      <if test="orderDate != null" >
+        order_date,
+      </if>
+      <if test="mealDate != null" >
+        meal_date,
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="setMealId != null" >
+        set_meal_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="ispay != null" >
+        ispay,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkOrder != null" >
+        #{pkOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null" >
+        #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mealDate != null" >
+        #{mealDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkLinkman != null" >
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealId != null" >
+        #{setMealId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="ispay != null" >
+        #{ispay,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.ParentOrder" >
+    update parent_order
+    <set >
+      <if test="orderDate != null" >
+        order_date = #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mealDate != null" >
+        meal_date = #{mealDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealId != null" >
+        set_meal_id = #{setMealId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="ispay != null" >
+        ispay = #{ispay,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_order = #{pkOrder,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.ParentOrder" >
+    update parent_order
+    set order_date = #{orderDate,jdbcType=TIMESTAMP},
+      meal_date = #{mealDate,jdbcType=TIMESTAMP},
+      pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      set_meal_id = #{setMealId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      cost = #{cost,jdbcType=DECIMAL},
+      ispay = #{ispay,jdbcType=INTEGER},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_order = #{pkOrder,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByCondition" parameterType="com.wuxue.model.ParentOrder" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List"/>
+      from parent_order
+      where pk_student = #{pkStudent}
+      <if test="startDate != null and startDate != '' or endDate != null and endDate != ''">
+        and meal_date between #{startDate} and #{endDate}
+      </if>
+      <if test="mealDate != null">
+        and meal_date = #{mealDate}
+      </if>
+      <if test="type != null">
+        and type = #{type}
+      </if>
+      -- and ispay = 1
+  </select>
+
+  <resultMap id="ParentOrderAnalysisMap" type="com.wuxue.model.ParentOrder">
+      <id column="pk_order" property="pkOrder" jdbcType="VARCHAR"/>
+      <result column="order_date" property="orderDate" jdbcType="TIMESTAMP"/>
+      <result column="pk_student" property="pkStudent" jdbcType="VARCHAR"/>
+      <result column="set_meal_id" property="setMealId" jdbcType="VARCHAR"/>
+      <association property="setMeal" javaType="com.wuxue.model.SetMeal">
+          <id column="pk_set_meal" property="pkSetMeal" jdbcType="VARCHAR"/>
+          <result column="set_meal_name" property="setMealName" jdbcType="VARCHAR"/>
+          <collection property="Materials" ofType="com.wuxue.model.junhwa.Material">
+              <id column="material_id" jdbcType="VARCHAR" property="materialId" />
+              <result column="material_name" jdbcType="VARCHAR" property="materialName" />
+              <result column="gram" jdbcType="VARCHAR" property="gram" />
+              <collection property="nutritions" ofType="com.wuxue.model.junhwa.Nutrition">
+                  <id column="nutrition_id" jdbcType="VARCHAR" property="nutritionId" />
+                  <result column="nutrition_name" jdbcType="VARCHAR" property="nutritionName" />
+                  <result column="can_eat_percent" jdbcType="VARCHAR" property="canEatPercent" />
+                  <result column="code" jdbcType="VARCHAR" property="code" />
+                  <result column="unit" jdbcType="VARCHAR" property="unit" />
+                  <result column="content" jdbcType="DECIMAL" property="content" />
+              </collection>
+          </collection>
+      </association>
+  </resultMap>
+  <select id="selectAllInfoByStudentId" parameterType="com.wuxue.model.ParentOrder"
+          resultMap="ParentOrderAnalysisMap">
+      select  h.*,n.* from (select psmm.*,m.material_name from (select psm.*,mm.material_id,mm.gram from
+      (select po.pk_order,po.pk_student,sm.pk_set_meal,sm.set_meal_name from parent_order as po  left join  set_meal as sm
+      on po.set_meal_id = sm.pk_set_meal
+      where po.pk_student=#{pkStudent})psm left join meal_material mm
+      on psm.pk_set_meal = mm.set_meal_id)psmm left join material m
+      on psmm.material_id = m.material_id) h left join nutrition n
+      on h.material_id =  n.material_id
+  </select>
+
+  <!--<resultMap id="MaterialGramMap" type="HashMap">-->
+    <!--<result column="id" property="key"  />-->
+    <!--<result column="gra" property="value" />-->
+  <!--</resultMap>-->
+
+  <select id="getMaterialIdAndGramCountList" parameterType="com.wuxue.model.ParentOrder" resultType="com.wuxue.base.ResultEntity">
+    select m.material_id id,sum(mm.gram) count
+    from parent_order po
+    left join set_meal sm on po.set_meal_id = sm.pk_set_meal
+    left join meal_material mm on sm.pk_set_meal = mm.set_meal_id
+    left join material m on mm.material_id = m.material_id
+    where po.pk_student =#{pkStudent}
+    <if test="startDate != null and endDate != null">
+      and po.meal_date between #{startDate} and #{endDate}
+    </if>
+    and po.ispay=1
+    group by m.material_id
+  </select>
+
+  <select id="getParentOrderListByIds" resultMap="BaseResultMap">
+    select * from parent_order
+    where isvalid != 0
+    <if test="ids != null and ids.size > 0">
+      and pk_order in
+      <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+  </select>
+  <select id="getNonPaymentOrderMoneySum" parameterType="java.lang.String"  resultType="java.math.BigDecimal">
+    select sum(po.cost) from parent_order po where po.pk_student=#{pkStudent} and  po.ispay = 0
+  </select>
+
+  <select id="getParentOrderPaySum" resultType="java.math.BigDecimal">
+-- ispay = 1 and
+    select sum(cost) from parent_order
+    where pk_student = #{pkStudent} and ispay = 0 and isvalid != 0
+  </select>
+
+  <select id="selectMealStatisticsByPkStudent" parameterType="java.lang.String" resultType="com.wuxue.base.ResultEntity">
+    select sm.set_meal_name setMealName,count(*) count from parent_order po
+    left join set_meal sm on po.set_meal_id = sm.pk_set_meal
+    where po.pk_student=#{pkStudent}
+    and po.ispay=1
+    group by po.set_meal_id
+  </select>
+</mapper>

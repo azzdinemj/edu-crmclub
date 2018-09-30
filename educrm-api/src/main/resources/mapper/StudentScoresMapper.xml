@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.StudentScoresMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.StudentScores" >
+    <id column="pk_student_test_plans_scores" property="pkStudentTestPlansScores" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="pk_cource" property="pkCource" jdbcType="VARCHAR" />
+    <result column="pk_employee" property="pkEmployee" jdbcType="VARCHAR" />
+    <result column="pk_classinfo" property="pkClassinfo" jdbcType="VARCHAR" />
+    <result column="pk_plans" property="pkPlans" jdbcType="VARCHAR" />
+    <result column="pk_student_test_plans" property="pkStudentTestPlans" jdbcType="VARCHAR" />
+    <result column="scores" property="scores" jdbcType="DECIMAL" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="year" property="year" jdbcType="TIMESTAMP" />
+    <result column="term" property="term" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_student_test_plans_scores, pk_domain, pk_student, pk_cource, pk_employee, pk_classinfo,
+    pk_plans, pk_student_test_plans, scores, memo, creator, creation_date, modifier, 
+    lastedit_date,code,weight,year,term
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_scores
+    where pk_student_test_plans_scores = #{pkStudentTestPlansScores,jdbcType=VARCHAR}
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.StudentScores" >
+    select
+    <include refid="Base_Column_List" />
+    from student_scores
+    where 1=1
+    <if test="pkDomain != null and pkDomain != ''" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkStudent != null and pkStudent != ''" >
+      and pk_student = #{pkStudent}
+    </if>
+    <if test="pkPlans != null and pkPlans != ''" >
+      and pk_plans = #{pkPlans}
+    </if>
+    <if test="term != null and term != ''" >
+      and term = #{term}
+    </if>
+    <if test="pkCource != null and pkCource != ''" >
+      and pk_cource = #{pkCource}
+    </if>
+    <if test="year != null" >
+      <![CDATA[ and year = #{year} ]]>
+    </if>
+    <if test="pkClassinfo != null and pkClassinfo != ''" >
+      and pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR}
+    </if>
+    <if test="caption != null and caption != ''" >
+      and pk_student in (SELECT pk_student FROM  student where caption LIKE "%"#{caption}"%")
+    </if>
+  </select>
+  <select id="selectCourseByStu" resultMap="BaseResultMap" parameterType="com.wuxue.model.StudentScores" >
+    select
+    <include refid="Base_Column_List" />
+    from student_scores
+    where 1=1
+    <if test="pkDomain != null and pkDomain != ''" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkStudent != null and pkStudent != ''" >
+      and pk_student = #{pkStudent}
+    </if>
+    <if test="pkPlans != null and pkPlans != ''" >
+      and pk_plans = #{pkPlans}
+    </if>
+    <if test="term != null and term != ''" >
+      and term = #{term}
+    </if>
+    <if test="year != null" >
+      <![CDATA[ and year = #{year} ]]>
+    </if>
+    GROUP BY pk_cource
+  </select>
+  <select id="selectByCourseAndPalns" resultMap="BaseResultMap" parameterType="com.wuxue.model.StudentScores" >
+    select
+    <include refid="Base_Column_List" />
+    from student_scores
+    where 1=1
+    <if test="pkDomain != null and pkDomain != ''" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="pkStudent != null and pkStudent != ''" >
+      and pk_student = #{pkStudent}
+    </if>
+    <if test="pkPlans != null and pkPlans != ''" >
+      and pk_plans = #{pkPlans}
+    </if>
+    <if test="pkCource != null and pkCource != ''" >
+      and pk_cource = #{pkCource}
+    </if>
+    <if test="term != null and term != ''" >
+      and term = #{term}
+    </if>
+    <if test="year != null" >
+      <![CDATA[ and year = #{year} ]]>
+    </if>
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student_scores
+    where pk_student_test_plans_scores = #{pkStudentTestPlansScores,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.StudentScores" >
+    insert into student_scores (pk_student_test_plans_scores, pk_domain, 
+      pk_student, pk_cource, pk_employee,
+      pk_classinfo, pk_plans, pk_student_test_plans, 
+      scores, memo, creator, 
+      creation_date, modifier, lastedit_date,code,weight,year,term
+      )
+    values (#{pkStudentTestPlansScores,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, 
+      #{pkStudent,jdbcType=VARCHAR}, #{pkCource,jdbcType=VARCHAR}, #{pkEmployee,jdbcType=VARCHAR},
+      #{pkClassinfo,jdbcType=VARCHAR}, #{pkPlans,jdbcType=VARCHAR}, #{pkStudentTestPlans,jdbcType=VARCHAR}, 
+      #{scores,jdbcType=DECIMAL}, #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP},
+      #{code,jdbcType=VARCHAR},#{weight,jdbcType=DECIMAL},#{year,jdbcType=TIMESTAMP},#{term,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.StudentScores" >
+    insert into student_scores
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkStudentTestPlansScores != null" >
+        pk_student_test_plans_scores,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkCource != null" >
+        pk_cource,
+      </if>
+      <if test="pkEmployee != null" >
+        pk_employee,
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo,
+      </if>
+      <if test="pkPlans != null" >
+        pk_plans,
+      </if>
+      <if test="pkStudentTestPlans != null" >
+        pk_student_test_plans,
+      </if>
+      <if test="scores != null" >
+        scores,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="term != null" >
+        term,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkStudentTestPlansScores != null" >
+        #{pkStudentTestPlansScores,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkCource != null" >
+        #{pkCource,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null" >
+        #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null" >
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pkPlans != null" >
+        #{pkPlans,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudentTestPlans != null" >
+        #{pkStudentTestPlans,jdbcType=VARCHAR},
+      </if>
+      <if test="scores != null" >
+        #{scores,jdbcType=DECIMAL},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=TIMESTAMP},
+      </if>
+      <if test="term != null" >
+        #{term,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.StudentScores" >
+    update student_scores
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkCource != null" >
+        pk_cource = #{pkCource,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null" >
+        pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pkPlans != null" >
+        pk_plans = #{pkPlans,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudentTestPlans != null" >
+        pk_student_test_plans = #{pkStudentTestPlans,jdbcType=VARCHAR},
+      </if>
+      <if test="scores != null" >
+        scores = #{scores,jdbcType=DECIMAL},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=TIMESTAMP},
+      </if>
+      <if test="term != null" >
+        term = #{term,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_student_test_plans_scores = #{pkStudentTestPlansScores,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.StudentScores" >
+    update student_scores
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_cource = #{pkCource,jdbcType=VARCHAR},
+      pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      pk_plans = #{pkPlans,jdbcType=VARCHAR},
+      pk_student_test_plans = #{pkStudentTestPlans,jdbcType=VARCHAR},
+      scores = #{scores,jdbcType=DECIMAL},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      code = #{code,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=DECIMAL},
+      year = #{year,jdbcType=TIMESTAMP},
+      term = #{term,jdbcType=VARCHAR},
+    where pk_student_test_plans_scores = #{pkStudentTestPlansScores,jdbcType=VARCHAR}
+  </update>
+</mapper>

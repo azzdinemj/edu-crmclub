@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SetMealMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.SetMeal" >
+    <id column="pk_set_meal" property="pkSetMeal" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="set_meal_name" property="setMealName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="meal_number" property="mealNumber" jdbcType="INTEGER" />
+    <result column="pk_canteen" property="pkCanteen" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="defaults" property="defaults" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="nutrition_name" property="nutritionName" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="from_date" property="fromDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+    <result column="week_day" property="weekDay" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_set_meal, code, set_meal_name, type, price, isvalid, defaults,memo, creator, creation_date,
+    modifier, lastedit_date,week_day
+  </sql>
+  <select id="findAllergy" resultMap="BaseResultMap" parameterType="com.wuxue.model.SetMeal" >
+    SELECT
+        m.set_meal_id as pk_set_meal
+    FROM
+        student_allergy s
+	LEFT JOIN meal_material m ON s.pk_material = m.material_id
+	where 1=1
+    <if test="pkStudent != null and pkStudent != ''">
+      and s.pk_student = #{pkStudent}
+    </if>
+    <if test="pkSetMeal != null" >
+      and m.material_id = #{pkSetMeal}
+    </if>
+    GROUP BY
+	m.set_meal_id
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.SetMeal" >
+    select 
+    s.*,c.pk_canteen
+    from set_meal s LEFT JOIN canteen_setmeal c on s.pk_set_meal = c.pk_set_meal
+    where s.isvalid != 3
+    <!--<if test="pkStudent != null and pkStudent != ''">-->
+      <!--and pk_student = #{pkStudent}-->
+    <!--</if>-->
+    <if test="type != null">
+      and s.type = #{type}
+    </if>
+    <if test="isvalid != null">
+      and s.isvalid = #{isvalid}
+    </if>
+    <if test="code != null and code != ''" >
+      and s.code = #{code}
+    </if>
+    <if test="defaults != null" >
+      and s.defaults = #{defaults}
+    </if>
+    <if test="pkCanteen != null and pkCanteen != ''">
+      and c.pk_canteen = #{pkCanteen}
+    </if>
+    <if test="weekDay != null">
+      and s.week_day = #{weekDay}
+    </if>
+  </select>
+  <select id="selectNutrition" resultMap="BaseResultMap" parameterType="com.wuxue.model.SetMeal" >
+    SELECT
+      sm.set_meal_name,
+      (select sum(gram) from meal_material where 1=1
+    <if test="pkSetMeal != null" >
+      and set_meal_id = #{pkSetMeal}
+    </if>
+    )*sum(n.content) as content,
+      n.nutrition_name as nutrition_name,
+      n.unit as unit
+    FROM
+      set_meal sm
+    LEFT JOIN meal_material mm ON sm.pk_set_meal = mm.set_meal_id
+    LEFT JOIN nutrition n on mm.material_id = n.material_id
+    WHERE 1=1
+    <if test="pkSetMeal != null" >
+      and sm.pk_set_meal = #{pkSetMeal}
+    </if>
+    GROUP BY n.code
+    ORDER BY mm.material_id
+  </select>
+  <select id="mealStatistics" resultMap="BaseResultMap" parameterType="com.wuxue.model.SetMeal" >
+      SELECT
+	count( p.pk_order ) AS meal_number,
+	s.*,p.meal_date as mealDate
+      FROM
+          ( SELECT * FROM parent_order WHERE isvalid = 1 ) p
+          RIGHT JOIN set_meal s ON p.set_meal_id = s.pk_set_meal
+      where 1=1
+    <if test="type != null and type != ''" >
+      and s.type = #{type}
+    </if>
+    <if test="fromDate != null" >
+      and datediff(p.meal_date,#{fromDate})=0
+    </if>
+    GROUP BY
+	s.pk_set_meal
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from set_meal
+    where pk_set_meal = #{pkSetMeal,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from set_meal
+    where pk_set_meal = #{pkSetMeal,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.SetMeal" >
+    insert into set_meal (pk_set_meal, code, set_meal_name, 
+      type, price, isvalid, defaults,memo,
+      creator, creation_date, modifier, 
+      lastedit_date,week_day)
+    values (#{pkSetMeal,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{setMealName,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{isvalid,jdbcType=INTEGER},  #{defaults,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR},
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP},#{weekDay,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.SetMeal" >
+    insert into set_meal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSetMeal != null" >
+        pk_set_meal,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="setMealName != null" >
+        set_meal_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="defaults != null" >
+        defaults,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="weekDay != null" >
+        week_day,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSetMeal != null" >
+        #{pkSetMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealName != null" >
+        #{setMealName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="defaults != null" >
+        #{defaults,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weekDay != null" >
+        #{weekDay,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SetMeal" >
+    update set_meal
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealName != null" >
+        set_meal_name = #{setMealName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="defaults != null" >
+        defaults = #{defaults,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weekDay != null" >
+        week_day = #{weekDay,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_set_meal = #{pkSetMeal,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.SetMeal" >
+    update set_meal
+    set code = #{code,jdbcType=VARCHAR},
+      set_meal_name = #{setMealName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      defaults = #{defaults,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      week_day = #{weekDay,jdbcType=INTEGER}
+    where pk_set_meal = #{pkSetMeal,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findSetMealByIds" resultMap="BaseResultMap">
+    select *
+    from set_meal
+    where 1 = 1
+    <if test="setMealIds != null and setMealIds.size > 0">
+      and pk_set_meal in
+      <foreach collection="setMealIds" item="id" index="index" open="(" separator="," close=")" >
+        #{id}
+      </foreach>
+    </if>
+  </select>
+</mapper>

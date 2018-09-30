@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.TkLearnRecordsMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.TkLearnRecords" >
+    <id column="pk_learn_records" property="pkLearnRecords" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="pk_schedule" property="pkSchedule" jdbcType="VARCHAR" />
+    <result column="product_type" property="productType" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_learn_records, pk_student, pk_schedule, product_type, `type`, creator, creation_date,
+    modifier, lastedit_date
+  </sql>
+
+  <!--通用查询-->
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.TkLearnRecords">
+    select
+    <include refid="Base_Column_List"/>
+    from tk_learn_records
+    where 1=1
+    <if test="pkStudent!=null and pkStudent!=''">
+     and pk_student=#{pkStudent}
+    </if>
+    <if test="pkSchedule!=null and pkSchedule!=''">
+      and pk_schedule=#{pkSchedule}
+    </if>
+  </select>
+
+  <!--通用计数-->
+  <select id="" resultType="java.lang.Integer" parameterType="com.wuxue.model.TkLearnRecords">
+    select count(*) FROM  tk_learn_records where 1=1
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tk_learn_records
+    where pk_learn_records = #{pkLearnRecords,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tk_learn_records
+    where pk_learn_records = #{pkLearnRecords,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.TkLearnRecords" >
+    insert into tk_learn_records (pk_learn_records, pk_student, pk_schedule,
+      product_type, `type`, creator,
+      creation_date, modifier, lastedit_date
+      )
+    values (#{pkLearnRecords,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, #{pkSchedule,jdbcType=VARCHAR},
+      #{productType,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.TkLearnRecords" >
+    insert into tk_learn_records
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkLearnRecords != null" >
+        pk_learn_records,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="productType != null" >
+        product_type,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="pkSchedule != null" >
+        pk_schedule,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkLearnRecords != null" >
+        #{pkLearnRecords,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkSchedule != null" >
+        #{pkSchedule,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.TkLearnRecords" >
+    update tk_learn_records
+    <set >
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null" >
+        product_type = #{productType,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkSchedule != null" >
+        pk_schedule = #{pkSchedule,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where pk_learn_records = #{pkLearnRecords,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.TkLearnRecords" >
+    update tk_learn_records
+    set pk_student = #{pkStudent,jdbcType=VARCHAR},
+      product_type = #{productType,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+       pk_schedule = #{pkSchedule,jdbcType=VARCHAR},
+    where pk_learn_records = #{pkLearnRecords,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.QuestionsPaperMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.QuestionsPaper" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="INTEGER" />
+    <result column="questions_subject_id" property="questionsSubjectId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="CHAR" />
+    <result column="explain" property="explain" jdbcType="VARCHAR" />
+    <result column="takes" property="takes" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="REAL" />
+    <result column="passscore" property="passscore" jdbcType="INTEGER" />
+    <result column="regdate" property="regdate" jdbcType="TIMESTAMP" />
+    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, `type`, project_id, questions_subject_id, title, `explain`, takes, `year`, score, passscore,
+    regdate, modifydate, status, version, isdel
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.QuestionsPaper" >
+    select
+    <include refid="Base_Column_List" />
+    from questions_paper
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from questions_paper
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from questions_paper
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.QuestionsPaper" >
+    insert into questions_paper (id, `type`, project_id,
+      questions_subject_id, title, `explain`,
+      takes, `year`, score, passscore,
+      regdate, modifydate, status, 
+      version, isdel)
+    values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{projectId,jdbcType=INTEGER}, 
+      #{questionsSubjectId,jdbcType=VARCHAR}, #{title,jdbcType=CHAR}, #{explain,jdbcType=VARCHAR}, 
+      #{takes,jdbcType=INTEGER}, #{year,jdbcType=VARCHAR}, #{score,jdbcType=REAL}, #{passscore,jdbcType=INTEGER}, 
+      #{regdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{version,jdbcType=INTEGER}, #{isdel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.QuestionsPaper" >
+    insert into questions_paper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="questionsSubjectId != null" >
+        questions_subject_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="explain != null" >
+        `explain`,
+      </if>
+      <if test="takes != null" >
+        takes,
+      </if>
+      <if test="year != null" >
+        `year`,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="passscore != null" >
+        passscore,
+      </if>
+      <if test="regdate != null" >
+        regdate,
+      </if>
+      <if test="modifydate != null" >
+        modifydate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="questionsSubjectId != null" >
+        #{questionsSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=CHAR},
+      </if>
+      <if test="explain != null" >
+        #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="takes != null" >
+        #{takes,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="passscore != null" >
+        #{passscore,jdbcType=INTEGER},
+      </if>
+      <if test="regdate != null" >
+        #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.QuestionsPaper" >
+    update questions_paper
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="questionsSubjectId != null" >
+        questions_subject_id = #{questionsSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=CHAR},
+      </if>
+      <if test="explain != null" >
+        `explain` = #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="takes != null" >
+        takes = #{takes,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        `year` = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=REAL},
+      </if>
+      <if test="passscore != null" >
+        passscore = #{passscore,jdbcType=INTEGER},
+      </if>
+      <if test="regdate != null" >
+        regdate = #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.QuestionsPaper" >
+    update questions_paper
+    set type = #{type,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=INTEGER},
+      questions_subject_id = #{questionsSubjectId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=CHAR},
+      `explain` = #{explain,jdbcType=VARCHAR},
+      takes = #{takes,jdbcType=INTEGER},
+      `year` = #{year,jdbcType=VARCHAR},
+      score = #{score,jdbcType=REAL},
+      passscore = #{passscore,jdbcType=INTEGER},
+      regdate = #{regdate,jdbcType=TIMESTAMP},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

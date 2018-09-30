@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.JhQuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.JhQuestion" >
+    <id column="pk_question" property="pkQuestion" jdbcType="VARCHAR" />
+    <result column="pk_examination" property="pkExamination" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="others" property="others" jdbcType="VARCHAR" />
+    <result column="pk_sys_user" property="pkSysUser" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="types" property="types" jdbcType="INTEGER" />
+
+    <result column="other" property="other" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_question, pk_examination, caption, pk_sys_user, creator, creation_date, modifier, lastedit_date,
+    status, isdel, sort, types,other
+  </sql>
+
+  <!--通用查询-->
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.JhQuestion">
+  select
+  <include refid="Base_Column_List"/>
+  from jh_question
+  where isdel != 1 and status != 2
+  <if test="pkExamination !=null and pkExamination !=''">
+    and pk_examination=#{pkExamination}
+  </if>
+    order by sort
+  </select>
+  <select id="selectOther" resultMap="BaseResultMap" parameterType="com.wuxue.model.JhQuestion">
+    select j.other as others,a.children_name as name,j.pk_question from jh_answerdetail j LEFT JOIN jh_answer a on j.pk_answer = a.pk_answer where j.other <![CDATA[<>]]>  ""
+    <if test="pkExamination != null" >
+      and j.pk_examination = #{pkExamination}
+    </if>
+    <if test="pkQuestion != null" >
+      and j.pk_question = #{pkQuestion}
+    </if>
+  </select>
+
+  <select id="selectByUser" resultMap="BaseResultMap" parameterType="com.wuxue.model.JhQuestion">
+    select
+    <include refid="Base_Column_List"/>
+    from jh_question
+    where status = 2 and isdel != 1
+    <if test="pkExamination != null" >
+      and pk_examination = #{pkExamination}
+    </if>
+    <if test="pkSysUser != null" >
+      and pk_sys_user = #{pkSysUser}
+    </if>
+    order by sort
+  </select>
+  <!--通用计数-->
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.JhQuestion">
+    select count(*) FROM  jh_question where 1=1
+    <if test="pkExamination != null" >
+      and pk_examination = #{pkExamination}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jh_question
+    where pk_question = #{pkQuestion,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from jh_question
+    where pk_question = #{pkQuestion,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.JhQuestion" >
+    insert into jh_question (pk_question, pk_examination, caption, pk_sys_user,
+      creator, creation_date, modifier, 
+      lastedit_date, status, isdel, 
+      sort, types,other)
+    values (#{pkQuestion,jdbcType=VARCHAR}, #{pkExamination,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR},  #{pkSysUser,jdbcType=VARCHAR},
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{isdel,jdbcType=INTEGER}, 
+      #{sort,jdbcType=INTEGER}, #{types,jdbcType=INTEGER},#{other,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.JhQuestion" >
+    insert into jh_question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkQuestion != null" >
+        pk_question,
+      </if>
+      <if test="pkExamination != null" >
+        pk_examination,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="pkSysUser != null" >
+        pk_sys_user,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="types != null" >
+        types,
+      </if>
+      <if test="other != null" >
+        other,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkQuestion != null" >
+        #{pkQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="pkExamination != null" >
+        #{pkExamination,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysUser != null" >
+        #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="types != null" >
+        #{types,jdbcType=INTEGER},
+      </if>
+
+      <if test="other != null" >
+        #{other,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.JhQuestion" >
+    update jh_question
+    <set >
+      <if test="pkExamination != null" >
+        pk_examination = #{pkExamination,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSysUser != null" >
+        pk_sys_user = #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="types != null" >
+        types = #{types,jdbcType=INTEGER},
+      </if>
+
+      <if test="other != null" >
+        other = #{other,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_question = #{pkQuestion,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.JhQuestion" >
+    update jh_question
+    set pk_examination = #{pkExamination,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      pk_sys_user = #{pkSysUser,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      types = #{types,jdbcType=INTEGER},
+      other = #{other,jdbcType=INTEGER}
+    where pk_question = #{pkQuestion,jdbcType=VARCHAR}
+  </update>
+</mapper>

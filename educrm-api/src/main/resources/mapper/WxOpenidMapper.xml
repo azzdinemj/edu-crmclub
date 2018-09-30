@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.WxOpenidMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.WxOpenid" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="pk_EmpStu" property="pkEmpstu" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pk_EmpStu, `type`, openid
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.WxOpenid" >
+    select
+    *
+    from wx_openid
+    where 1=1
+    <if test="pkEmpstu != null and pkEmpstu!='' " >
+      and pk_EmpStu = #{pkEmpstu}
+    </if>
+    <if test="openid != null and openid !='' " >
+      and openid = #{openid}
+    </if>
+    <if test="type != null" >
+      and type = #{type}
+    </if>
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_openid
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_openid
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.WxOpenid" >
+    insert into wx_openid (id, pk_EmpStu, `type`,
+      openid)
+    values (#{id,jdbcType=VARCHAR}, #{pkEmpstu,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{openid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.WxOpenid" >
+    insert into wx_openid
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pkEmpstu != null" >
+        pk_EmpStu,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="openid != null" >
+        openid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmpstu != null" >
+        #{pkEmpstu,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.WxOpenid" >
+    update wx_openid
+    <set >
+      <if test="pkEmpstu != null" >
+        pk_EmpStu = #{pkEmpstu,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null" >
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.WxOpenid" >
+    update wx_openid
+    set pk_EmpStu = #{pkEmpstu,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=INTEGER},
+      openid = #{openid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

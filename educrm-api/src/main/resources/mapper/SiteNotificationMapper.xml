@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.SiteNotificationMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.shuttle.SiteNotification" >
+    <id column="pk_site_notification" property="pkSiteNotification" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="pk_school_bus" property="pkSchoolBus" jdbcType="VARCHAR" />
+    <result column="pk_school_bus_line" property="pkSchoolBusLine" jdbcType="VARCHAR" />
+    <result column="arrival_date" property="arrivalDate" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="send_many" property="sendMany" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_site_notification, pk_domain, code, pk_school_bus, pk_school_bus_line, arrival_date, 
+    state, send_many, memo, creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from site_notification
+    where pk_site_notification = #{pkSiteNotification,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from site_notification
+    where pk_site_notification = #{pkSiteNotification,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.shuttle.SiteNotification" >
+    insert into site_notification (pk_site_notification, pk_domain, code, 
+      pk_school_bus, pk_school_bus_line, arrival_date, 
+      state, send_many, memo, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkSiteNotification,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{pkSchoolBus,jdbcType=VARCHAR}, #{pkSchoolBusLine,jdbcType=VARCHAR}, #{arrivalDate,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=INTEGER}, #{sendMany,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.shuttle.SiteNotification" >
+    insert into site_notification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSiteNotification != null" >
+        pk_site_notification,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="pkSchoolBus != null" >
+        pk_school_bus,
+      </if>
+      <if test="pkSchoolBusLine != null" >
+        pk_school_bus_line,
+      </if>
+      <if test="arrivalDate != null" >
+        arrival_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="sendMany != null" >
+        send_many,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSiteNotification != null" >
+        #{pkSiteNotification,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBus != null" >
+        #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBusLine != null" >
+        #{pkSchoolBusLine,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivalDate != null" >
+        #{arrivalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="sendMany != null" >
+        #{sendMany,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.shuttle.SiteNotification" >
+    update site_notification
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBus != null" >
+        pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBusLine != null" >
+        pk_school_bus_line = #{pkSchoolBusLine,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivalDate != null" >
+        arrival_date = #{arrivalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="sendMany != null" >
+        send_many = #{sendMany,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_site_notification = #{pkSiteNotification,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.shuttle.SiteNotification" >
+    update site_notification
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      pk_school_bus_line = #{pkSchoolBusLine,jdbcType=VARCHAR},
+      arrival_date = #{arrivalDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      send_many = #{sendMany,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_site_notification = #{pkSiteNotification,jdbcType=VARCHAR}
+  </update>
+</mapper>

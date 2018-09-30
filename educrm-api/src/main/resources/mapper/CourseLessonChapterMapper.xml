@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.CourseLessonChapterMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.CourseLessonChapter" >
+    <id column="pk_course_lesson" property="pkCourseLesson" jdbcType="VARCHAR" />
+    <result column="pk_chapter" property="pkChapter" jdbcType="VARCHAR" />
+    <result column="pk_course" property="pkCourse" jdbcType="VARCHAR" />
+    <result column="sheet_type" property="sheetType" jdbcType="INTEGER" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="isopen" property="isopen" jdbcType="INTEGER" />
+    <result column="instruction" property="instruction" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_course_lesson, pk_chapter, pk_course, sheet_type, caption, sort, type, url, isopen, 
+    instruction, status, isdel, creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.CourseLessonChapter" >
+    select
+    <include refid="Base_Column_List" />
+    from course_lesson_chapter
+    where isdel != 0
+    <if test="pkCourse != null" >
+      and pk_course = #{pkCourse}
+    </if>
+    order by sort
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.CourseLessonChapter" >
+    select
+    count(*)
+    from course_lesson_chapter
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from course_lesson_chapter
+    where pk_course_lesson = #{pkCourseLesson,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from course_lesson_chapter
+    where pk_course_lesson = #{pkCourseLesson,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.CourseLessonChapter" >
+    insert into course_lesson_chapter (pk_course_lesson, pk_chapter, pk_course, 
+      sheet_type, caption, sort, 
+      type, url, isopen, 
+      instruction, status, isdel, 
+      creator, creation_date, modifier, 
+      lastedit_date)
+    values (#{pkCourseLesson,jdbcType=VARCHAR}, #{pkChapter,jdbcType=VARCHAR}, #{pkCourse,jdbcType=VARCHAR}, 
+      #{sheetType,jdbcType=INTEGER}, #{caption,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{type,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{isopen,jdbcType=INTEGER}, 
+      #{instruction,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{isdel,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.CourseLessonChapter" >
+    insert into course_lesson_chapter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkCourseLesson != null" >
+        pk_course_lesson,
+      </if>
+      <if test="pkChapter != null" >
+        pk_chapter,
+      </if>
+      <if test="pkCourse != null" >
+        pk_course,
+      </if>
+      <if test="sheetType != null" >
+        sheet_type,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="isopen != null" >
+        isopen,
+      </if>
+      <if test="instruction != null" >
+        instruction,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkCourseLesson != null" >
+        #{pkCourseLesson,jdbcType=VARCHAR},
+      </if>
+      <if test="pkChapter != null" >
+        #{pkChapter,jdbcType=VARCHAR},
+      </if>
+      <if test="pkCourse != null" >
+        #{pkCourse,jdbcType=VARCHAR},
+      </if>
+      <if test="sheetType != null" >
+        #{sheetType,jdbcType=INTEGER},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isopen != null" >
+        #{isopen,jdbcType=INTEGER},
+      </if>
+      <if test="instruction != null" >
+        #{instruction,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.CourseLessonChapter" >
+    update course_lesson_chapter
+    <set >
+      <if test="pkChapter != null" >
+        pk_chapter = #{pkChapter,jdbcType=VARCHAR},
+      </if>
+      <if test="pkCourse != null" >
+        pk_course = #{pkCourse,jdbcType=VARCHAR},
+      </if>
+      <if test="sheetType != null" >
+        sheet_type = #{sheetType,jdbcType=INTEGER},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isopen != null" >
+        isopen = #{isopen,jdbcType=INTEGER},
+      </if>
+      <if test="instruction != null" >
+        instruction = #{instruction,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_course_lesson = #{pkCourseLesson,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.CourseLessonChapter" >
+    update course_lesson_chapter
+    set pk_chapter = #{pkChapter,jdbcType=VARCHAR},
+      pk_course = #{pkCourse,jdbcType=VARCHAR},
+      sheet_type = #{sheetType,jdbcType=INTEGER},
+      caption = #{caption,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      isopen = #{isopen,jdbcType=INTEGER},
+      instruction = #{instruction,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_course_lesson = #{pkCourseLesson,jdbcType=VARCHAR}
+  </update>
+</mapper>

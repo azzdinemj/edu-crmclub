@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.DormRoomEmployeeMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.DormRoomEmployee" >
+    <id column="pk_dorm_employee" property="pkDormEmployee" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="pk_dorm_room" property="pkDormRoom" jdbcType="VARCHAR" />
+    <result column="pk_employee" property="pkEmployee" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="check_in_time" property="checkInTime" jdbcType="TIMESTAMP" />
+    <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_dorm_employee, pk_domain, code, pk_dorm_room, pk_employee, isvalid, date, check_in_time, 
+    expire_time, memo, creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.DormRoomEmployee" >
+    select
+    <include refid="Base_Column_List" />
+    from dorm_room_employee
+    where 1=1
+    <if test="isvalid != null" >
+      and isvalid = #{isvalid,jdbcType=INTEGER}
+    </if>
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain,jdbcType=VARCHAR}
+    </if>
+    <if test="pkDormRoom != null" >
+      and pk_dorm_room = #{pkDormRoom,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dorm_room_employee
+    where pk_dorm_employee = #{pkDormEmployee,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByREPrimaryKey" resultMap="BaseResultMap" parameterType="com.wuxue.model.DormRoomEmployee" >
+    select
+    <include refid="Base_Column_List" />
+    from dorm_room_employee
+    where pk_employee = #{pkEmployee,jdbcType=VARCHAR} OR pk_dorm_room = #{pkDormRoom,jdbcType=VARCHAR}
+    <if test="isvalid != null" >
+      and isvalid = #{isvalid,jdbcType=INTEGER}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dorm_room_employee
+    where pk_dorm_employee = #{pkDormEmployee,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.DormRoomEmployee" >
+    insert into dorm_room_employee (pk_dorm_employee, pk_domain, code, 
+      pk_dorm_room, pk_employee, isvalid, 
+      date, check_in_time, expire_time, 
+      memo, creator, creation_date, 
+      modifier, lastedit_date)
+    values (#{pkDormEmployee,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{pkDormRoom,jdbcType=VARCHAR}, #{pkEmployee,jdbcType=VARCHAR}, #{isvalid,jdbcType=INTEGER}, 
+      #{date,jdbcType=TIMESTAMP}, #{checkInTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP}, 
+      #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.DormRoomEmployee" >
+    insert into dorm_room_employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDormEmployee != null" >
+        pk_dorm_employee,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="pkDormRoom != null" >
+        pk_dorm_room,
+      </if>
+      <if test="pkEmployee != null" >
+        pk_employee,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="checkInTime != null" >
+        check_in_time,
+      </if>
+      <if test="expireTime != null" >
+        expire_time,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDormEmployee != null" >
+        #{pkDormEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDormRoom != null" >
+        #{pkDormRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null" >
+        #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkInTime != null" >
+        #{checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.DormRoomEmployee" >
+    update dorm_room_employee
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDormRoom != null" >
+        pk_dorm_room = #{pkDormRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null" >
+        pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkInTime != null" >
+        check_in_time = #{checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_dorm_employee = #{pkDormEmployee,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.DormRoomEmployee" >
+    update dorm_room_employee
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      pk_dorm_room = #{pkDormRoom,jdbcType=VARCHAR},
+      pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      date = #{date,jdbcType=TIMESTAMP},
+      check_in_time = #{checkInTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_dorm_employee = #{pkDormEmployee,jdbcType=VARCHAR}
+  </update>
+</mapper>

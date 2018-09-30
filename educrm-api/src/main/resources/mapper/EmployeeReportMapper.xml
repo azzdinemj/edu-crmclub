@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.EmployeeReportMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.EmployeeReport" >
+    <result column="departmentName" property="departmentname" jdbcType="VARCHAR" />
+    <result column="dictName" property="dictname" jdbcType="VARCHAR" />
+    <result column="GG" property="gg" jdbcType="BIGINT" />
+    <result column="MM" property="mm" jdbcType="BIGINT" />
+    <result column="countP" property="countp" jdbcType="BIGINT" />
+  </resultMap>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.EmployeeReport" >
+    select
+    *
+    from employee_report
+    where 1=1
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.EmployeeReport" >
+    select
+    count(*)
+    from employee_report
+    where 1=1
+  </select>
+  <insert id="insert" parameterType="com.wuxue.model.EmployeeReport" >
+    insert into employee_report (departmentName, dictName, GG, 
+      MM, countP)
+    values (#{departmentname,jdbcType=VARCHAR}, #{dictname,jdbcType=VARCHAR}, #{gg,jdbcType=BIGINT}, 
+      #{mm,jdbcType=BIGINT}, #{countp,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.EmployeeReport" >
+    insert into employee_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="departmentname != null" >
+        departmentName,
+      </if>
+      <if test="dictname != null" >
+        dictName,
+      </if>
+      <if test="gg != null" >
+        GG,
+      </if>
+      <if test="mm != null" >
+        MM,
+      </if>
+      <if test="countp != null" >
+        countP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="departmentname != null" >
+        #{departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="dictname != null" >
+        #{dictname,jdbcType=VARCHAR},
+      </if>
+      <if test="gg != null" >
+        #{gg,jdbcType=BIGINT},
+      </if>
+      <if test="mm != null" >
+        #{mm,jdbcType=BIGINT},
+      </if>
+      <if test="countp != null" >
+        #{countp,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

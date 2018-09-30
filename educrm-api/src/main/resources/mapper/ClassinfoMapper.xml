@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.ClassinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Classinfo" >
+    <id column="pk_classinfo" property="pkClassinfo" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_parent" property="pkParent" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="director" property="director" jdbcType="VARCHAR" />
+    <result column="head_teacher" property="headTeacher" jdbcType="VARCHAR" />
+    <result column="second_teacher" property="secondTeacher" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="class_room" property="classRoom" jdbcType="VARCHAR" />
+    <result column="pk_employee" property="pkEmployee" jdbcType="VARCHAR" />
+    <result column="course_time" property="courseTime" jdbcType="INTEGER" />
+    <result column="program" property="program" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="double_grade" property="doubleGrade" jdbcType="VARCHAR" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+    <result column="issubmit" property="issubmit" jdbcType="INTEGER" />
+    <result column="submitor" property="submitor" jdbcType="VARCHAR" />
+    <result column="submit_date" property="submitDate" jdbcType="TIMESTAMP" />
+    <result column="isaudit" property="isaudit" jdbcType="INTEGER" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+    <result column="iscomfirm" property="iscomfirm" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="confirmor" property="confirmor" jdbcType="VARCHAR" />
+    <result column="comfirm_date" property="comfirmDate" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+    <result column="registration_start_time" property="registrationStartTime" jdbcType="TIMESTAMP" />
+    <result column="registration_end_time" property="registrationEndTime" jdbcType="TIMESTAMP" />
+    <result column="from_date" jdbcType="TIMESTAMP" property="fromDate" />
+    <result column="to_date" jdbcType="TIMESTAMP" property="toDate" />
+    <result column="division" jdbcType="VARCHAR" property="division" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="pkEmployee" jdbcType="VARCHAR" property="pkEmployee" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="isPay" jdbcType="INTEGER" property="isPay" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="existing_numbers" jdbcType="INTEGER" property="existingNumbers" />
+    <result column="fee" jdbcType="DECIMAL" property="fee" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_classinfo, pk_domain, pk_parent,code, caption, date, director, head_teacher, second_teacher,
+    start_date, end_date, class_room, course_time, existing_numbers,program, grade, notes, issubmit, submitor,
+    submit_date, isaudit, auditor, audit_date, iscomfirm,isPay,status,fee,type, confirmor, comfirm_date, creator,
+    creation_date, modifier, lastedit_date,registration_start_time,registration_end_time,division,img,num,double_grade
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.Classinfo" >
+    select
+    <include refid="Base_Column_List" />
+    from classinfo
+    where 1=1
+    <if test="pkDomain != null" >
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="caption != null and caption !=''" >
+      and caption LIKE "%"#{caption}"%"
+    </if>
+    <if test="grade != null and grade != ''" >
+      and grade = #{grade}
+    </if>
+    <if test="program != null and program != ''" >
+      and program = #{program}
+    </if>
+    <if test="type != null and type != ''" >
+      and type = #{type}
+    </if>
+    <if test="isPay != null" >
+      and isPay = #{isPay}
+    </if>
+    <if test="headTeacher != null" >
+      and head_teacher = #{headTeacher}
+    </if>
+    <if test="division != null and program != ''" >
+      and division = #{division}
+    </if>
+    <if test="fromDate != null">
+      <![CDATA[ and date >= #{fromDate} ]]>
+    </if>
+    <if test="toDate != null">
+      <![CDATA[ and date <= #{toDate} ]]>
+    </if>
+    order by creation_date DESC
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.Classinfo" >
+    select
+    count(*)
+    from classinfo
+    where 1=1
+  </select>
+  <select id="selectNotesByPrimaryKey" resultType="java.lang.String" parameterType="java.lang.String" >
+    select
+    notes
+    from classinfo
+    where pk_classinfo=#{pkClassinfo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectClassinfoByEmployee" resultMap="BaseResultMap" parameterType="com.wuxue.model.Classinfo" >
+    SELECT
+        *
+    FROM
+        classinfo AS cs
+    WHERE
+        cs.pk_classinfo IN (
+            SELECT
+                ce.pk_classinfo
+            FROM
+                classinfo_employee AS ce
+            WHERE
+                ce.pk_employee = #{pkEmployee}
+        )
+    <!--<if test="pkDomain != null" >-->
+      <!--and cs.pk_domain = #{pkDomain}-->
+    <!--</if>-->
+    <if test="caption != null and caption !=''" >
+      and cs.caption LIKE "%"#{caption}"%"
+    </if>
+    <if test="type != null and type != ''" >
+      and type = #{type}
+    </if>
+    <if test="grade != null and grade != ''" >
+      and cs.grade = #{grade}
+    </if>
+    <if test="program != null and program != ''" >
+      and cs.program = #{program}
+    </if>
+    <if test="division != null and program != ''" >
+      and cs.division = #{division}
+    </if>
+    <if test="fromDate != null">
+      <![CDATA[ and cs.date >= #{fromDate} ]]>
+    </if>
+    <if test="toDate != null">
+      <![CDATA[ and cs.date <= #{toDate} ]]>
+    </if>
+    order by cs.creation_date DESC
+  </select>
+  <select id="selectByType" resultMap="BaseResultMap" parameterType="com.wuxue.model.Classinfo" >
+    select 
+    <include refid="Base_Column_List" />
+    from classinfo
+    where type = #{type,jdbcType=INTEGER}
+  </select>
+  <select id="selectKeyValue" resultType="com.wuxue.base.KeyValue" parameterType="com.wuxue.model.Classinfo" >
+    select
+    pk_classinfo id ,caption ,code
+    from classinfo
+    where 1=1
+    <if test="type != null " >
+      and type = #{type}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from classinfo
+    where pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from classinfo
+    where pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Classinfo" >
+    insert into classinfo (pk_classinfo, pk_domain, pk_parent,code,
+      caption, date, director, 
+      head_teacher, second_teacher, start_date, 
+      end_date, class_room, course_time, existing_numbers,
+      program, grade, notes, 
+      issubmit, submitor, submit_date, 
+      isaudit, auditor, audit_date, 
+      iscomfirm, fee, isPay,status,type,confirmor, comfirm_date,
+      creator, creation_date, modifier, 
+      lastedit_date,registration_start_time,registration_end_time,division,img,num,double_grade )
+    values ( #{pkClassinfo,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR},  #{pkParent,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+      #{caption,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, #{director,jdbcType=VARCHAR}, 
+      #{headTeacher,jdbcType=VARCHAR}, #{secondTeacher,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{classRoom,jdbcType=VARCHAR}, #{courseTime,jdbcType=INTEGER},  #{existingNumbers,jdbcType=INTEGER},
+      #{program,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, 
+      #{issubmit,jdbcType=INTEGER}, #{submitor,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, 
+      #{isaudit,jdbcType=INTEGER}, #{auditor,jdbcType=VARCHAR}, #{auditDate,jdbcType=TIMESTAMP}, 
+      #{iscomfirm,jdbcType=INTEGER}, #{fee,jdbcType=INTEGER}, #{isPay,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{confirmor,jdbcType=VARCHAR}, #{comfirmDate,jdbcType=TIMESTAMP},
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lasteditDate,jdbcType=TIMESTAMP},#{registrationStartTime,jdbcType=TIMESTAMP},#{registrationEndTime,jdbcType=TIMESTAMP},#{division,jdbcType=VARCHAR},
+      #{img,jdbcType=VARCHAR},#{num,jdbcType=INTEGER},#{doubleGrade,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Classinfo" >
+    insert into classinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkClassinfo != null" >
+        pk_classinfo,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkParent != null" >
+        pk_parent,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="director != null" >
+        director,
+      </if>
+      <if test="headTeacher != null" >
+        head_teacher,
+      </if>
+      <if test="secondTeacher != null" >
+        second_teacher,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="classRoom != null" >
+        class_room,
+      </if>
+      <if test="courseTime != null" >
+        course_time,
+      </if>
+      <if test="existingNumbers != null" >
+        existing_numbers,
+      </if>
+      <if test="program != null" >
+        program,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="notes != null" >
+        notes,
+      </if>
+      <if test="issubmit != null" >
+        issubmit,
+      </if>
+      <if test="submitor != null" >
+        submitor,
+      </if>
+      <if test="submitDate != null" >
+        submit_date,
+      </if>
+      <if test="isaudit != null" >
+        isaudit,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditDate != null" >
+        audit_date,
+      </if>
+      <if test="iscomfirm != null" >
+        iscomfirm,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="isPay != null" >
+        isPay,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="confirmor != null" >
+        confirmor,
+      </if>
+      <if test="comfirmDate != null" >
+        comfirm_date,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="registrationStartTime != null" >
+        registration_start_time,
+      </if>
+      <if test="registrationEndTime != null" >
+        registration_end_time,
+      </if>
+      <if test="division != null" >
+        division,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="doubleGrade != null" >
+        double_grade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkClassinfo != null" >
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParent != null" >
+        #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="director != null" >
+        #{director,jdbcType=VARCHAR},
+      </if>
+      <if test="headTeacher != null" >
+        #{headTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="secondTeacher != null" >
+        #{secondTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classRoom != null" >
+        #{classRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="courseTime != null" >
+        #{courseTime,jdbcType=INTEGER},
+      </if>
+      <if test="existingNumbers != null" >
+        #{existingNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="program != null" >
+        #{program,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmit != null" >
+        #{issubmit,jdbcType=INTEGER},
+      </if>
+      <if test="submitor != null" >
+        #{submitor,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isaudit != null" >
+        #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iscomfirm != null" >
+        #{iscomfirm,jdbcType=INTEGER},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=INTEGER},
+      </if>
+      <if test="isPay != null" >
+        #{isPay,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="confirmor != null" >
+        #{confirmor,jdbcType=VARCHAR},
+      </if>
+      <if test="comfirmDate != null" >
+        #{comfirmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registrationStartTime != null" >
+        #{registrationStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registrationEndTime != null" >
+        #{registrationEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="division != null" >
+        #{division,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="doubleGrade != null" >
+        #{doubleGrade,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="classOn">
+    update classinfo e,
+    (select c.pk_classinfo,d.sort,d.pk_division_grade from
+    (select a.pk_classinfo,a.division,a.grade,b.sort
+    from classinfo a left join division_grade b
+    ON a.division=b.division_id and a.grade=b.pk_division_grade) c left JOIN
+    division_grade d
+    ON c.sort+1=d.sort and c.division=d.division_id) f
+    set e.grade=f.pk_division_grade
+    where e.pk_classinfo=f.pk_classinfo and f.pk_division_grade is not null
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Classinfo" >
+    update classinfo
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkParent != null" >
+        pk_parent = #{pkParent,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="director != null" >
+        director = #{director,jdbcType=VARCHAR},
+      </if>
+      <if test="headTeacher != null" >
+        head_teacher = #{headTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="secondTeacher != null" >
+        second_teacher = #{secondTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classRoom != null" >
+        class_room = #{classRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="courseTime != null" >
+        course_time = #{courseTime,jdbcType=INTEGER},
+      </if>
+      <if test="existingNumbers != null" >
+        existing_numbers = #{existingNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="program != null" >
+        program = #{program,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmit != null" >
+        issubmit = #{issubmit,jdbcType=INTEGER},
+      </if>
+      <if test="submitor != null" >
+        submitor = #{submitor,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isaudit != null" >
+        isaudit = #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iscomfirm != null" >
+        iscomfirm = #{iscomfirm,jdbcType=INTEGER},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=INTEGER},
+      </if>
+      <if test="isPay != null" >
+        isPay = #{isPay,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="confirmor != null" >
+        confirmor = #{confirmor,jdbcType=VARCHAR},
+      </if>
+      <if test="comfirmDate != null" >
+        comfirm_date = #{comfirmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registrationStartTime != null" >
+        registration_start_time = #{registrationStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registrationEndTime != null" >
+        registration_end_time = #{registrationEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="division != null" >
+        division = #{division,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="doubleGrade != null" >
+        double_grade = #{doubleGrade,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Classinfo" >
+    update classinfo
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_parent = #{pkParent,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      caption = #{caption,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      director = #{director,jdbcType=VARCHAR},
+      head_teacher = #{headTeacher,jdbcType=VARCHAR},
+      second_teacher = #{secondTeacher,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      class_room = #{classRoom,jdbcType=VARCHAR},
+      course_time = #{courseTime,jdbcType=INTEGER},
+      existing_numbers = #{existingNumbers,jdbcType=INTEGER},
+      program = #{program,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR},
+      issubmit = #{issubmit,jdbcType=INTEGER},
+      submitor = #{submitor,jdbcType=VARCHAR},
+      submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      isaudit = #{isaudit,jdbcType=INTEGER},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      iscomfirm = #{iscomfirm,jdbcType=INTEGER},
+      fee = #{fee,jdbcType=INTEGER},
+      isPay = #{isPay,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      confirmor = #{confirmor,jdbcType=VARCHAR},
+      comfirm_date = #{comfirmDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      registration_start_time = #{registrationStartTime,jdbcType=TIMESTAMP},
+      registration_end_time = #{registrationEndTime,jdbcType=TIMESTAMP},
+      division = #{division,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      double_grade = #{doubleGrade,jdbcType=VARCHAR}
+    where pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR}
+  </update>
+  <select id="selectClassInfoListByTeacherId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from classinfo where head_teacher=#{teacherId}
+  </select>
+  <select id="selectClassInfoIdListByStudentId"  parameterType="java.lang.String"   resultMap="BaseResultMap">
+    select c.* from classinfo_student cs left join classinfo c
+    on cs.pk_classinfo = c.pk_classinfo
+    where cs.pk_student =#{studentId}
+  </select>
+</mapper>

@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.StudentSignupMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.StudentSignup">
+    <id column="pk_student_signup" jdbcType="VARCHAR" property="pkStudentSignup" />
+    <result column="pk_domain" jdbcType="VARCHAR" property="pkDomain" />
+    <result column="pk_student" jdbcType="VARCHAR" property="pkStudent" />
+    <result column="pk_employee" jdbcType="VARCHAR" property="pkEmployee" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="old_school" jdbcType="VARCHAR" property="oldSchool" />
+    <result column="audit_opinion" jdbcType="VARCHAR" property="auditOpinion" />
+    <result column="old_grade" jdbcType="VARCHAR" property="oldGrade" />
+    <result column="id_resident" jdbcType="VARCHAR" property="idResident" />
+    <result column="program" jdbcType="VARCHAR" property="program" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="class_name" jdbcType="VARCHAR" property="className" />
+    <result column="pk_classinfo" jdbcType="VARCHAR" property="pkClassinfo" />
+    <result column="school_year" jdbcType="VARCHAR" property="schoolYear" />
+    <result column="payment_method" jdbcType="VARCHAR" property="paymentMethod" />
+    <result column="bank_account_caption" jdbcType="VARCHAR" property="bankAccountCaption" />
+    <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="bank_caption" jdbcType="VARCHAR" property="bankCaption" />
+    <result column="bank_address" jdbcType="VARCHAR" property="bankAddress" />
+    <result column="mny" jdbcType="DECIMAL" property="mny" />
+    <result column="mny_usd" jdbcType="DECIMAL" property="mnyUsd" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="money_usd" jdbcType="DECIMAL" property="moneyUsd" />
+    <result column="responsible_person" jdbcType="VARCHAR" property="responsiblePerson" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="issubmit" jdbcType="INTEGER" property="issubmit" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="submitor" jdbcType="VARCHAR" property="submitor" />
+    <result column="submit_date" jdbcType="TIMESTAMP" property="submitDate" />
+    <result column="isaudit" jdbcType="INTEGER" property="isaudit" />
+    <result column="isaudit" jdbcType="INTEGER" property="isaudit" />
+    <result column="review_status" jdbcType="VARCHAR" property="reviewStatus" />
+    <result column="audit_date" jdbcType="TIMESTAMP" property="auditDate" />
+    <result column="iscomfirm" jdbcType="INTEGER" property="iscomfirm" />
+    <result column="confirmor" jdbcType="VARCHAR" property="confirmor" />
+    <result column="comfirm_date" jdbcType="TIMESTAMP" property="comfirmDate" />
+    <result column="iscancel" jdbcType="INTEGER" property="iscancel" />
+    <result column="cancel" jdbcType="VARCHAR" property="cancel" />
+    <result column="cancel_date" jdbcType="TIMESTAMP" property="cancelDate" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="lastedit_date" jdbcType="TIMESTAMP" property="lasteditDate" />
+    <result column="from_date" jdbcType="TIMESTAMP" property="fromDate" />
+    <result column="to_date" jdbcType="TIMESTAMP" property="toDate" />
+    <result column="studentName" jdbcType="VARCHAR" property="studentName" />
+    <result column="signup_type" jdbcType="VARCHAR" property="signupType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_student_signup, pk_domain, pk_student, pk_employee, date, code, old_school,audit_opinion, old_grade,
+    id_resident, program, grade, class_name, pk_classinfo, school_year,payment_method, bank_account_caption,
+    bank_account, bank_caption, bank_address, mny, mny_usd, discount, money, money_usd,
+    responsible_person, memo, issubmit,status, submitor, submit_date, isaudit, auditor, audit_date,
+    iscomfirm, review_status,confirmor, comfirm_date, iscancel, cancel, cancel_date, creator, creation_date,
+    modifier, lastedit_date,signup_type
+  </sql>
+  <select id="getNotPlacement" parameterType="com.wuxue.model.StudentSignup" resultMap="BaseResultMap">
+    select
+    *
+   <!-- <if test="pkStudent != null">
+      and pk_student = #{pkStudent}
+    </if>-->
+    from student_signup
+    <if test="studentName != ''">
+      left join student on student_signup.pk_student = student.pk_student where student.caption like "%"#{studentName}"%" and student_signup.status = 1
+    </if>
+    <!--where IFNULL(pk_classinfo,'')='' and IFNULL(isaudit,'0') ='1'-->
+    <if test="studentName == ''">
+      where status = 1
+    </if>
+  </select>
+  <select id="selectForFrop" parameterType="com.wuxue.model.StudentSignup" resultType="java.util.HashMap">
+    SELECT
+    IFNULL(sum(mny),0) mny, IFNULL(sum(discount),0) discount,IFNULL(sum(money),0) money
+
+    from student_signup where pk_student=#{pkStudent} and school_year=#{schoolYear} and review_status in (1,2,3);
+  </select>
+  <select id="select" parameterType="com.wuxue.model.StudentSignup" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student_signup
+    where 1=1 and status != 9
+    <if test="pkDomain != null">
+      and pk_domain = #{pkDomain}
+    </if>
+    <if test="code != null and code !=''">
+      and code = #{code}
+    </if>
+    <if test="pkStudent != null">
+      and pk_student = #{pkStudent}
+    </if>
+    <if test="reviewStatus != null and reviewStatus != 999">
+      and review_status = #{reviewStatus}
+    </if>
+    <if test="reviewStatus == 999">
+      and (review_status = 0 or review_status = 4)
+    </if>
+    <if test="caption != null and caption !=''">
+      and pk_student IN (SELECT pk_student FROM student where caption LIKE "%"#{caption}"%")
+    </if>
+    <if test="pkClassinfo != null">
+      and pk_classinfo = #{pkClassinfo}
+    </if>
+    <if test="hasClassInfo != null and hasClassInfo =='true'.toString()">
+      and IFNULL(pk_classinfo,'') != ''
+    </if>
+    <if test="hasClassInfo != null and hasClassInfo == 'false'.toString()">
+      and IFNULL(pk_classinfo,'') = ''
+    </if>
+    <if test="grade != null and grade != ''">
+      and grade = #{grade}
+    </if>
+    <if test="issubmit != null and issubmit != ''">
+      and issubmit = #{issubmit}
+    </if>
+    <if test="signupType != null and issubmit != ''">
+      and signup_type = #{signupType}
+    </if>
+    <if test="fromDate != null">
+      <![CDATA[ and date >= #{fromDate} ]]>
+    </if>
+    <if test="toDate != null">
+      <![CDATA[ and date <= #{toDate} ]]>
+    </if>
+    order by creation_date DESC
+  </select>
+  <select id="countBy" parameterType="com.wuxue.model.StudentSignup" resultType="java.lang.Integer">
+    select
+    count(*)
+    from student_signup
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student_signup
+    where pk_student_signup = #{pkStudentSignup,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from student_signup
+    where pk_student_signup = #{pkStudentSignup,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.StudentSignup">
+    insert into student_signup (pk_student_signup, pk_domain, pk_student, 
+      pk_employee, date, code, 
+      old_school, audit_opinion,old_grade, id_resident,
+      program, grade, class_name, 
+      pk_classinfo, school_year,payment_method, bank_account_caption,
+      bank_account, bank_caption, bank_address, 
+      mny, mny_usd, discount, 
+      money, money_usd, responsible_person, 
+      memo, issubmit,status, submitor,
+      submit_date, isaudit, auditor, 
+      audit_date, iscomfirm, review_status,confirmor,
+      comfirm_date, iscancel, cancel, 
+      cancel_date, creator, creation_date, 
+      modifier, lastedit_date,signup_type)
+    values (#{pkStudentSignup,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, 
+      #{pkEmployee,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, #{code,jdbcType=VARCHAR}, 
+      #{oldSchool,jdbcType=VARCHAR}, #{auditOpinion,jdbcType=VARCHAR}, #{oldGrade,jdbcType=VARCHAR}, #{idResident,jdbcType=VARCHAR},
+      #{program,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, 
+      #{pkClassinfo,jdbcType=VARCHAR}, #{schoolYear,jdbcType=VARCHAR}, #{paymentMethod,jdbcType=VARCHAR}, #{bankAccountCaption,jdbcType=VARCHAR},
+      #{bankAccount,jdbcType=VARCHAR}, #{bankCaption,jdbcType=VARCHAR}, #{bankAddress,jdbcType=VARCHAR}, 
+      #{mny,jdbcType=DECIMAL}, #{mnyUsd,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, 
+      #{money,jdbcType=DECIMAL}, #{moneyUsd,jdbcType=DECIMAL}, #{responsiblePerson,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=VARCHAR}, #{issubmit,jdbcType=INTEGER},  #{status,jdbcType=INTEGER}, #{submitor,jdbcType=VARCHAR},
+      #{submitDate,jdbcType=TIMESTAMP}, #{isaudit,jdbcType=INTEGER}, #{auditor,jdbcType=VARCHAR}, 
+      #{auditDate,jdbcType=TIMESTAMP}, #{iscomfirm,jdbcType=INTEGER}, #{reviewStatus,jdbcType=INTEGER}, #{confirmor,jdbcType=VARCHAR},
+      #{comfirmDate,jdbcType=TIMESTAMP}, #{iscancel,jdbcType=INTEGER}, #{cancel,jdbcType=VARCHAR}, 
+      #{cancelDate,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP},#{signupType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.StudentSignup">
+    insert into student_signup
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkStudentSignup != null">
+        pk_student_signup,
+      </if>
+      <if test="pkDomain != null">
+        pk_domain,
+      </if>
+      <if test="pkStudent != null">
+        pk_student,
+      </if>
+      <if test="pkEmployee != null">
+        pk_employee,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="oldSchool != null">
+        old_school,
+      </if>
+      <if test="auditOpinion != null">
+        audit_opinion,
+      </if>
+      <if test="oldGrade != null">
+        old_grade,
+      </if>
+      <if test="idResident != null">
+        id_resident,
+      </if>
+      <if test="program != null">
+        program,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="className != null">
+        class_name,
+      </if>
+      <if test="pkClassinfo != null">
+        pk_classinfo,
+      </if>
+      <if test="schoolYear != null">
+        school_year,
+      </if>
+      <if test="paymentMethod != null">
+        payment_method,
+      </if>
+      <if test="bankAccountCaption != null">
+        bank_account_caption,
+      </if>
+      <if test="bankAccount != null">
+        bank_account,
+      </if>
+      <if test="bankCaption != null">
+        bank_caption,
+      </if>
+      <if test="bankAddress != null">
+        bank_address,
+      </if>
+      <if test="mny != null">
+        mny,
+      </if>
+      <if test="mnyUsd != null">
+        mny_usd,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="moneyUsd != null">
+        money_usd,
+      </if>
+      <if test="responsiblePerson != null">
+        responsible_person,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="issubmit != null">
+        issubmit,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="submitor != null">
+        submitor,
+      </if>
+      <if test="submitDate != null">
+        submit_date,
+      </if>
+      <if test="isaudit != null">
+        isaudit,
+      </if>
+      <if test="auditor != null">
+        auditor,
+      </if>
+      <if test="auditDate != null">
+        audit_date,
+      </if>
+      <if test="iscomfirm != null">
+        iscomfirm,
+      </if>
+      <if test="reviewStatus != null">
+        review_status,
+      </if>
+      <if test="confirmor != null">
+        confirmor,
+      </if>
+      <if test="comfirmDate != null">
+        comfirm_date,
+      </if>
+      <if test="iscancel != null">
+        iscancel,
+      </if>
+      <if test="cancel != null">
+        cancel,
+      </if>
+      <if test="cancelDate != null">
+        cancel_date,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date,
+      </if>
+      <if test="signupType != null">
+        signup_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkStudentSignup != null">
+        #{pkStudentSignup,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null">
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null">
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null">
+        #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="oldSchool != null">
+        #{oldSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null">
+        #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="oldGrade != null">
+        #{oldGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="idResident != null">
+        #{idResident,jdbcType=VARCHAR},
+      </if>
+      <if test="program != null">
+        #{program,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null">
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null">
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolYear != null">
+        #{schoolYear,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentMethod != null">
+        #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountCaption != null">
+        #{bankAccountCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null">
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCaption != null">
+        #{bankCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAddress != null">
+        #{bankAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="mny != null">
+        #{mny,jdbcType=DECIMAL},
+      </if>
+      <if test="mnyUsd != null">
+        #{mnyUsd,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="moneyUsd != null">
+        #{moneyUsd,jdbcType=DECIMAL},
+      </if>
+      <if test="responsiblePerson != null">
+        #{responsiblePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmit != null">
+        #{issubmit,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="submitor != null">
+        #{submitor,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null">
+        #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isaudit != null">
+        #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditor != null">
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null">
+        #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iscomfirm != null">
+        #{iscomfirm,jdbcType=INTEGER},
+      </if>
+      <if test="reviewStatus != null">
+        #{reviewStatus,jdbcType=INTEGER},
+      </if>
+      <if test="confirmor != null">
+        #{confirmor,jdbcType=VARCHAR},
+      </if>
+      <if test="comfirmDate != null">
+        #{comfirmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iscancel != null">
+        #{iscancel,jdbcType=INTEGER},
+      </if>
+      <if test="cancel != null">
+        #{cancel,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelDate != null">
+        #{cancelDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signupType != null">
+        #{signupType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.StudentSignup">
+    update student_signup
+    <set>
+      <if test="pkDomain != null">
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null">
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null">
+        pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="oldSchool != null">
+        old_school = #{oldSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null">
+        audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="oldGrade != null">
+        old_grade = #{oldGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="idResident != null">
+        id_resident = #{idResident,jdbcType=VARCHAR},
+      </if>
+      <if test="program != null">
+        program = #{program,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null">
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null">
+        pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolYear != null">
+        school_year = #{schoolYear,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentMethod != null">
+        payment_method = #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountCaption != null">
+        bank_account_caption = #{bankAccountCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null">
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCaption != null">
+        bank_caption = #{bankCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAddress != null">
+        bank_address = #{bankAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="mny != null">
+        mny = #{mny,jdbcType=DECIMAL},
+      </if>
+      <if test="mnyUsd != null">
+        mny_usd = #{mnyUsd,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="moneyUsd != null">
+        money_usd = #{moneyUsd,jdbcType=DECIMAL},
+      </if>
+      <if test="responsiblePerson != null">
+        responsible_person = #{responsiblePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmit != null">
+        issubmit = #{issubmit,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="submitor != null">
+        submitor = #{submitor,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null">
+        submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isaudit != null">
+        isaudit = #{isaudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditor != null">
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null">
+        audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iscomfirm != null">
+        iscomfirm = #{iscomfirm,jdbcType=INTEGER},
+      </if>
+      <if test="reviewStatus != null">
+        review_status = #{reviewStatus,jdbcType=INTEGER},
+      </if>
+      <if test="confirmor != null">
+        confirmor = #{confirmor,jdbcType=VARCHAR},
+      </if>
+      <if test="comfirmDate != null">
+        comfirm_date = #{comfirmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iscancel != null">
+        iscancel = #{iscancel,jdbcType=INTEGER},
+      </if>
+      <if test="cancel != null">
+        cancel = #{cancel,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelDate != null">
+        cancel_date = #{cancelDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signupType != null">
+        signup_type = #{signupType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_student_signup = #{pkStudentSignup,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.StudentSignup">
+    update student_signup
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      code = #{code,jdbcType=VARCHAR},
+      old_school = #{oldSchool,jdbcType=VARCHAR},
+      audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      old_grade = #{oldGrade,jdbcType=VARCHAR},
+      id_resident = #{idResident,jdbcType=VARCHAR},
+      program = #{program,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      class_name = #{className,jdbcType=VARCHAR},
+      pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      school_year = #{schoolYear,jdbcType=VARCHAR},
+      payment_method = #{paymentMethod,jdbcType=VARCHAR},
+      bank_account_caption = #{bankAccountCaption,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      bank_caption = #{bankCaption,jdbcType=VARCHAR},
+      bank_address = #{bankAddress,jdbcType=VARCHAR},
+      mny = #{mny,jdbcType=DECIMAL},
+      mny_usd = #{mnyUsd,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=DECIMAL},
+      money = #{money,jdbcType=DECIMAL},
+      money_usd = #{moneyUsd,jdbcType=DECIMAL},
+      responsible_person = #{responsiblePerson,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      issubmit = #{issubmit,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      submitor = #{submitor,jdbcType=VARCHAR},
+      submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      isaudit = #{isaudit,jdbcType=INTEGER},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      iscomfirm = #{iscomfirm,jdbcType=INTEGER},
+      review_status = #{reviewStatus,jdbcType=INTEGER},
+      confirmor = #{confirmor,jdbcType=VARCHAR},
+      comfirm_date = #{comfirmDate,jdbcType=TIMESTAMP},
+      iscancel = #{iscancel,jdbcType=INTEGER},
+      cancel = #{cancel,jdbcType=VARCHAR},
+      cancel_date = #{cancelDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      signup_type = #{signupType,jdbcType=VARCHAR}
+    where pk_student_signup = #{pkStudentSignup,jdbcType=VARCHAR}
+  </update>
+</mapper>

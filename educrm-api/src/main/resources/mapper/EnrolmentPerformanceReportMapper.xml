@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.EnrolmentPerformanceReportMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.EnrolmentPerformanceReport" >
+    <result column="pk_sys_user" property="pkSysUser" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="studentNum" property="studentnum" jdbcType="BIGINT" />
+    <result column="memberNum" property="membernum" jdbcType="BIGINT" />
+  </resultMap>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.EnrolmentPerformanceReport" >
+    select
+    *
+    from enrolment_performance_report
+    where 1=1
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.EnrolmentPerformanceReport" >
+    select
+    count(*)
+    from enrolment_performance_report
+    where 1=1
+  </select>
+  <insert id="insert" parameterType="com.wuxue.model.EnrolmentPerformanceReport" >
+    insert into enrolment_performance_report (pk_sys_user, caption, studentNum, 
+      memberNum)
+    values (#{pkSysUser,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}, #{studentnum,jdbcType=BIGINT}, 
+      #{membernum,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.EnrolmentPerformanceReport" >
+    insert into enrolment_performance_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSysUser != null" >
+        pk_sys_user,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="studentnum != null" >
+        studentNum,
+      </if>
+      <if test="membernum != null" >
+        memberNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSysUser != null" >
+        #{pkSysUser,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="studentnum != null" >
+        #{studentnum,jdbcType=BIGINT},
+      </if>
+      <if test="membernum != null" >
+        #{membernum,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

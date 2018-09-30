@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.EmployeeJobExpMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.EmployeeJobExp" >
+    <id column="pk_employee_job_exp" property="pkEmployeeJobExp" jdbcType="VARCHAR" />
+    <result column="pk_employee" property="pkEmployee" jdbcType="VARCHAR" />
+    <result column="startdate" property="startdate" jdbcType="TIMESTAMP" />
+    <result column="enddate" property="enddate" jdbcType="TIMESTAMP" />
+    <result column="job_unit" property="jobUnit" jdbcType="VARCHAR" />
+    <result column="job_title" property="jobTitle" jdbcType="VARCHAR" />
+    <result column="witness" property="witness" jdbcType="VARCHAR" />
+    <result column="witness_phone" property="witnessPhone" jdbcType="VARCHAR" />
+    <result column="reason_leaving" property="reasonLeaving" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_employee_job_exp, pk_employee, startdate, enddate, job_unit, job_title, witness, 
+    witness_phone, reason_leaving, memo, creator, creation_date, modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.EmployeeJobExp" >
+    select
+    <include refid="Base_Column_List" />
+    from employee_job_exp
+    where 1=1
+    <!--<if test="start != null and pageSize != null">-->
+      <!--LIMIT #{start}, #{pageSize}-->
+    <!--</if>-->
+    <if test="pkEmployee != null">
+      and pk_employee = #{pkEmployee}
+    </if>
+  </select>
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.EmployeeJobExp" >
+    select
+    count(*)
+    from employee_job_exp
+    where 1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from employee_job_exp
+    where pk_employee_job_exp = #{pkEmployeeJobExp,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from employee_job_exp
+    where pk_employee_job_exp = #{pkEmployeeJobExp,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.EmployeeJobExp" >
+    insert into employee_job_exp (pk_employee_job_exp, pk_employee, startdate, 
+      enddate, job_unit, job_title, 
+      witness, witness_phone, reason_leaving, 
+      memo, creator, creation_date, 
+      modifier, lastedit_date)
+    values (#{pkEmployeeJobExp,jdbcType=VARCHAR}, #{pkEmployee,jdbcType=VARCHAR}, #{startdate,jdbcType=TIMESTAMP}, 
+      #{enddate,jdbcType=TIMESTAMP}, #{jobUnit,jdbcType=VARCHAR}, #{jobTitle,jdbcType=VARCHAR}, 
+      #{witness,jdbcType=VARCHAR}, #{witnessPhone,jdbcType=VARCHAR}, #{reasonLeaving,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.EmployeeJobExp" >
+    insert into employee_job_exp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkEmployeeJobExp != null" >
+        pk_employee_job_exp,
+      </if>
+      <if test="pkEmployee != null" >
+        pk_employee,
+      </if>
+      <if test="startdate != null" >
+        startdate,
+      </if>
+      <if test="enddate != null" >
+        enddate,
+      </if>
+      <if test="jobUnit != null" >
+        job_unit,
+      </if>
+      <if test="jobTitle != null" >
+        job_title,
+      </if>
+      <if test="witness != null" >
+        witness,
+      </if>
+      <if test="witnessPhone != null" >
+        witness_phone,
+      </if>
+      <if test="reasonLeaving != null" >
+        reason_leaving,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkEmployeeJobExp != null" >
+        #{pkEmployeeJobExp,jdbcType=VARCHAR},
+      </if>
+      <if test="pkEmployee != null" >
+        #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobUnit != null" >
+        #{jobUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="witness != null" >
+        #{witness,jdbcType=VARCHAR},
+      </if>
+      <if test="witnessPhone != null" >
+        #{witnessPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonLeaving != null" >
+        #{reasonLeaving,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.EmployeeJobExp" >
+    update employee_job_exp
+    <set >
+      <if test="pkEmployee != null" >
+        pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        startdate = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobUnit != null" >
+        job_unit = #{jobUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        job_title = #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="witness != null" >
+        witness = #{witness,jdbcType=VARCHAR},
+      </if>
+      <if test="witnessPhone != null" >
+        witness_phone = #{witnessPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonLeaving != null" >
+        reason_leaving = #{reasonLeaving,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_employee_job_exp = #{pkEmployeeJobExp,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.EmployeeJobExp" >
+    update employee_job_exp
+    set pk_employee = #{pkEmployee,jdbcType=VARCHAR},
+      startdate = #{startdate,jdbcType=TIMESTAMP},
+      enddate = #{enddate,jdbcType=TIMESTAMP},
+      job_unit = #{jobUnit,jdbcType=VARCHAR},
+      job_title = #{jobTitle,jdbcType=VARCHAR},
+      witness = #{witness,jdbcType=VARCHAR},
+      witness_phone = #{witnessPhone,jdbcType=VARCHAR},
+      reason_leaving = #{reasonLeaving,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_employee_job_exp = #{pkEmployeeJobExp,jdbcType=VARCHAR}
+  </update>
+</mapper>

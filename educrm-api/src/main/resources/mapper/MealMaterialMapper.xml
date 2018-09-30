@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.MealMaterialMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.junhwa.MealMaterial" >
+    <id column="meal_material_id" property="mealMaterialId" jdbcType="VARCHAR" />
+    <result column="set_meal_id" property="setMealId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="gram" property="gram" jdbcType="DECIMAL" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    meal_material_id, set_meal_id, material_id, gram, creator, creation_date, modifier, 
+    lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.junhwa.MealMaterial" >
+    select
+    <include refid="Base_Column_List" />,(select material_name from material where material_id=meal_material.material_id) as material_name
+    from meal_material
+    where 1=1
+    <if test="setMealId != null" >
+      and set_meal_id = #{setMealId}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from meal_material
+    where meal_material_id = #{mealMaterialId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByMeal" parameterType="java.lang.String" >
+    delete from meal_material
+    where set_meal_id = #{setMealId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from meal_material
+    where meal_material_id = #{mealMaterialId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.junhwa.MealMaterial" >
+    insert into meal_material (meal_material_id, set_meal_id, material_id, 
+      gram, creator, creation_date, 
+      modifier, lastedit_date)
+    values (#{mealMaterialId,jdbcType=VARCHAR}, #{setMealId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, 
+      #{gram,jdbcType=DECIMAL}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.junhwa.MealMaterial" >
+    insert into meal_material
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mealMaterialId != null" >
+        meal_material_id,
+      </if>
+      <if test="setMealId != null" >
+        set_meal_id,
+      </if>
+      <if test="materialId != null" >
+        material_id,
+      </if>
+      <if test="gram != null" >
+        gram,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mealMaterialId != null" >
+        #{mealMaterialId,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealId != null" >
+        #{setMealId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null" >
+        #{materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="gram != null" >
+        #{gram,jdbcType=DECIMAL},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.junhwa.MealMaterial" >
+    update meal_material
+    <set >
+      <if test="setMealId != null" >
+        set_meal_id = #{setMealId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null" >
+        material_id = #{materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="gram != null" >
+        gram = #{gram,jdbcType=DECIMAL},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where meal_material_id = #{mealMaterialId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.junhwa.MealMaterial" >
+    update meal_material
+    set set_meal_id = #{setMealId,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      gram = #{gram,jdbcType=DECIMAL},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where meal_material_id = #{mealMaterialId,jdbcType=VARCHAR}
+  </update>
+</mapper>

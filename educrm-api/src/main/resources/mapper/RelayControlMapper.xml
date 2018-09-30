@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.RelayControlMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.shuttle.RelayControl" >
+    <id column="pk_relay_control" property="pkRelayControl" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="delivery_application_id" property="deliveryApplicationId" jdbcType="VARCHAR" />
+    <result column="qr_code" property="qrCode" jdbcType="VARCHAR" />
+    <result column="person_id" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="notice" property="notice" jdbcType="VARCHAR" />
+    <result column="delivery_date" property="deliveryDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_relay_control, pk_domain, qr_code, person_id, notice, delivery_date, status,type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from relay_control
+    where pk_relay_control = #{pkRelayControl,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from relay_control
+    where pk_relay_control = #{pkRelayControl,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.shuttle.RelayControl" >
+    insert into relay_control (pk_relay_control, pk_domain, qr_code, 
+      person_id, notice, delivery_date, 
+      status,type,delivery_application_id)
+    values (#{pkRelayControl,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{qrCode,jdbcType=VARCHAR}, 
+      #{pkStudent,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, #{deliveryDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER},#{type,jdbcType=INTEGER},#{deliveryApplicationId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.shuttle.RelayControl" >
+    insert into relay_control
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkRelayControl != null" >
+        pk_relay_control,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="qrCode != null" >
+        qr_code,
+      </if>
+      <if test="pkStudent != null" >
+        person_id,
+      </if>
+      <if test="notice != null" >
+        notice,
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="deliveryApplicationId != null" >
+        delivery_application_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkRelayControl != null" >
+        #{pkRelayControl,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCode != null" >
+        #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryApplicationId != null" >
+        #{deliveryApplicationId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.shuttle.RelayControl" >
+    update relay_control
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCode != null" >
+        qr_code = #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        person_id = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        notice = #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryApplicationId != null" >
+        delivery_application_id = #{deliveryApplicationId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_relay_control = #{pkRelayControl,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.shuttle.RelayControl" >
+    update relay_control
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      qr_code = #{qrCode,jdbcType=VARCHAR},
+      person_id = #{personId,jdbcType=VARCHAR},
+      notice = #{notice,jdbcType=VARCHAR},
+      delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      delivery_application_id = #{deliveryApplicationId,jdbcType=VARCHAR}
+    where pk_relay_control = #{pkRelayControl,jdbcType=VARCHAR}
+  </update>
+</mapper>

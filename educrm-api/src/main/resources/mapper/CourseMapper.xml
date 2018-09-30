@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.Course" >
+    <id column="pk_course" property="pkCourse" jdbcType="VARCHAR" />
+    <result column="caption" property="caption" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="classes" property="classes" jdbcType="INTEGER" />
+    <result column="cycle" property="cycle" jdbcType="INTEGER" />
+    <result column="isissue" property="isissue" jdbcType="INTEGER" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="subject" property="subject" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="teacher" property="teacher" jdbcType="VARCHAR" />
+    <result column="enclosure" property="enclosure" jdbcType="VARCHAR" />
+    <result column="thumb" property="thumb" jdbcType="VARCHAR" />
+    <result column="crowd" property="crowd" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+    <result column="instruction" property="instruction" jdbcType="VARCHAR" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+    <result column="isType" property="isType" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+    <result column="types" property="types" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wuxue.model.Course" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_course, caption, sort, classes, cycle, isissue, project, subject, time, num, teacher, enclosure,
+    thumb, crowd, target, instruction, notes, isdel, creator, creation_date, modifier, 
+    lastedit_date,types
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+
+  <!--查询 -->
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.Course" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from course
+    where 1=1
+    <if test="code != null">
+      and creator=#{code}
+    </if>
+    <if test="caption != null and caption!=''">
+      and caption LIKE "%"#{caption}"%"
+    </if>
+    <if test="isissue != null and isissue !=null">
+      and isissue=#{isissue}
+    </if>
+    <if test="types != null">
+      and types=#{types}
+    </if>
+    <!--<if test="teacher != null and teacher!='' ">-->
+      <!--and teacher=#{teacher}-->
+    <!--</if>-->
+    <if test="isType == 0 ">
+      and teacher=#{teacher} or creator = #{creator}
+    </if>
+    <if test="isType == 1 ">
+      and creator = #{creator}
+    </if>
+    <if test="lasteditDate != null">
+       order By lastedit_date Desc
+    </if>
+    <if test="num != null">
+       order BY num Desc
+    </if>
+    <if test="creationDate == null">
+      order BY creation_date Desc
+    </if>
+  </select>
+
+  <select id="countBy" resultType="java.lang.Integer" parameterType="com.wuxue.model.Course" >
+    select
+    count(*)
+    from course
+    where 1=1
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from course
+    where pk_course = #{pkCourse,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from course
+    where pk_course = #{pkCourse,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.Course" >
+    insert into course (pk_course, caption, sort, 
+      classes, cycle, isissue, 
+      project, subject, time, 
+      num, teacher,enclosure, thumb,
+      crowd, target, instruction, 
+      notes, isdel, creator, 
+      creation_date, modifier, lastedit_date,
+      content,types)
+    values (#{pkCourse,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{classes,jdbcType=INTEGER}, #{cycle,jdbcType=INTEGER}, #{isissue,jdbcType=INTEGER}, 
+      #{project,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER}, #{teacher,jdbcType=VARCHAR},  #{enclosure,jdbcType=VARCHAR}, #{thumb,jdbcType=VARCHAR},
+      #{crowd,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR}, #{instruction,jdbcType=VARCHAR}, 
+      #{notes,jdbcType=VARCHAR}, #{isdel,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR}, #{types,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.Course" >
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkCourse != null" >
+        pk_course,
+      </if>
+      <if test="caption != null" >
+        caption,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="classes != null" >
+        classes,
+      </if>
+      <if test="cycle != null" >
+        cycle,
+      </if>
+      <if test="isissue != null" >
+        isissue,
+      </if>
+      <if test="project != null" >
+        project,
+      </if>
+      <if test="subject != null" >
+        subject,
+      </if>
+      <if test="time != null" >
+        `time`,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="teacher != null" >
+        teacher,
+      </if>
+      <if test="enclosure != null" >
+        enclosure,
+      </if>
+      <if test="thumb != null" >
+        thumb,
+      </if>
+      <if test="crowd != null" >
+        crowd,
+      </if>
+      <if test="target != null" >
+        target,
+      </if>
+      <if test="instruction != null" >
+        instruction,
+      </if>
+      <if test="notes != null" >
+        notes,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="types != null" >
+        types,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkCourse != null" >
+        #{pkCourse,jdbcType=VARCHAR},
+      </if>
+      <if test="caption != null" >
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="classes != null" >
+        #{classes,jdbcType=INTEGER},
+      </if>
+      <if test="cycle != null" >
+        #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="isissue != null" >
+        #{isissue,jdbcType=INTEGER},
+      </if>
+      <if test="project != null" >
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="teacher != null" >
+        #{teacher,jdbcType=VARCHAR},
+      </if>
+      <if test="enclosure != null" >
+        #{enclosure,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb != null" >
+        #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="crowd != null" >
+        #{crowd,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="instruction != null" >
+        #{instruction,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="types != null" >
+        #{types,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.Course" >
+    update course
+    <set >
+      <if test="caption != null" >
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="classes != null" >
+        classes = #{classes,jdbcType=INTEGER},
+      </if>
+      <if test="cycle != null" >
+        cycle = #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="isissue != null" >
+        isissue = #{isissue,jdbcType=INTEGER},
+      </if>
+      <if test="project != null" >
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null" >
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="teacher != null" >
+        teacher = #{teacher,jdbcType=VARCHAR},
+      </if>
+      <if test="enclosure != null" >
+        enclosure = #{enclosure,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb != null" >
+        thumb = #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="crowd != null" >
+        crowd = #{crowd,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        target = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="instruction != null" >
+        instruction = #{instruction,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="types != null" >
+        types = #{types,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_course = #{pkCourse,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wuxue.model.Course" >
+    update course
+    set caption = #{caption,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      classes = #{classes,jdbcType=INTEGER},
+      cycle = #{cycle,jdbcType=INTEGER},
+      isissue = #{isissue,jdbcType=INTEGER},
+      project = #{project,jdbcType=VARCHAR},
+      subject = #{subject,jdbcType=VARCHAR},
+      `time` = #{time,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      teacher = #{teacher,jdbcType=VARCHAR},
+      enclosure = #{enclosure,jdbcType=VARCHAR},
+      thumb = #{thumb,jdbcType=VARCHAR},
+      crowd = #{crowd,jdbcType=VARCHAR},
+      target = #{target,jdbcType=VARCHAR},
+      instruction = #{instruction,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR},
+      types = #{types,jdbcType=VARCHAR}
+    where pk_course = #{pkCourse,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.Course" >
+    update course
+    set caption = #{caption,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      classes = #{classes,jdbcType=INTEGER},
+      cycle = #{cycle,jdbcType=INTEGER},
+      isissue = #{isissue,jdbcType=INTEGER},
+      project = #{project,jdbcType=VARCHAR},
+      subject = #{subject,jdbcType=VARCHAR},
+      `time` = #{time,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      teacher = #{teacher,jdbcType=VARCHAR},
+      enclosure = #{enclosure,jdbcType=VARCHAR},
+      thumb = #{thumb,jdbcType=VARCHAR},
+      crowd = #{crowd,jdbcType=VARCHAR},
+      target = #{target,jdbcType=VARCHAR},
+      instruction = #{instruction,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      types = #{types,jdbcType=VARCHAR},
+    where pk_course = #{pkCourse,jdbcType=VARCHAR}
+  </update>
+</mapper>

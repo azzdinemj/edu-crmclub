@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.ClassinfoRoomMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.ClassinfoRoom" >
+    <id column="pk_classinfo_room" property="pkClassinfoRoom" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="pk_classinfo" property="pkClassinfo" jdbcType="VARCHAR" />
+    <result column="pk_classroom" property="pkClassroom" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="kind" property="kind" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_classinfo_room, pk_domain, pk_classinfo, pk_classroom, isvalid, kind, memo, creator, 
+    creation_date, modifier, lastedit_date
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassinfoRoom" >
+    select
+    a.pk_classinfo,b.pk_classinfo_room,b.pk_classroom,b.isvalid
+    from classinfo a
+    left join classinfo_room b
+    on
+    a.pk_classinfo=b.pk_classinfo
+
+    <if test="fromDate != null">
+      <![CDATA[ and date >= #{fromDate} ]]>
+    </if>
+    <if test="toDate != null">
+      <![CDATA[ and date <= #{toDate} ]]>
+    </if>
+    <if test="caption != null and caption !=''" >
+      WHERE a.pk_classinfo IN (SELECT pk_classinfo FROM classinfo WHERE caption LIKE "%"#{caption}"%")
+    </if>
+    order by b.lastedit_date
+  </select>
+  <select id="selectBy" resultMap="BaseResultMap" parameterType="com.wuxue.model.ClassinfoRoom" >
+    select
+    <include refid="Base_Column_List" />
+    from classinfo_room
+    where 1=1
+    <if test="pkClassinfo != null" >
+      and pk_classinfo = #{pkClassinfo}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from classinfo_room
+    where pk_classinfo_room = #{pkClassinfoRoom,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUnique" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from classinfo_room
+    where classinfo_room = #{classinfo_room,jdbcType=VARCHAR} AND pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from classinfo_room
+    where pk_classinfo_room = #{pkClassinfoRoom,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.ClassinfoRoom" >
+    insert into classinfo_room (pk_classinfo_room, pk_domain, pk_classinfo, 
+      pk_classroom, isvalid, kind, 
+      memo, creator, creation_date, 
+      modifier, lastedit_date)
+    values (#{pkClassinfoRoom,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkClassinfo,jdbcType=VARCHAR}, 
+      #{pkClassroom,jdbcType=VARCHAR}, #{isvalid,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER}, 
+      #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.ClassinfoRoom" >
+    insert into classinfo_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkClassinfoRoom != null" >
+        pk_classinfo_room,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo,
+      </if>
+      <if test="pkClassroom != null" >
+        pk_classroom,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="kind != null" >
+        kind,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkClassinfoRoom != null" >
+        #{pkClassinfoRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null" >
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassroom != null" >
+        #{pkClassroom,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.ClassinfoRoom" >
+    update classinfo_room
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassroom != null" >
+        pk_classroom = #{pkClassroom,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null" >
+        kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_classinfo_room = #{pkClassinfoRoom,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.ClassinfoRoom" >
+    update classinfo_room
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      pk_classroom = #{pkClassroom,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      kind = #{kind,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_classinfo_room = #{pkClassinfoRoom,jdbcType=VARCHAR}
+  </update>
+</mapper>

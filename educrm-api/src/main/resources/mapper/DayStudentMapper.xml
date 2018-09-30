@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.DayStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.junhwa.DayStudent" >
+    <id column="day_student_id" property="dayStudentId" jdbcType="INTEGER" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="delivery_date" property="deliveryDate" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="eat_type" property="eatType" jdbcType="INTEGER" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="pk_classinfo" property="pkClassinfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    day_student_id, pk_student, delivery_date, type, eat_type, pk_classinfo,isvalid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from day_student
+    where day_student_id = #{dayStudentId,jdbcType=INTEGER}
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.junhwa.DayStudent" >
+    select
+    <include refid="Base_Column_List" />
+    from day_student
+    where 1=1
+    <if test="pkStudent != null" >
+      pk_student,
+    </if>
+    ORDER BY delivery_date
+  </select>
+  <select id="selectByUnique" resultMap="BaseResultMap" parameterType="com.wuxue.model.junhwa.DayStudent" >
+    select
+    <include refid="Base_Column_List" />
+    from day_student
+    where pk_student=#{pkStudent,jdbcType=VARCHAR} and type = #{type,jdbcType=INTEGER}
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from day_student
+    where day_student_id = #{dayStudentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.junhwa.DayStudent" >
+    insert into day_student (day_student_id, pk_student, delivery_date, 
+      type, eat_type, pk_classinfo,isvalid)
+    values (#{dayStudentId,jdbcType=INTEGER}, #{pkStudent,jdbcType=VARCHAR}, #{deliveryDate,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=INTEGER}, #{eatType,jdbcType=INTEGER}, #{pkClassinfo,jdbcType=VARCHAR},#{isvalid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.junhwa.DayStudent" >
+    insert into day_student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dayStudentId != null" >
+        day_student_id,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="eatType != null" >
+        eat_type,
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dayStudentId != null" >
+        #{dayStudentId,jdbcType=INTEGER},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="eatType != null" >
+        #{eatType,jdbcType=INTEGER},
+      </if>
+      <if test="pkClassinfo != null" >
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.junhwa.DayStudent" >
+    update day_student
+    <set >
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="eatType != null" >
+        eat_type = #{eatType,jdbcType=INTEGER},
+      </if>
+      <if test="pkClassinfo != null" >
+        pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where day_student_id = #{dayStudentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.junhwa.DayStudent" >
+    update day_student
+    set pk_student = #{pkStudent,jdbcType=VARCHAR},
+      delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=INTEGER},
+      eat_type = #{eatType,jdbcType=INTEGER},
+      pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=INTEGER}
+    where day_student_id = #{dayStudentId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.ActivityImgMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.junhwa.ActivityImg">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <id column="activity_img_id" jdbcType="VARCHAR" property="activityImgId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="img_order" jdbcType="INTEGER" property="imgOrder" />
+    <result column="rel_id" jdbcType="VARCHAR" property="relId" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="lastedit_date" jdbcType="TIMESTAMP" property="lasteditDate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    activity_img_id, type, img_url, img_order, rel_id, creation_date, creator, lastedit_date, 
+    modifier
+  </sql>
+  <select id="selectByExample" parameterType="com.wuxue.model.junhwa.ActivityImgExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_activity_img
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startIndex != null and startIndex &gt;= 0">
+      limit #{startIndex} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from t_activity_img
+    where activity_img_id = #{activityImgId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    delete from t_activity_img
+    where activity_img_id = #{activityImgId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wuxue.model.junhwa.ActivityImgExample">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    delete from t_activity_img
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.junhwa.ActivityImg">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    insert into t_activity_img (activity_img_id, type, img_url, 
+      img_order, rel_id, creation_date, 
+      creator, lastedit_date, modifier
+      )
+    values (#{activityImgId,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, 
+      #{imgOrder,jdbcType=INTEGER}, #{relId,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{lasteditDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.junhwa.ActivityImg">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    insert into t_activity_img
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="activityImgId != null">
+        activity_img_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="imgOrder != null">
+        img_order,
+      </if>
+      <if test="relId != null">
+        rel_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="activityImgId != null">
+        #{activityImgId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgOrder != null">
+        #{imgOrder,jdbcType=INTEGER},
+      </if>
+      <if test="relId != null">
+        #{relId,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wuxue.model.junhwa.ActivityImgExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select count(*) from t_activity_img
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update t_activity_img
+    <set>
+      <if test="record.activityImgId != null">
+        activity_img_id = #{record.activityImgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.imgUrl != null">
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgOrder != null">
+        img_order = #{record.imgOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.relId != null">
+        rel_id = #{record.relId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null">
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lasteditDate != null">
+        lastedit_date = #{record.lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifier != null">
+        modifier = #{record.modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update t_activity_img
+    set activity_img_id = #{record.activityImgId,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      img_order = #{record.imgOrder,jdbcType=INTEGER},
+      rel_id = #{record.relId,jdbcType=VARCHAR},
+      creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      lastedit_date = #{record.lasteditDate,jdbcType=TIMESTAMP},
+      modifier = #{record.modifier,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.junhwa.ActivityImg">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update t_activity_img
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgOrder != null">
+        img_order = #{imgOrder,jdbcType=INTEGER},
+      </if>
+      <if test="relId != null">
+        rel_id = #{relId,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lasteditDate != null">
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where activity_img_id = #{activityImgId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.junhwa.ActivityImg">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update t_activity_img
+    set type = #{type,jdbcType=INTEGER},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      img_order = #{imgOrder,jdbcType=INTEGER},
+      rel_id = #{relId,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where activity_img_id = #{activityImgId,jdbcType=VARCHAR}
+  </update>
+</mapper>

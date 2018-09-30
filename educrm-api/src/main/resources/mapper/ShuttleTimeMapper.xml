@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.ShuttleTimeMapper">
+  <resultMap id="BaseResultMap" type="com.wuxue.model.junhwa.ShuttleTime">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <id column="pk_shuttle_time" jdbcType="VARCHAR" property="pkShuttleTime" />
+    <result column="pk_domain" jdbcType="VARCHAR" property="pkDomain" />
+    <result column="pk_classinfo" jdbcType="VARCHAR" property="pkClassinfo" />
+    <result column="date_type" jdbcType="INTEGER" property="dateType" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="shuttle_type" jdbcType="INTEGER" property="shuttleType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    pk_shuttle_time, pk_domain, pk_classinfo, date_type, start_time, end_time, shuttle_type
+  </sql>
+  <select id="selectByExample" parameterType="com.wuxue.model.junhwa.ShuttleTimeExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shuttle_time
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startIndex != null and startIndex >= 0">
+      limit #{startIndex} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select
+    <include refid="Base_Column_List" />
+    from shuttle_time
+    where pk_shuttle_time = #{pkShuttleTime,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    delete from shuttle_time
+    where pk_shuttle_time = #{pkShuttleTime,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wuxue.model.junhwa.ShuttleTimeExample">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    delete from shuttle_time
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.junhwa.ShuttleTime">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    insert into shuttle_time (pk_shuttle_time, pk_domain, pk_classinfo,
+    date_type, start_time, end_time,
+    shuttle_type)
+    values (#{pkShuttleTime,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{pkClassinfo,jdbcType=VARCHAR},
+    #{dateType,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+    #{shuttleType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.junhwa.ShuttleTime">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    insert into shuttle_time
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkShuttleTime != null">
+        pk_shuttle_time,
+      </if>
+      <if test="pkDomain != null">
+        pk_domain,
+      </if>
+      <if test="pkClassinfo != null">
+        pk_classinfo,
+      </if>
+      <if test="dateType != null">
+        date_type,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="shuttleType != null">
+        shuttle_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkShuttleTime != null">
+        #{pkShuttleTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null">
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null">
+        #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="dateType != null">
+        #{dateType,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shuttleType != null">
+        #{shuttleType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wuxue.model.junhwa.ShuttleTimeExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    select count(*) from shuttle_time
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update shuttle_time
+    <set>
+      <if test="record.pkShuttleTime != null">
+        pk_shuttle_time = #{record.pkShuttleTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pkDomain != null">
+        pk_domain = #{record.pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pkClassinfo != null">
+        pk_classinfo = #{record.pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateType != null">
+        date_type = #{record.dateType,jdbcType=INTEGER},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.shuttleType != null">
+        shuttle_type = #{record.shuttleType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update shuttle_time
+    set pk_shuttle_time = #{record.pkShuttleTime,jdbcType=VARCHAR},
+    pk_domain = #{record.pkDomain,jdbcType=VARCHAR},
+    pk_classinfo = #{record.pkClassinfo,jdbcType=VARCHAR},
+    date_type = #{record.dateType,jdbcType=INTEGER},
+    start_time = #{record.startTime,jdbcType=TIMESTAMP},
+    end_time = #{record.endTime,jdbcType=TIMESTAMP},
+    shuttle_type = #{record.shuttleType,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.junhwa.ShuttleTime">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update shuttle_time
+    <set>
+      <if test="pkDomain != null">
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="pkClassinfo != null">
+        pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="dateType != null">
+        date_type = #{dateType,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shuttleType != null">
+        shuttle_type = #{shuttleType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pk_shuttle_time = #{pkShuttleTime,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.junhwa.ShuttleTime">
+    <!--
+      WARNING - @mbg.generated MyBatis Generator Create
+    -->
+    update shuttle_time
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+    pk_classinfo = #{pkClassinfo,jdbcType=VARCHAR},
+    date_type = #{dateType,jdbcType=INTEGER},
+    start_time = #{startTime,jdbcType=TIMESTAMP},
+    end_time = #{endTime,jdbcType=TIMESTAMP},
+    shuttle_type = #{shuttleType,jdbcType=INTEGER}
+    where pk_shuttle_time = #{pkShuttleTime,jdbcType=VARCHAR}
+  </update>
+</mapper>

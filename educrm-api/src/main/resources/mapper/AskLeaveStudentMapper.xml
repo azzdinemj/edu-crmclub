@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.AskLeaveStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.AskLeaveStudent" >
+    <id column="pk_student_leave" property="pkStudentLeave" jdbcType="VARCHAR" />
+    <result column="pk_ask_for_leave" property="pkAskForLeave" jdbcType="VARCHAR" />
+    <result column="pk_student" property="pkStudent" jdbcType="VARCHAR" />
+    <result column="pk_linkman" property="pkLinkman" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_student_leave, pk_ask_for_leave, pk_student, pk_linkman
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.AskLeaveStudent" >
+    select
+    <include refid="Base_Column_List" />
+    from ask_leave_student
+    where 1=1
+    <if test="pkStudent != null" >
+      and pk_student = #{pkStudent}
+    </if>
+  </select>
+  <select id="selectByPkAskForLeave" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ask_leave_student
+    where pk_ask_for_leave = #{pkAskForLeave,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ask_leave_student
+    where pk_student_leave = #{pkStudentLeave,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ask_leave_student
+    where pk_student_leave = #{pkStudentLeave,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByLeaveId" parameterType="java.lang.String" >
+    delete from ask_leave_student
+    where pk_ask_for_leave = #{pkAskForLeave,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.AskLeaveStudent" >
+    insert into ask_leave_student (pk_student_leave, pk_ask_for_leave, pk_student, 
+      pk_linkman)
+    values (#{pkStudentLeave,jdbcType=VARCHAR}, #{pkAskForLeave,jdbcType=VARCHAR}, #{pkStudent,jdbcType=VARCHAR}, 
+      #{pkLinkman,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.AskLeaveStudent" >
+    insert into ask_leave_student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkStudentLeave != null" >
+        pk_student_leave,
+      </if>
+      <if test="pkAskForLeave != null" >
+        pk_ask_for_leave,
+      </if>
+      <if test="pkStudent != null" >
+        pk_student,
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkStudentLeave != null" >
+        #{pkStudentLeave,jdbcType=VARCHAR},
+      </if>
+      <if test="pkAskForLeave != null" >
+        #{pkAskForLeave,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkLinkman != null" >
+        #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.AskLeaveStudent" >
+    update ask_leave_student
+    <set >
+      <if test="pkAskForLeave != null" >
+        pk_ask_for_leave = #{pkAskForLeave,jdbcType=VARCHAR},
+      </if>
+      <if test="pkStudent != null" >
+        pk_student = #{pkStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="pkLinkman != null" >
+        pk_linkman = #{pkLinkman,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_student_leave = #{pkStudentLeave,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.AskLeaveStudent" >
+    update ask_leave_student
+    set pk_ask_for_leave = #{pkAskForLeave,jdbcType=VARCHAR},
+      pk_student = #{pkStudent,jdbcType=VARCHAR},
+      pk_linkman = #{pkLinkman,jdbcType=VARCHAR}
+    where pk_student_leave = #{pkStudentLeave,jdbcType=VARCHAR}
+  </update>
+</mapper>

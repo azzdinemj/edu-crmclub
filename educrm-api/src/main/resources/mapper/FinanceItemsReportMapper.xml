@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.FinanceItemsReportMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.FinanceItemsReport" >
+    <result column="pk_expense_item" property="pkExpenseItem" jdbcType="VARCHAR" />
+    <result column="sum" property="sum" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List">
+      pk_expense_item,sum
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wuxue.model.FinanceItemsReport">
+      SELECT
+    <include refid="Base_Column_List" />
+    FROM finance_items_report
+    WHERE 1=1
+  </select>
+  <insert id="insert" parameterType="com.wuxue.model.FinanceItemsReport" >
+    insert into finance_items_report (pk_expense_item, sum)
+    values (#{pkExpenseItem,jdbcType=VARCHAR}, #{sum,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.FinanceItemsReport" >
+    insert into finance_items_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkExpenseItem != null" >
+        pk_expense_item,
+      </if>
+      <if test="sum != null" >
+        sum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkExpenseItem != null" >
+        #{pkExpenseItem,jdbcType=VARCHAR},
+      </if>
+      <if test="sum != null" >
+        #{sum,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

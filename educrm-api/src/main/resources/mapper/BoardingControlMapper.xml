@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuxue.api.mapper.BoardingControlMapper" >
+  <resultMap id="BaseResultMap" type="com.wuxue.model.shuttle.BoardingControl" >
+    <id column="pk_boarding_control" property="pkBoardingControl" jdbcType="VARCHAR" />
+    <result column="pk_domain" property="pkDomain" jdbcType="VARCHAR" />
+    <result column="site_id" property="siteId" jdbcType="VARCHAR" />
+    <result column="pk_school_bus" property="pkSchoolBus" jdbcType="VARCHAR" />
+    <result column="student_num" property="studentNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="lastedit_date" property="lasteditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_boarding_control, pk_domain, site_id, pk_school_bus, student_num, status, type, 
+    creation_date, lastedit_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from boarding_control
+    where pk_boarding_control = #{pkBoardingControl,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from boarding_control
+    where pk_boarding_control = #{pkBoardingControl,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wuxue.model.shuttle.BoardingControl" >
+    insert into boarding_control (pk_boarding_control, pk_domain, site_id, 
+      pk_school_bus, student_num, status, 
+      type, creation_date, lastedit_date
+      )
+    values (#{pkBoardingControl,jdbcType=VARCHAR}, #{pkDomain,jdbcType=VARCHAR}, #{siteId,jdbcType=VARCHAR}, 
+      #{pkSchoolBus,jdbcType=VARCHAR}, #{studentNum,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{creationDate,jdbcType=TIMESTAMP}, #{lasteditDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wuxue.model.shuttle.BoardingControl" >
+    insert into boarding_control
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkBoardingControl != null" >
+        pk_boarding_control,
+      </if>
+      <if test="pkDomain != null" >
+        pk_domain,
+      </if>
+      <if test="siteId != null" >
+        site_id,
+      </if>
+      <if test="pkSchoolBus != null" >
+        pk_school_bus,
+      </if>
+      <if test="studentNum != null" >
+        student_num,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkBoardingControl != null" >
+        #{pkBoardingControl,jdbcType=VARCHAR},
+      </if>
+      <if test="pkDomain != null" >
+        #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBus != null" >
+        #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNum != null" >
+        #{studentNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lasteditDate != null" >
+        #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.shuttle.BoardingControl" >
+    update boarding_control
+    <set >
+      <if test="pkDomain != null" >
+        pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        site_id = #{siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="pkSchoolBus != null" >
+        pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNum != null" >
+        student_num = #{studentNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lasteditDate != null" >
+        lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_boarding_control = #{pkBoardingControl,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wuxue.model.shuttle.BoardingControl" >
+    update boarding_control
+    set pk_domain = #{pkDomain,jdbcType=VARCHAR},
+      site_id = #{siteId,jdbcType=VARCHAR},
+      pk_school_bus = #{pkSchoolBus,jdbcType=VARCHAR},
+      student_num = #{studentNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      lastedit_date = #{lasteditDate,jdbcType=TIMESTAMP}
+    where pk_boarding_control = #{pkBoardingControl,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxue.api.mapper.SysRoleDepartmentMapper">
+	<resultMap id="BaseResultMap" type="com.wuxue.model.SysRoleDepartment">
+		<id column="pk_sys_role" jdbcType="VARCHAR" property="pkSysRole" />
+		<id column="pk_department" jdbcType="VARCHAR" property="pkDepartment" />
+		<result column="pk_domain" jdbcType="VARCHAR" property="pkDomain" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		pk_sys_role, pk_department, pk_domain
+	</sql>
+	<select id="select" resultMap="BaseResultMap"
+		parameterType="com.wuxue.model.SysRoleDepartment">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role_department
+		where 1=1
+		<if test="pkSysRole != null">
+			and pk_sys_role=#{pkSysRole,jdbcType=VARCHAR}
+		</if>
+		<if test="pkDepartment != null">
+			and pk_department= #{pkDepartment,jdbcType=VARCHAR}
+		</if>
+		<if test="pkDomain != null">
+			and pk_domain=#{pkDomain,jdbcType=VARCHAR}
+		</if>
+		<if test="start != null and pageSize != null">
+			LIMIT #{start}, #{pageSize}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="com.wuxue.model.SysRoleDepartmentKey"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role_department
+		where pk_sys_role = #{pkSysRole,jdbcType=VARCHAR}
+		and pk_department = #{pkDepartment,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="com.wuxue.model.SysRoleDepartmentKey">
+		delete from sys_role_department
+		where pk_sys_role = #{pkSysRole,jdbcType=VARCHAR}
+		and pk_department = #{pkDepartment,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.wuxue.model.SysRoleDepartment">
+		insert into sys_role_department (pk_sys_role, pk_department, pk_domain
+		)
+		values (#{pkSysRole,jdbcType=VARCHAR}, #{pkDepartment,jdbcType=VARCHAR},
+		#{pkDomain,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.wuxue.model.SysRoleDepartment">
+		insert into sys_role_department
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="pkSysRole != null">
+				pk_sys_role,
+			</if>
+			<if test="pkDepartment != null">
+				pk_department,
+			</if>
+			<if test="pkDomain != null">
+				pk_domain,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="pkSysRole != null">
+				#{pkSysRole,jdbcType=VARCHAR},
+			</if>
+			<if test="pkDepartment != null">
+				#{pkDepartment,jdbcType=VARCHAR},
+			</if>
+			<if test="pkDomain != null">
+				#{pkDomain,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.wuxue.model.SysRoleDepartment">
+		update sys_role_department
+		<set>
+			<if test="pkDomain != null">
+				pk_domain = #{pkDomain,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where pk_sys_role = #{pkSysRole,jdbcType=VARCHAR}
+		and pk_department = #{pkDepartment,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.wuxue.model.SysRoleDepartment">
+		update sys_role_department
+		set pk_domain = #{pkDomain,jdbcType=VARCHAR}
+		where pk_sys_role = #{pkSysRole,jdbcType=VARCHAR}
+		and pk_department = #{pkDepartment,jdbcType=VARCHAR}
+	</update>
+</mapper>
