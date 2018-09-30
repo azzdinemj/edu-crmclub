@@ -1,0 +1,212 @@
+
+
+
+
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close"
+                    data-dismiss="modal" aria-hidden="true">
+                &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+                修改套餐
+            </h4>
+        </div>
+        <div class="modal-body">
+            <form class="look form-horizontal form-ajax" method="post" id="formId" action="/system/tkSetMeal/save"
+                  data-target="/system/tkSetMeal/query">
+
+                <input type="hidden" id="pkSetMeal" name="pkSetMeal" value="">
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 ">
+                        <div class="form-group">
+                            <label class="control-label col-xs-3 col-md-3">套餐名称</label>
+                            <div class="col-xs-9 col-md-9">
+                                <input id="caption" name="caption" value="" class="form-control" >
+
+                            </div>
+                        </div><!-- /.col -->
+                    </div>
+                    <div class="col-xs-12 col-md-6 ">
+                        <div class="form-group">
+                            <label class="control-label col-lg-3">课时数量</label>
+                            <div class="col-xs-9 col-md-9">
+                                <input id="number" name="number" value="" class="form-control"   type="number">
+                            </div>
+                        </div><!-- /.col -->
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6 ">
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">原价</label>
+                                <div class="col-xs-9 col-md-9">
+                                    <input id="price" name="price" value="" class="form-control" onblur="validate(this.value)"  type="text">
+                                </div>
+                            </div><!-- /.col -->
+
+
+                        </div><!-- /.col-6 -->
+                        <div class="col-xs-12 col-md-6 ">
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">现价</label>
+                                <div class="col-xs-9 col-md-9">
+                                    <input id="currentPrice"  name="currentPrice" value="" class="form-control" onblur="validate(this.value)"  type="text">
+                                </div>
+                            </div><!-- /.col -->
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-xs-3 col-md-3">是否启用</label>
+                            <div class="col-xs-9 col-md-9 pt7">
+                                 <span class="rdio rdio-warning">
+                                   <input name="status" value="1"  id="radio3" type="radio">
+                                   <label for="radio3">是</label>
+                               </span>
+                                <span class="rdio rdio-warning">
+                                   <input name="status" value="2" id="radio4"  type="radio">
+                                   <label for="radio4">否</label>
+                               </span>
+                            </div>
+
+                        </div><!-- /.col -->
+
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-xs-2 col-md-2">备注</label>
+                            <div class="col-xs-10 col-md-10">
+                                <textarea id="memo" rows="4" name="memo" value="" class="form-control"  title=""></textarea>
+                            </div><!-- /.col -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group ">
+                            <label class="control-label col-xs-3 col-md-3">创建人</label>
+                            <div class="col-xs-9 col-md-9">
+                                <input readonly id="creator"  class="form-control" value=""   type="text">
+                            </div><!-- /.col -->
+                        </div>
+                        <div class="form-group ">
+                            <label class="control-label  col-xs-3 col-md-3">修改人</label>
+                            <div class="col-xs-9 col-md-9">
+                                <input readonly id="modifier" name="modifier" class="form-control" value=""   type="text">
+                            </div><!-- /.col -->
+                        </div>
+
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group ">
+                            <label class="control-label col-xs-3 col-md-3">创建时间</label>
+                            <div class="col-xs-9 col-md-9">
+                                <input readonly id="creationDateTime" class="form-control"     type="text">
+                            </div><!-- /.col -->
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="control-label col-xs-3 col-md-3">修改时间</label>
+                            <div class="col-xs-9 col-md-9">
+                                <input readonly id="lasteditDateTime" class="form-control"     type="text">
+                            </div><!-- /.col -->
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
+                    <button type="submit" id="submit" class="btn btn-newblue btn-sm">确定</button>
+                </div>
+            </form>
+        </div>
+
+    </div><!-- /.modal-content -->
+
+</div>
+
+<script type="text/javascript">
+    $('.form-ajax').bootstrapValidator().on('success.form.bv', function(e) {
+        // Prevent form submission
+        e.preventDefault();
+
+        // Get the form instance
+        var $form = $(e.target);
+
+        // Get the BootstrapValidator instance
+        var bv = $form.data('bootstrapValidator');
+
+        // Use Ajax to submit form data
+
+        $.post($form.attr('action'), $form.serialize(), function(data) {
+
+            if(data.code==0){
+                Notify.success(data.message);
+                if($form.data('target')){
+                    setTimeout("window.location.href='"+$form.data('target')+"'",3000);
+                }
+            }else{
+                Notify.danger(data.message);
+            }
+        }, 'json');
+    });
+
+    $(document).ready(function () {
+         var id =parent.returnId();
+
+         $.ajax({
+             url:"/system/tkSetMeal/edit",
+             type:"GET",
+             data:{"pkSetMeal":id},
+             dataType:"json",
+             success:function (data) {
+                 if(data.code ==0){
+                        $("#pkSetMeal").val(data.data.pkSetMeal);
+                        $("#number").val(data.data.number);
+                        $("#caption").val(data.data.caption);
+                        $("#memo").val(data.data.memo);
+                        $("#price").val(data.data.price);
+                        $("#currentPrice").val(data.data.currentPrice);
+                        $("#creator").val(data.data.map.creatorEntity.caption);
+                        $("#modifier").val(data.data.map.modifierEntity.caption);
+                        $("#creationDateTime").val(timestampConvertDateYHMD(data.data.creationDate));
+                        $("#lasteditDateTime").val(timestampConvertDateYHMD(data.data.lasteditDate));
+                        if(data.data.status==1){
+                            $("#radio3").attr("checked","checked");
+                        }else {
+                            $("#radio4").attr("checked","checked");
+                        }
+                 }
+             }
+
+
+         });
+
+    });
+
+    function validate(obj){
+        if (obj == null || obj==""){
+            document.getElementById("submit").disabled=false;
+            return false;
+        }
+        var reg = new RegExp('^\\d+(\\.\\d+)?$');
+        if(!reg.test(obj)){
+            alert("请输入数字!");
+            document.getElementById("submit").disabled=true;
+            return;
+        }
+        document.getElementById("submit").disabled=false;
+
+    }
+    </script>

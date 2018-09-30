@@ -1,0 +1,337 @@
+<!--<#include "../commons/top.ftl" />-->
+<!--<#include "../commons/left.ftl" />-->
+
+<!-- top -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"> </meta>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">-->
+    <!--<meta name="description" content="">-->
+    <!--<meta name="author" content="">-->
+
+    <title></title>
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet"> </link>
+    <link href="/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet"> </link>
+    <link href="/css/plug/bootstrapValidator.min.css" type="text/css" rel="stylesheet"> </link>
+    <link href="/css/style.default.css" rel="stylesheet"> </link>
+    <link rel="stylesheet" type="text/css" href="/css/datepicker.css"> </link>
+
+    <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"> </link>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-dialog.css"> </link>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-notify.css"> </link>
+    <link rel="stylesheet" type="text/css" href="/css/tree.css"> </link>
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css"> </link>
+    <link rel="stylesheet" type="text/css" href="/plus/Bootstrap-select/css/bootstrap-select.min.css"> </link>
+    <link rel="stylesheet" href="/css/TreeGrid.css" /> </link>
+    <link rel="stylesheet" href="/layer/skin/layer.css" /> </link>
+    <link rel="stylesheet" href="/layer/skin/layer.ext.css" /> </link>
+    <link rel="stylesheet" href="/css/course.css" /> </link>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+
+</head>
+
+<body>
+
+
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+
+
+<section>
+    <div class="mainpanel"><!--mainpanel-->
+        <div class="headerbar">
+
+            <a class="menutoggle"><i class="fa fa-bars"></i></a>
+            <div class="header-right">
+                <ul class="headermenu">
+                    <li>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <img src="/images/photos/blog3.jpg" alt=""/>
+
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                                <li><a href="/signout"><i class="glyphicon glyphicon-log-out"></i> 退出</a></li>
+                                <li><a data-toggle="modal" data-target="#modal" data-url="/updatePassword">修改密码</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </div><!-- header-right -->
+
+        </div><!-- headerbar -->
+
+        <!--top-->
+
+
+        <!--left-->
+
+        <div class="leftpanel">
+
+
+            <div class="logopanel">
+                <h1><span>[</span> 冠桥 <span>]</span></h1>
+            </div><!-- logopanel -->
+            <div class="leftpanelinner">
+
+                <!-- This is only visible to small devices -->
+                <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                    <div class="media userlogged">
+                        <img alt="" src="/images/photos/blog3.jpg" class="media-object"> </img>
+                        <div class="media-body">
+                            <h4>Mike</h4>
+                            <span>"..."</span>
+                        </div>
+                    </div>
+
+                    <h5 class="sidebartitle actitle">账户</h5>
+                    <ul class="nav nav-pills nav-stacked nav-bracket mb30">
+                        <li><a href="/signout"><i class="fa fa-sign-out"></i> <span>退出</span></a></li>
+                    </ul>
+                </div>
+                <!--导航===================================-->
+                <!-- <h5 class="sidebartitle">导航菜单</h5>-->
+                <ul class="nav nav-pills nav-stacked nav-bracket" id="sysMenuId">
+                    <li><a href="/signon"><i class="fa fa-home"></i> <span>首页</span></a></li>
+                    <!--<li class="nav-parent"><a href=""><i class="fa fa-edit"></i> <span></span></a>-->
+
+                    <li class="nav-parent nav-active active"><a href=""><i class="fa fa-bookmark"></i> <span>市场管理</span></a>
+                        <ul class="children" style="display: block;">
+                            <li class="active"><a href="/student/studentSignup/query"><i class="fa fa-caret-right"></i>意向学生</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-group"></i> <span>教学管理</span></a>
+                        <ul class="children">
+                            <li><a href="/classinfo/classinfo/query"><i class="fa fa-caret-right"></i> 新生开班</a></li>
+                            <li><a href="/classinfo/classon/query"><i class="fa fa-caret-right"></i> 班级升学</a></li>
+                            <li><a href="/classinfo/classreturn/query"><i class="fa fa-caret-right"></i> 学生转班</a></li>
+                            <li><a href="/student/studentSignups/query"><i class="fa fa-caret-right"></i> 学生报名</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-file-text"></i> <span>教务管理</span></a>
+                        <ul class="children">
+                            <li><a href="/student/student/query"><i class="fa fa-caret-right"></i>学生档案</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-money"></i> <span>财务管理</span></a>
+                        <ul class="children">
+                            <li><a href="/finance/receivable/query"><i class="fa fa-caret-right"></i>应收款</a></li>
+                            <li><a href="/stuReceiv/geStutreceivList"><i class="fa fa-caret-right"></i>学生收费</a></li>
+                            <li><a href="/finance/expenseItem/query"><i class="fa fa-caret-right"></i>费用项目</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-user"></i> <span>人事管理</span></a>
+                        <ul class="children">
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-hdd-o"></i> <span>宿舍管理</span></a>
+                        <ul class="children">
+
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-signal"></i> <span>报表分析</span></a>
+                        <ul class="children">
+                            <li><a href=""><i class="fa fa-caret-right"></i>校区业绩报表</a></li>
+                            <li><a href=""><i class="fa fa-caret-right"></i>校区学生变动情况</a></li>
+                            <li><a href=""><i class="fa fa-caret-right"></i>项目业绩报表</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-flag-o"></i> <span>基础资料</span></a>
+                        <ul class="children">
+                            <li><a href="/system/domain/query"><i class="fa fa-caret-right"></i>校区管理</a></li>
+                            <li><a href="/system/department/query"><i class="fa fa-caret-right"></i>部门资料</a></li>
+                            <li><a href="/classinfo/classTime/query"><i class="fa fa-caret-right"></i>上课时间</a></li>
+                            <li><a href="/classinfo/classRoom/query"><i class="fa fa-caret-right"></i>教室维护</a></li>
+                            <li><a href="/system/sysDict/query"><i class="fa fa-caret-right"></i>数据字典</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-cogs"></i> <span>系统管理</span></a>
+                        <ul class="children">
+                            <li><a href="/system/sysUser/query"><i class="fa fa-caret-right"></i>用户管理</a></li>
+                            <li><a href="/system/sysRole/query"><i class="fa fa-caret-right"></i>角色管理</a></li>
+                            <li><a href="/system/sysAutocode/query"><i class="fa fa-caret-right"></i>编码规则</a></li>
+                            <li><a href="/log/userlog"><i class="fa fa-caret-right"></i>操作日志</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <!--  导航结束-->
+
+
+            </div><!-- leftpanelinner -->
+        </div><!-- leftpanel -->
+
+        <!--left-->
+
+<div class="contentpanel">
+    <div class="pageheader">
+        <h2><i class="fa fa-bookmark"></i>学生列表<span>...</span></h2>
+        <div class="breadcrumb-wrapper">
+            <!--<div class="btn-group fr title-btn">-->
+                <!--<a class="btn btn-sm btn-newblue" href="/guanqiao/student/create">添加</a>-->
+                <!--<a href="" class="btn btn-sm btn-newblue" onclick="del()">删除 </a>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="panel panel-default">
+
+        <div class="panel  panel-alt widget-quick-status-post mb0 bor0">
+            <div class="panel-heading pd10 bor0 new">
+
+                <!--高显搜索-->
+                <form class="form-inline search white">
+                    <div class="form-group">
+                        <label class="control-label">学生姓名 :</label>
+                        <input id="caption" type="text" title="" name="reservation" class="form-control form-input-lg"
+                               value=""/>
+                    </div>
+
+                    <div class="form-group">
+                        <label></label>
+                        <div class="btn-group">
+                            <button type="button" onclick="query();" class="btn btn-newblue btn-sm search">搜索</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+        <div class="panel-body pd0">
+            <div class="table-responsive">
+                <table id="pagingTable" class="table table-striped table-bordered  " cellspacing="0">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div><!-- table-responsive -->
+        </div><!-- panel-body -->
+
+    </div><!-- panel -->
+</div><!-- contentpanel -->
+
+
+<!--<#include "../commons/footer.ftl" />-->
+
+<!-- foot-->
+
+</section>
+<div id="modal" class="modal"></div>
+<script src=" /js/jquery-1.11.1.min.js"></script>
+<script src=" /js/jquery-migrate-1.2.1.min.js"></script>
+<script src=" /js/bootstrap.min.js"></script>
+<script src=" /js/modernizr.min.js"></script>
+<script src=" /js/jquery.sparkline.min.js"></script>
+<script src=" /js/toggles.min.js"></script>
+<script src=" /js/retina.min.js"></script>
+<script src=" /js/jquery.cookies.js"></script>
+
+
+<script src=" /js/html5shiv.js"></script>
+<script src=" /js/respond.min.js"></script>
+<script type="text/javascript" src=" /js/uncompressed/moment.js"></script>
+<script type="text/javascript" src=" /js/uncompressed/daterangepicker.js"></script>
+<script type="text/javascript" src=" /js/TreeGrid.js"></script>
+<script type="text/javascript" src=" /js/application.js"></script>
+<script type="text/javascript" src=" /js/ajaxfileupload.js"></script>
+
+<script src=" /js/jquery.datatables.min.js"></script>
+<script src=" /js/jquery-ui.min.js"></script>
+<script type="text/javascript" language="javascript" src=" /js/dataTables.bootstrap.js"></script>
+
+<script src=" /js/login/bootstrapValidator.min.js"></script>
+<script src=" /js/login/bootstrap-notify.js"></script>
+
+<script src=" /js/custom.js?v=1"></script>
+<script src=" /js/jquery.ztree.core.js"></script>
+<script src=" /js/jquery.ztree.excheck.js"></script>
+<script src=" /js/jquery.ztree.exedit.js"></script>
+<script src=" /plus/Bootstrap-select/js/bootstrap-select.js"></script>
+<script src=" /js/bootstrap-datetimepicker.min.js"></script>
+<script src=" /js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src=" /js/function.js?v=3"></script>
+<script src=" /js/wuxue-common.js"></script>
+
+<script src=" /js/kindeditor/kindeditor-all.js"></script>
+<script src=" /js/kindeditor/lang/zh-CN.js"></script>
+
+<script src=" /layer/layer.min.js"></script>
+
+
+
+</body>
+</html>
+
+
+
+<!-- foot-->
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        query();
+    });
+
+    function renderCaption(data, type, row) {
+        return '<a href="/guanqiao/student/edit?pkStudent=' + row.pkStudent + '" class="yellow" >' + data + '</a>';
+    }
+    
+    function query() {
+        var data = {
+            "caption": $("#caption").val(),
+            "pkDomain":"gq"
+        };
+        init(GetTableColumn("tkstudent"), "/guanqiao/student/queryByPaging", data,"pagingTable");
+    }
+
+    function del() {
+        var index = $(".table-color-").index();
+        var id = getTableSelectRow("pagingTable",index).pkStudent;
+
+        if (id == null) {
+            Notify.danger("请先选择要删除的数据",3000);
+            return false;
+        }
+
+        var flag = confirm("确认删除吗？");
+        if (flag) {
+            $.ajax({
+                type: "POST",
+                url: "/guanqiao/student/delete",
+                data: {"pkStudent": id},
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 0) {
+                        Notify.success(data.message);
+                        setTimeout("location.reload()", 1);
+                    } else {
+                        Notify.danger(data.message)
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+
+    }
+
+
+
+
+
+</script>

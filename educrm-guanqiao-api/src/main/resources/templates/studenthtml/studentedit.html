@@ -1,0 +1,686 @@
+<!--<#include "../commons/top.ftl">-->
+    <!--<#include "../commons/left.ftl">-->
+
+<!-- top -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"> </meta>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">-->
+    <!--<meta name="description" content="">-->
+    <!--<meta name="author" content="">-->
+
+    <title></title>
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet"> </link>
+    <link href="/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet"> </link>
+    <link href="/css/plug/bootstrapValidator.min.css" type="text/css" rel="stylesheet"> </link>
+    <link href="/css/style.default.css" rel="stylesheet"> </link>
+    <link rel="stylesheet" type="text/css" href="/css/datepicker.css"> </link>
+
+    <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"> </link>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-dialog.css"> </link>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-notify.css"> </link>
+    <link rel="stylesheet" type="text/css" href="/css/tree.css"> </link>
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css"> </link>
+    <link rel="stylesheet" type="text/css" href="/plus/Bootstrap-select/css/bootstrap-select.min.css"> </link>
+    <link rel="stylesheet" href="/css/TreeGrid.css" /> </link>
+    <link rel="stylesheet" href="/layer/skin/layer.css" /> </link>
+    <link rel="stylesheet" href="/layer/skin/layer.ext.css" /> </link>
+    <link rel="stylesheet" href="/css/course.css" /> </link>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+
+</head>
+
+<body>
+
+
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+
+
+<section>
+    <div class="mainpanel"><!--mainpanel-->
+        <div class="headerbar">
+
+            <a class="menutoggle"><i class="fa fa-bars"></i></a>
+            <div class="header-right">
+                <ul class="headermenu">
+                    <li>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <img src="/images/photos/blog3.jpg" alt=""/>
+
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                                <li><a href="/signout"><i class="glyphicon glyphicon-log-out"></i> 退出</a></li>
+                                <li><a data-toggle="modal" data-target="#modal" data-url="/updatePassword">修改密码</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </div><!-- header-right -->
+
+        </div><!-- headerbar -->
+
+        <!--top-->
+
+
+        <!--left-->
+
+        <div class="leftpanel">
+
+
+            <div class="logopanel">
+                <h1><span>[</span> 冠桥 <span>]</span></h1>
+            </div><!-- logopanel -->
+            <div class="leftpanelinner">
+
+                <!-- This is only visible to small devices -->
+                <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                    <div class="media userlogged">
+                        <img alt="" src="/images/photos/blog3.jpg" class="media-object"> </img>
+                        <div class="media-body">
+                            <h4>Mike</h4>
+                            <span>"..."</span>
+                        </div>
+                    </div>
+
+                    <h5 class="sidebartitle actitle">账户</h5>
+                    <ul class="nav nav-pills nav-stacked nav-bracket mb30">
+                        <li><a href="/signout"><i class="fa fa-sign-out"></i> <span>退出</span></a></li>
+                    </ul>
+                </div>
+                <!--导航===================================-->
+                <!-- <h5 class="sidebartitle">导航菜单</h5>-->
+                <ul class="nav nav-pills nav-stacked nav-bracket" id="sysMenuId">
+                    <li><a href="/signon"><i class="fa fa-home"></i> <span>首页</span></a></li>
+                    <!--<li class="nav-parent"><a href=""><i class="fa fa-edit"></i> <span></span></a>-->
+
+                    <li class="nav-parent nav-active active"><a href=""><i class="fa fa-bookmark"></i> <span>市场管理</span></a>
+                        <ul class="children" style="display: block;">
+                            <li class="active"><a href="/student/studentSignup/query"><i class="fa fa-caret-right"></i>意向学生</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-group"></i> <span>教学管理</span></a>
+                        <ul class="children">
+                            <li><a href="/classinfo/classinfo/query"><i class="fa fa-caret-right"></i> 新生开班</a></li>
+                            <li><a href="/classinfo/classon/query"><i class="fa fa-caret-right"></i> 班级升学</a></li>
+                            <li><a href="/classinfo/classreturn/query"><i class="fa fa-caret-right"></i> 学生转班</a></li>
+                            <li><a href="/student/studentSignups/query"><i class="fa fa-caret-right"></i> 学生报名</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-file-text"></i> <span>教务管理</span></a>
+                        <ul class="children">
+                            <li><a href="/student/student/query"><i class="fa fa-caret-right"></i>学生档案</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-money"></i> <span>财务管理</span></a>
+                        <ul class="children">
+                            <li><a href="/finance/receivable/query"><i class="fa fa-caret-right"></i>应收款</a></li>
+                            <li><a href="/stuReceiv/geStutreceivList"><i class="fa fa-caret-right"></i>学生收费</a></li>
+                            <li><a href="/finance/expenseItem/query"><i class="fa fa-caret-right"></i>费用项目</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-user"></i> <span>人事管理</span></a>
+                        <ul class="children">
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-hdd-o"></i> <span>宿舍管理</span></a>
+                        <ul class="children">
+
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-signal"></i> <span>报表分析</span></a>
+                        <ul class="children">
+                            <li><a href=""><i class="fa fa-caret-right"></i>校区业绩报表</a></li>
+                            <li><a href=""><i class="fa fa-caret-right"></i>校区学生变动情况</a></li>
+                            <li><a href=""><i class="fa fa-caret-right"></i>项目业绩报表</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-flag-o"></i> <span>基础资料</span></a>
+                        <ul class="children">
+                            <li><a href="/system/domain/query"><i class="fa fa-caret-right"></i>校区管理</a></li>
+                            <li><a href="/system/department/query"><i class="fa fa-caret-right"></i>部门资料</a></li>
+                            <li><a href="/classinfo/classTime/query"><i class="fa fa-caret-right"></i>上课时间</a></li>
+                            <li><a href="/classinfo/classRoom/query"><i class="fa fa-caret-right"></i>教室维护</a></li>
+                            <li><a href="/system/sysDict/query"><i class="fa fa-caret-right"></i>数据字典</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent"><a href=""><i class="fa fa-cogs"></i> <span>系统管理</span></a>
+                        <ul class="children">
+                            <li><a href="/system/sysUser/query"><i class="fa fa-caret-right"></i>用户管理</a></li>
+                            <li><a href="/system/sysRole/query"><i class="fa fa-caret-right"></i>角色管理</a></li>
+                            <li><a href="/system/sysAutocode/query"><i class="fa fa-caret-right"></i>编码规则</a></li>
+                            <li><a href="/log/userlog"><i class="fa fa-caret-right"></i>操作日志</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <!--  导航结束-->
+
+
+            </div><!-- leftpanelinner -->
+        </div><!-- leftpanel -->
+
+        <!--left-->
+
+
+
+
+
+            <div class="pageheader">
+                <h2><i class="fa fa-bookmark"></i>学生档案 <span>...</span></h2>
+                <div class="breadcrumb-wrapper">
+                    <div class="btn-group fr title-btn">
+                        <a class="btn btn-sm btn-newblue" onClick="javascript:history.back(-1);">返回</a>
+                        <!--<button onclick="submit()" class="btn btn-sm btn-newblue" type="submit">修改</button>-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="contentpanel">
+                <div class="panel panel-default">
+                    <div class="contentpanel">
+
+                        <div class="tab-content">
+                            <div id="all" class="tab-pane active">
+
+                                <div class="row">
+
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="student-img upload text-center">
+                                            <!--<input type="file" name="file" id="doc" style="width:80px;"-->
+                                                   <!--onchange="ajaxSubmitForm()" />-->
+                                            <div id="dd">
+                                                        <img id="imgid" src="/images/photos/icon-h.jpg" onerror="">
+                                            </div>
+                                            <p class="gray">头像</p>
+                                            <input type="hidden" name="img" id="studentImg" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">姓名</label>
+                                            <div class="col-xs-9">
+                                                <input name="caption" value="" class="form-control" >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">性别</label>
+                                            <div class="col-xs-9">
+                                                <select id="sex">
+                                                    <option value="1">男</option>
+                                                    <option value="0">女</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">英文名</label>
+                                            <div class="col-xs-9">
+                                                <input name="shortCaption" value="" class="form-control" >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">个人电话</label>
+                                            <div class="col-xs-9">
+                                                <input name="phone" value=""  type="text" class="form-control"
+                                                       data-bv-phone="true" data-bv-phone-country="ZHCN" data-bv-phone-message="请输入正确手机号" >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">生日</label>
+                                            <div class="col-xs-9">
+                                                <input name="birthTime" id="data" value="" class="form-control"  >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">父母姓名</label>
+                                            <div class="col-xs-9">
+                                                <input name="parentName" value="" class="form-control"  >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">就读学校</label>
+                                            <div class="col-xs-9">
+                                                <input name="stuSchool" value="" class="form-control"  >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">紧急联系方式</label>
+                                            <div class="col-xs-9">
+                                                <input name="parentPhone" value="" class="form-control"  >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">QQ</label>
+                                            <div class="col-xs-9">
+                                                <input name="qq" value="" class="form-control"  >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">Email</label>
+                                            <div class="col-xs-9">
+                                                <input name="email" value="" class="form-control"  >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">城市</label>
+                                            <div class="col-xs-9">
+                                                <!--<select id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"></select>&nbsp;&nbsp;-->
+                                                <!--<select id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');"></select>&nbsp;&nbsp;-->
+                                                <!--<span id="seachdistrict_div"><select id="seachdistrict" name="seachdistrict"></select></span>-->
+
+                                                <input id="seachdistrict" value="" class="form-control"  >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                               <br/>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">详细地址</label>
+                                            <div class="col-xs-9">
+                                                <input name="address" value="" class="form-control"  >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">邮编</label>
+                                            <div class="col-xs-9">
+                                                <input name="zipCode" value="" class="form-control"  >
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-9">接受过多久线上英语培训</label>
+                                            <div class="col-xs-12">
+                                                <input name="radio1" value="0" type="radio"   >没接受过&nbsp; &nbsp;
+                                                <input name="radio1" value="1" type="radio"  > 半年&nbsp; &nbsp;
+                                                <input name="radio1" value="2" type="radio"  > 一年&nbsp; &nbsp;
+                                                <input name="radio1" value="3" type="radio"  > 二年及以上
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-9">英语基础</label>
+                                            <div class="col-xs-12">
+                                                <input name="radio2" value="0" type="radio"   >没基础&nbsp; &nbsp;
+                                                <input name="radio2" value="1" type="radio"  > 能说基础单词&nbsp; &nbsp;
+                                                <input name="radio2" value="2" type="radio"  > 能简单交流&nbsp; &nbsp;
+                                                <input name="radio2" value="3" type="radio"  > 能流利交流
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-9">孩子参与课堂的积极态度</label>
+                                            <div class="col-xs-12">
+                                                <input name="radio3" value="0" type="radio"   >基本不说话&nbsp; &nbsp;
+                                                <input name="radio3" value="1" type="radio"  > 偶尔说话&nbsp; &nbsp;
+                                                <input name="radio3" value="2" type="radio"  > 积极互动&nbsp; &nbsp;
+                                                <input name="radio3" value="3" type="radio"  > 没上过课
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+                            </div><!-- tab-content -->
+
+                        </div>-->
+
+                    </div><!-- tab-pane -->
+
+
+                </div>
+
+            </div><!-- panel -->
+
+            </div><!-- contentpanel -->
+
+            </div><!-- mainpanel -->
+
+
+        <!--<#include "../commons/footer.ftl" >-->
+
+<!-- foot-->
+</section>
+<div id="modal" class="modal"></div>
+<script src=" /js/jquery-1.11.1.min.js"></script>
+<script src=" /js/jquery-migrate-1.2.1.min.js"></script>
+<script src=" /js/bootstrap.min.js"></script>
+<script src=" /js/modernizr.min.js"></script>
+<script src=" /js/jquery.sparkline.min.js"></script>
+<script src=" /js/toggles.min.js"></script>
+<script src=" /js/retina.min.js"></script>
+<script src=" /js/jquery.cookies.js"></script>
+
+
+<script src=" /js/html5shiv.js"></script>
+<script src=" /js/respond.min.js"></script>
+<script type="text/javascript" src=" /js/uncompressed/moment.js"></script>
+<script type="text/javascript" src=" /js/uncompressed/daterangepicker.js"></script>
+<script type="text/javascript" src=" /js/TreeGrid.js"></script>
+<script type="text/javascript" src=" /js/application.js"></script>
+<script type="text/javascript" src=" /js/ajaxfileupload.js"></script>
+
+<script src=" /js/jquery.datatables.min.js"></script>
+<script src=" /js/jquery-ui.min.js"></script>
+<script type="text/javascript" language="javascript" src=" /js/dataTables.bootstrap.js"></script>
+
+<script src=" /js/login/bootstrapValidator.min.js"></script>
+<script src=" /js/login/bootstrap-notify.js"></script>
+
+<script src=" /js/custom.js?v=1"></script>
+<script src=" /js/jquery.ztree.core.js"></script>
+<script src=" /js/jquery.ztree.excheck.js"></script>
+<script src=" /js/jquery.ztree.exedit.js"></script>
+<script src=" /plus/Bootstrap-select/js/bootstrap-select.js"></script>
+<script src=" /js/bootstrap-datetimepicker.min.js"></script>
+<script src=" /js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src=" /js/function.js?v=3"></script>
+<script src=" /js/wuxue-common.js"></script>
+
+<script src=" /js/kindeditor/kindeditor-all.js"></script>
+<script src=" /js/kindeditor/lang/zh-CN.js"></script>
+
+<script src=" /layer/layer.min.js"></script>
+
+<script src=" /js/AreaData_min.js"></script>
+<script src=" /js/Area.js"></script>
+
+
+
+
+</body>
+</html>
+
+<!-- foot-->
+
+
+  <script type="text/javascript">
+
+      function clear(str) {
+          str = str.replace(/,/g, "");//取消字符串中出现的所有逗号
+          return str;
+      }
+
+      function setImagePreviews() {
+          var docObj = document.getElementById("doc");
+          var dd = document.getElementById("dd");
+          dd.innerHTML = "";
+          var fileList = docObj.files;
+          for (var i = 0; i < fileList.length; i++) {
+
+              dd.innerHTML += "<div> <img id='img" + i + "'  /> </div>";
+              var imgObjPreview = document.getElementById("img" + i);
+              if (docObj.files && docObj.files[i]) {
+                  //火狐下，直接设img属性
+                  imgObjPreview.style.display = 'block';
+                  imgObjPreview.style.width = '112px';
+                  imgObjPreview.style.height = '152px';
+                  //imgObjPreview.src = docObj.files[0].getAsDataURL();
+                  //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+                  imgObjPreview.src = window.URL.createObjectURL(docObj.files[i]);
+              }
+              else {
+                  //IE下，使用滤镜
+                  docObj.select();
+                  var imgSrc = document.selection.createRange().text;
+                  alert(imgSrc)
+                  var localImagId = document.getElementById("img" + i);
+                  //必须设置初始大小
+                  localImagId.style.width = "112px";
+                  localImagId.style.height = "152px";
+                  //图片异常的捕捉，防止用户修改后缀来伪造图片
+                  try {
+                      localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                      localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+                  }
+                  catch (e) {
+                      alert("您上传的图片格式不正确，请重新选择!");
+                      return false;
+                  }
+                  imgObjPreview.style.display = 'none';
+                  document.selection.empty();
+              }
+          }
+
+          return true;
+      }
+
+      function ajaxSubmitForm(){
+          var requestData = {};
+          var value = $("#file").val();
+          requestData.file = value;
+          var id_str = "doc";
+          $.ajaxFileUpload({
+              url : '/file/upload',
+              type : 'post',
+              secureuri : false,
+              data : requestData,
+              fileElementId : id_str,  //文件             //普通数据
+              dataType : 'json',
+              success : function(result) {
+                  // hideLoading();
+                  if(result.code == 0){
+                      setImagePreviews();
+                      $("#studentImg").val(result.data);
+                  }
+              }
+          });
+      }
+
+      $(document).ready(function () {
+          loadStudent();
+      });
+
+      var pk= getParam("pkStudent");
+      function loadStudent() {
+          $.ajax({
+              url:'/guanqiao/student/findByPk',
+              type:'post',
+              data:{
+                  pkStudent:pk
+              },
+              dataType:'json',
+              async:false,
+              success:function (data) {
+                  if(data.code==0){
+                      $("#imgid").attr("src",data.data.img)        //头像
+                      $("input[name='phone']").val(data.data.phone) //电话
+                      $("input[name='caption']").val(data.data.caption);//姓名
+                      $("#sex").find("option[value='"+data.data.sex+"']").attr("selected",true);//性别
+                      $("input[name='shortCaption']").val(data.data.shortCaption);//英文名
+                      $("input[name='birthTime']").val(timestampConvertDateYHMD(data.data.birthday));//生日
+                      $("input[name='parentName']").val(data.data.parentName);//父母姓名
+                      $("input[name='parentPhone']").val(data.data.parentPhone);//父母电话
+                      $("input[name='stuSchool']").val(data.data.stuSchool);//就读学校
+                      $("input[name='qq']").val(data.data.qq);//qq
+                      $("input[name='email']").val(data.data.email);//email
+
+
+//                      $("#seachprov").find("option[value='"+data.province+"']").attr("selected",true);//省
+//                      changeComplexProvince(data.province, sub_array, 'seachcity', 'seachdistrict');
+//                      $("#seachcity").find("option[value='"+data.city+"']").attr("selected",true);//市
+//                      changeCity(data.city,'seachdistrict','seachdistrict');//change市
+//                      $("#seachdistrict").find("option[value='"+data.area+"']").attr("selected",true);//区
+
+                      //省市区
+                      if(data.data.province&&data.data.city&&data.data.area){
+                          $("#seachdistrict").val(getAreaNamebyID(data.data.area));
+                      }else if(data.data.province&&data.data.city){
+                          $("#seachdistrict").val(getAreaNamebyID(data.data.city));
+                      }
+
+                      $("input[name='address']").val(data.data.address);//地址
+                      $("input[name='zipCode']").val(data.data.zipCode);//邮编
+
+                      var v=data.data.moreDetail.split(","); //更多信息
+                      $("input[name=radio1][value='"+v[0]+"']").attr("checked",true);
+                      $("input[name=radio2][value='"+v[1]+"']").attr("checked",true);
+                      $("input[name=radio3][value='"+v[2]+"']").attr("checked",true);
+
+                  }
+
+              },
+              error:function () {
+                  alert("error!!!");
+              }
+
+          })
+      }
+
+      function  submit() {
+          var img=$("input[name='img']").val();
+          var phone=$("input[name='phone']").val();
+          var caption=$("input[name='caption']").val();
+          var password=$("input[name='password']").val();
+
+          $.ajax({
+              url:'/guanqiao/student/editor',
+              type:'post',
+              data:{
+                  phone:phone,
+                  caption:caption,
+                  img:img,
+                  pkStudent:pk,
+                  password:password
+              },
+              dataType:'json',
+              success:function (data) {
+                  if(data.code==0){
+                      window.location.href="/guanqiao/student/query";
+                  }
+                            
+              },
+              error:function () {
+                  alert("error!!!");
+              }
+
+          })
+      }
+
+
+      $(function (){
+          initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '0', '0', '0');
+      });
+
+      //得到地区码
+      function getAreaID(){
+          var area = 0;
+          if($("#seachdistrict").val() != "0"){
+              area = $("#seachdistrict").val();
+          }else if ($("#seachcity").val() != "0"){
+              area = $("#seachcity").val();
+          }else{
+              area = $("#seachprov").val();
+          }
+          return area;
+      }
+
+      function showAreaID() {
+          //地区码
+          var areaID = getAreaID();
+          //地区名
+          var areaName = getAreaNamebyID(areaID) ;
+          alert("您选择的地区码：" + areaID + "      地区名：" + areaName);
+      }
+
+      //根据地区码查询地区名
+      function getAreaNamebyID(areaID){
+          var areaName = "";
+         // alert(areaID);
+          if(areaID.length == 2){
+              areaName = area_array[areaID];
+          }else if(areaID.length == 4){
+              var index1 = areaID.substring(0, 2);
+              areaName = area_array[index1] + " " + sub_array[index1][areaID];
+          }else if(areaID.length == 6){
+              var index1 = areaID.substring(0, 2);
+              var index2 = areaID.substring(0, 4);
+              areaName = area_array[index1] + " " + sub_array[index1][index2] + " " + sub_arr[index2][areaID];
+          }
+          return areaName;
+      }
+
+  </script>

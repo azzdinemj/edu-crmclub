@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    </meta>
+    <title></title>
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    </link>
+    <link href="/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet">
+    </link>
+    <link href="/css/plug/bootstrapValidator.min.css" type="text/css" rel="stylesheet">
+    </link>
+    <link href="/css/style.default.css" rel="stylesheet">
+    </link>
+    <link rel="stylesheet" type="text/css" href="/css/datepicker.css">
+    </link>
+
+    <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css">
+    </link>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-dialog.css">
+    </link>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-notify.css">
+    </link>
+    <link rel="stylesheet" type="text/css" href="/css/tree.css">
+    </link>
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css">
+    </link>
+    <link rel="stylesheet" type="text/css" href="/plus/Bootstrap-select/css/bootstrap-select.min.css">
+    </link>
+    <link rel="stylesheet" href="/css/TreeGrid.css"/>
+    </link>
+    <link rel="stylesheet" href="/layer/skin/layer.css"/>
+    </link>
+    <link rel="stylesheet" href="/layer/skin/layer.ext.css"/>
+    </link>
+    <link rel="stylesheet" href="/css/course.css"/>
+    </link>
+
+</head>
+<body>
+
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+
+<section>
+    <div class="mainpanel"><!--mainpanel-->
+        <div class="headerbar">
+
+            <a class="menutoggle"><i class="fa fa-bars"></i></a>
+            <div class="header-right">
+                <ul class="headermenu">
+                    <li>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <img src="/images/photos/blog3.jpg" alt=""/>
+
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                                <li><a href="/signout"><i class="glyphicon glyphicon-log-out"></i> 退出</a></li>
+                                <li><a data-toggle="modal" data-target="#modal" data-url="/updatePassword">修改密码</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </div><!-- header-right -->
+
+        </div><!-- headerbar -->
+
+        <div class="leftpanel">
+
+
+            <div class="logopanel">
+                <h1><span>[</span> 冠桥 <span>]</span></h1>
+            </div><!-- logopanel -->
+            <div class="leftpanelinner">
+
+                <!-- This is only visible to small devices -->
+                <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                    <div class="media userlogged">
+                        <img alt="" src="/images/photos/blog3.jpg" class="media-object"> </img>
+                        <div class="media-body">
+                            <h4>Mike</h4>
+                            <span>"..."</span>
+                        </div>
+                    </div>
+
+                    <h5 class="sidebartitle actitle">账户</h5>
+                    <ul class="nav nav-pills nav-stacked nav-bracket mb30">
+                        <li><a href="/signout"><i class="fa fa-sign-out"></i> <span>退出</span></a></li>
+                    </ul>
+                </div>
+                <!--导航===================================-->
+                <!-- <h5 class="sidebartitle">导航菜单</h5>-->
+                <ul class="nav nav-pills nav-stacked nav-bracket" id="sysMenuId">
+
+                </ul>
+                <!--  导航结束-->
+
+
+            </div><!-- leftpanelinner -->
+        </div><!-- leftpanel -->
+
+
+        <form class="look form-ajax" method="POST" id="formId" action="/guanqiao/employee/save"
+              data-target="/guanqiao/employee/query">
+            <div class="pageheader">
+                <h2><i class="fa fa-bookmark"></i>添加教师 <span>...</span></h2>
+                <div class="breadcrumb-wrapper">
+                    <div class="btn-group fr title-btn">
+                        <a class="btn btn-sm btn-newblue" onClick="javascript:history.back(-1);">返回</a>
+                        <button class="btn btn-sm btn-newblue" type="submit">保存</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contentpanel">
+                <div class="panel panel-default">
+                    <div class="contentpanel">
+                        <ul class="nav nav-tabs nav-success">
+
+                            <li class="active"><a data-toggle="tab" href="#all"><strong>教师信息</strong></a></li>
+
+                        </ul>
+                        <div class="tab-content">
+                            <div id="all" class="tab-pane active">
+
+                                <input id="pkEmployee" name="pkEmployee" value="" type="hidden">
+                                <input name="pkDomain" id="pkDomain" value="" type="hidden">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3 col-md-3">姓名</label>
+                                            <div class="col-xs-9 col-md-9">
+                                                <input name="caption" id="caption" class="form-control" data-bv-notempty data-bv-notempty-message="请录入姓名">
+
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group">-->
+                                            <!--<label class="control-label col-xs-3 col-md-3">编号</label>-->
+                                            <!--<div class="col-xs-9 col-md-9">-->
+                                                <!--<input class="form-control" readonly name="code" value="" type="text">-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">性别</label>
+                                            <div class="col-xs-9">
+                                            <span class="rdio rdio-warning">
+                                                <input name="sex" value="1" class="deldis" id="radio1" type="radio">
+                                                <label for="radio1">男</label>
+                                           </span>
+                                                <span class="rdio rdio-warning">
+                                               <input name="sex" value="0" id="radio2" class="deldis"  type="radio">
+                                               <label for="radio2">女</label>
+                                           </span>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">电话</label>
+                                            <div class="col-xs-9">
+                                                <input name="phone" id="phone" value="" type="text" class="form-control"
+                                                       data-bv-notempty data-bv-notempty-message="请录入电话"
+                                                       data-bv-phone="true" data-bv-phone-country="ZHCN" data-bv-phone-message="请输入正确手机号">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3 col-md-3">音频</label>
+                                            <div class="col-xs-9 col-md-11">
+                                                <input type="file" id="file2" name="file" onchange="ajaxSubmitFormMp3(this.id)"/>
+                                                <input type="hidden" id="picUrl" name="audio" value="">
+                                            </div>
+                                        </div>
+
+                                    </div><!-- col-sm-4 -->
+
+
+                                    <div class="col-xs-12 col-md-4">
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3 col-md-3">国籍</label>
+
+                                            <div class="col-xs-9">
+                                                <select name="nationality" id="select_idSysDictValues" class="form-control" >
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3 col-md-3">关联用户</label>
+
+                                            <div class="col-xs-9">
+                                                <select name="sysUser" id="select_idSysUser" class="form-control" >
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">单节课程价格</label>
+                                            <div class="col-xs-9">
+                                                <input id="price" name="price" value="" type="text" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3 col-md-3">毕业院校</label>
+                                            <div class="col-xs-9 col-md-9">
+                                                <input class="form-control" id="graduatedSchool" name="graduatedSchool" value="" type="text">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">居住地址</label>
+                                            <div class="col-xs-9">
+                                                <input id="address" name="address" value="" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3">出生日期</label>
+                                            <div class="col-xs-9">
+                                                <input name="birthTime" value="" id="data" type="text" class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div><!-- col-sm-4 -->
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="student-img upload text-center">
+                                            <input type="file" name="file" id="doc" style="width:80px;"
+                                                   onchange="ajaxSubmitForm()"/>
+                                            <div id="dd">
+                                                    <img id="imgid" src="/images/photos/icon-h.jpg">
+                                            </div>
+                                            <p class="gray">上传头像</p>
+                                            <input type="hidden" name="img" id="employeeImg"
+                                                   value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-1 col-md-1">备注</label>
+                                            <div class="col-xs-11 col-md-11">
+                                                <textarea class="form-control" name="memo" id="memo" rows="3" va></textarea>
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-4 -->
+                                </div><!-- col-sm-4 -->
+
+
+                            </div><!-- tab-content -->
+                        </div>
+
+                    </div><!-- tab-pane -->
+                </div>
+            </div><!-- panel -->
+        </form>
+    </div><!-- contentpanel -->
+
+
+    </div><!-- mainpanel -->
+
+
+</section>
+<div id="modal" class="modal"></div>
+<script src=" /js/jquery-1.11.1.min.js"></script>
+<script src=" /js/jquery-migrate-1.2.1.min.js"></script>
+<script src=" /js/bootstrap.min.js"></script>
+<script src=" /js/modernizr.min.js"></script>
+<script src=" /js/jquery.sparkline.min.js"></script>
+<script src=" /js/toggles.min.js"></script>
+<script src=" /js/retina.min.js"></script>
+<script src=" /js/jquery.cookies.js"></script>
+
+
+<script src=" /js/html5shiv.js"></script>
+<script src=" /js/respond.min.js"></script>
+<script type="text/javascript" src=" /js/uncompressed/moment.js"></script>
+<script type="text/javascript" src=" /js/uncompressed/daterangepicker.js"></script>
+<script type="text/javascript" src=" /js/TreeGrid.js"></script>
+<script type="text/javascript" src=" /js/application.js"></script>
+<script type="text/javascript" src=" /js/ajaxfileupload.js"></script>
+
+<script src=" /js/jquery.datatables.min.js"></script>
+<script src=" /js/jquery-ui.min.js"></script>
+<script type="text/javascript" language="javascript" src=" /js/dataTables.bootstrap.js"></script>
+
+<script src=" /js/login/bootstrapValidator.min.js"></script>
+<script src=" /js/login/bootstrap-notify.js"></script>
+
+<script src=" /js/custom.js?v=1"></script>
+<script src=" /js/jquery.ztree.core.js"></script>
+<script src=" /js/jquery.ztree.excheck.js"></script>
+<script src=" /js/jquery.ztree.exedit.js"></script>
+<script src=" /plus/Bootstrap-select/js/bootstrap-select.js"></script>
+<script src=" /js/bootstrap-datetimepicker.min.js"></script>
+<script src=" /js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src=" /js/function.js?v=3"></script>
+<script src=" /js/wuxue-common.js"></script>
+
+<script src=" /js/kindeditor/kindeditor-all.js"></script>
+<script src=" /js/kindeditor/lang/zh-CN.js"></script>
+
+<script src=" /layer/layer.min.js"></script>
+
+
+</body>
+</html>
+
+
+        <script type="text/javascript">
+
+
+
+            function setImagePreviews() {
+                var docObj = document.getElementById("doc");
+                var dd = document.getElementById("dd");
+                dd.innerHTML = "";
+                var fileList = docObj.files;
+                for (var i = 0; i < fileList.length; i++) {
+
+                    dd.innerHTML += "<div> <img id='img" + i + "'  /> </div>";
+                    var imgObjPreview = document.getElementById("img" + i);
+                    if (docObj.files && docObj.files[i]) {
+                        //火狐下，直接设img属性
+                        imgObjPreview.style.display = 'block';
+                        imgObjPreview.style.width = '112px';
+                        imgObjPreview.style.height = '152px';
+                        //imgObjPreview.src = docObj.files[0].getAsDataURL();
+                        //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+                        imgObjPreview.src = window.URL.createObjectURL(docObj.files[i]);
+                    }
+                    else {
+                        //IE下，使用滤镜
+                        docObj.select();
+                        var imgSrc = document.selection.createRange().text;
+                        alert(imgSrc)
+                        var localImagId = document.getElementById("img" + i);
+                        //必须设置初始大小
+                        localImagId.style.width = "112px";
+                        localImagId.style.height = "152px";
+                        //图片异常的捕捉，防止用户修改后缀来伪造图片
+                        try {
+                            localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                            localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+                        }
+                        catch (e) {
+                            alert("您上传的图片格式不正确，请重新选择!");
+                            return false;
+                        }
+                        imgObjPreview.style.display = 'none';
+                        document.selection.empty();
+                    }
+                }
+
+                return true;
+            }
+
+
+            function ajaxSubmitForm() {
+                var requestData = {};
+                var value = $("#file").val();
+                requestData.file = value;
+                var id_str = "doc";
+                $.ajaxFileUpload({
+                    url: '/file/upload',
+                    type: 'post',
+                    secureuri: false,
+                    data: requestData,
+                    fileElementId: id_str,  //文件             //普通数据
+                    dataType: 'json',
+                    success: function (result) {
+                        // hideLoading();
+                        if (result.code == 0) {
+                            setImagePreviews();
+                            $("#employeeImg").val(result.data);
+//                    alert(result.data);
+//                    Notify.success("上传成功");
+                        }
+                    }
+                });
+            }
+
+            //加载国籍
+            function getNationlity(){
+                $.ajax({
+                    url:"/guanqiao/product/getSysdictsValues",
+                    data:{
+                        pkSysDict:"country",
+                    },
+                    type:"GET",
+                    dataType:"json",
+                    success:function (data) {
+
+                        if(data.code==0){
+                            var arr = data.data;
+                            var option ;
+                            $.each(arr,function (i,valu) {
+                                option+="<option  value='"+arr[i].pkSysDictValues+"'>"+arr[i].caption+"</option>";
+                            });
+                            $(option).appendTo("#select_idSysDictValues");
+                        }
+                    },
+                    error:function () {
+                        alert("error!!");
+                    }
+                })
+            }
+
+            //加载关联用户
+            function getSysUser(){
+                $.ajax({
+                    url:"/guanqiao/employee/getSysUser",
+                    data:{
+                        "pageNo":"1",
+                        "pageSize":"300"
+                    },
+                    type:"GET",
+                    dataType:"json",
+                    async:false,
+                    success:function (data) {
+
+                        if(data.code==0){
+                            var arr = data.data;
+                            var option="<option  value=''>请选择</option>";
+                            $.each(arr,function (i,valu) {
+                                option+="<option  value='"+arr[i].pkSysUser+"'>"+arr[i].caption+"</option>";
+                            });
+                            $(option).appendTo("#select_idSysUser");
+                        }
+                    },
+                    error:function () {
+                        alert("error!!");
+                    }
+                })
+            }
+
+
+
+            //mp3 上传
+            function ajaxSubmitFormMp3(ids){
+                var requestData = {};
+                var value= document.getElementById(ids).value;
+                requestData.file = value;
+                var id_str=ids;
+                $.ajaxFileUpload({
+                    url : '/file/upload',
+                    type : 'post',
+                    secureuri : false,
+                    data : requestData,
+                    fileElementId : id_str,  //文件             //普通数据
+                    dataType : 'json',
+                    success : function(result) {
+                        // hideLoading();
+                        if(result.code == 0){
+                            document.getElementById("picUrl").value = result.data;
+                            Notify.success("success");
+                        }
+                    }
+                });
+            }
+
+
+            function GetRequest() {
+                var url = location.search; //获取url中"?"符后的字串
+                var theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    strs = str.split("&");
+                    for(var i = 0; i < strs.length; i ++) {
+                        theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+                    }
+                }
+                return theRequest;
+            }
+
+
+
+            $(document).ready(function () {
+                getNationlity();
+                getSysUser();
+                
+               var id =GetRequest().pkEmployee;
+
+                $.ajax({
+                    url:"/guanqiao/employee/edit",
+                    type:"GET",
+                    data:{"pkEmployee":id},
+                    dataType:"json",
+                    async:false,
+                    success:function (data) {
+                        if(data.code == 0){
+                            $("#pkEmployee").val(data.data.pkEmployee);
+                            $("#pkDomain").val(data.data.pkDomain);
+                            $("#code").val(data.data.code);
+                            $("#caption").val(data.data.caption);
+                            $("#phone").val(data.data.phone);
+                            $("#graduatedSchool").val(data.data.graduatedSchool);
+                            $("#data").val(timestampConvertDateYMD(data.data.birth));
+                            $("#address").val(data.data.address);
+                            $("#memo").val(data.data.memo);
+                            $("#price").val(data.data.price);
+
+                            $("#select_idSysDictValues").find("option[value='"+data.data.nationality+"']").attr("selected",true);
+
+                            if(data.data.sysUser){
+                                $("#select_idSysUser").find("option[value='"+data.data.sysUser+"']").attr("selected",true);
+                            }else{
+                                $("#select_idSysUser").find("option[value=' ']").attr("selected",true);
+
+                            }
+
+                            $("#imgid").attr("src",data.data.img);// img
+                            $("#employeeImg").val(data.data.img);         //input
+
+                            $("input[name='audio']").val(data.data.audio);
+
+                            if(data.data.sex==1){
+                                $("#radio1").attr("checked","checked");
+                            }else {
+                                $("#radio2").attr("checked","checked");
+                            }
+
+                        }
+                    }
+                })
+            });
+
+
+
+
+        </script>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        </meta>
+        <title></title>
+        <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+        </link>
+        <link href="/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet">
+        </link>
+        <link href="/css/plug/bootstrapValidator.min.css" type="text/css" rel="stylesheet">
+        </link>
+        <link href="/css/style.default.css" rel="stylesheet">
+        </link>
+        <link rel="stylesheet" type="text/css" href="/css/datepicker.css">
+        </link>
+
+        <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css">
+        </link>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap-dialog.css">
+        </link>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap-notify.css">
+        </link>
+        <link rel="stylesheet" type="text/css" href="/css/tree.css">
+        </link>
+        <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css">
+        </link>
+        <link rel="stylesheet" type="text/css" href="/plus/Bootstrap-select/css/bootstrap-select.min.css">
+        </link>
+        <link rel="stylesheet" href="/css/TreeGrid.css"/>
+        </link>
+        <link rel="stylesheet" href="/layer/skin/layer.css"/>
+        </link>
+        <link rel="stylesheet" href="/layer/skin/layer.ext.css"/>
+        </link>
+        <link rel="stylesheet" href="/css/course.css"/>
+        </link>
+
+    </head>
+    <body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+    </div>
+
+    <section>
+        <div class="mainpanel"><!--mainpanel-->
+            <div class="headerbar">
+
+                <a class="menutoggle"><i class="fa fa-bars"></i></a>
+                <div class="header-right">
+                    <ul class="headermenu">
+                        <li>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <img src="/images/photos/blog3.jpg" alt=""/>
+
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                                    <li><a href="/signout"><i class="glyphicon glyphicon-log-out"></i> 退出</a></li>
+                                    <li><a data-toggle="modal" data-target="#modal" data-url="/updatePassword">修改密码</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div><!-- header-right -->
+
+            </div><!-- headerbar -->
+
+            <div class="leftpanel">
+
+
+                <div class="logopanel">
+                    <h1><span>[</span> 冠桥 <span>]</span></h1>
+                </div><!-- logopanel -->
+                <div class="leftpanelinner">
+
+                    <!-- This is only visible to small devices -->
+                    <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                        <div class="media userlogged">
+                            <img alt="" src="/images/photos/blog3.jpg" class="media-object"> </img>
+                            <div class="media-body">
+                                <h4>Mike</h4>
+                                <span>"..."</span>
+                            </div>
+                        </div>
+
+                        <h5 class="sidebartitle actitle">账户</h5>
+                        <ul class="nav nav-pills nav-stacked nav-bracket mb30">
+                            <li><a href="/signout"><i class="fa fa-sign-out"></i> <span>退出</span></a></li>
+                        </ul>
+                    </div>
+                    <!--导航===================================-->
+                    <!-- <h5 class="sidebartitle">导航菜单</h5>-->
+                    <ul class="nav nav-pills nav-stacked nav-bracket" id="sysMenuId">
+
+                    </ul>
+                    <!--  导航结束-->
+
+
+                </div><!-- leftpanelinner -->
+            </div><!-- leftpanel -->
+
+            <!--left-->
+
+            <div class="contentpanel">
+                <div class="pageheader">
+                    <h2><i class="fa fa-bookmark"></i>用户管理<span>...</span></h2>
+                    <div class="breadcrumb-wrapper">
+                        <div class="btn-group fr title-btn">
+                            <a class="btn btn-sm btn-newblue" id="createId" data-toggle="modal" data-target="#modal" data-url="/system/sysUser/createHtml">新建</a>
+
+                            <button title="更多操作" type="button" class="btn btn-newblue btn-sm dropdown-toggle"
+                                    data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a data-toggle="modal" onclick="del()">删除</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+
+                    <div class="panel  panel-alt widget-quick-status-post mb0 bor0">
+                        <div class="panel-heading pd10 bor0 new">
+
+                            <!--<div class="panel-btns">-->
+                                <!--<a href="" class="minimize news-minimize">高级搜索<i class=" fa fa-chevron-down"></i></a>-->
+                            <!--</div>-->
+                            <!--隐藏搜索-->
+                            <form class="form-inline search white">
+                            <div class="form-group">
+                                <label class="control-label">用户名称 :</label>
+                                <input type="text" title="" id="caption" name="reservation" class="form-control form-input-lg" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <a class="btn btn-newblue btn-sm search" onclick="query()">搜索</a>
+                            </div>
+                            <div class="panel-body senior-search">
+                                <div id="post-status" class="tab-pane active">
+
+                                </div>
+
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="panel-body pd0">
+                        <div class="table-responsive">
+                            <table id="pagingTable" class="table table-striped table-bordered" cellspacing="0">
+                                <thead>
+
+                                </thead>
+                                <tbody>
+
+
+                                </tbody>
+                            </table>
+                        </div><!-- table-responsive -->
+                    </div><!-- panel-body -->
+
+                </div><!-- panel -->
+
+            </div><!-- contentpanel -->
+
+        </div><!-- mainpanel -->
+
+    </section>
+    <div id="modal" class="modal"></div>
+    <script src=" /js/jquery-1.11.1.min.js"></script>
+    <script src=" /js/jquery-migrate-1.2.1.min.js"></script>
+    <script src=" /js/bootstrap.min.js"></script>
+    <script src=" /js/modernizr.min.js"></script>
+    <script src=" /js/jquery.sparkline.min.js"></script>
+    <script src=" /js/toggles.min.js"></script>
+    <script src=" /js/retina.min.js"></script>
+    <script src=" /js/jquery.cookies.js"></script>
+
+
+    <script src=" /js/html5shiv.js"></script>
+    <script src=" /js/respond.min.js"></script>
+    <script type="text/javascript" src=" /js/uncompressed/moment.js"></script>
+    <script type="text/javascript" src=" /js/uncompressed/daterangepicker.js"></script>
+    <script type="text/javascript" src=" /js/TreeGrid.js"></script>
+    <script type="text/javascript" src=" /js/application.js"></script>
+    <script type="text/javascript" src=" /js/ajaxfileupload.js"></script>
+
+    <script src=" /js/jquery.datatables.min.js"></script>
+    <script src=" /js/jquery-ui.min.js"></script>
+    <script type="text/javascript" language="javascript" src=" /js/dataTables.bootstrap.js"></script>
+
+    <script src=" /js/login/bootstrapValidator.min.js"></script>
+    <script src=" /js/login/bootstrap-notify.js"></script>
+
+    <script src=" /js/custom.js?v=1"></script>
+    <script src=" /js/jquery.ztree.core.js"></script>
+    <script src=" /js/jquery.ztree.excheck.js"></script>
+    <script src=" /js/jquery.ztree.exedit.js"></script>
+    <script src=" /plus/Bootstrap-select/js/bootstrap-select.js"></script>
+    <script src=" /js/bootstrap-datetimepicker.min.js"></script>
+    <script src=" /js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src=" /js/function.js?v=3"></script>
+    <script src=" /js/wuxue-common.js"></script>
+
+    <script src=" /js/kindeditor/kindeditor-all.js"></script>
+    <script src=" /js/kindeditor/lang/zh-CN.js"></script>
+
+    <script src=" /layer/layer.min.js"></script>
+
+
+    </body>
+</html>
+
+<script type="text/javascript">
+
+    var pkId = "";
+
+    function renderCaption(data, type, row) {
+        return '<a class="yellow" data-toggle="modal" onclick="assignment(\''+row.pkSysUser+'\')" id="" data-target="#modal"data-url="/system/sysUser/editHtml">' + data + '</a>';
+    }
+    
+
+    
+    function assignment(id) {
+        pkId = id;
+    }
+
+    function returnId() {
+
+        return pkId;
+    }
+
+    $(document).ready(function () {
+        query();
+
+    });
+
+    function query() {
+        var data = {"dateTime": $("#datas").val(), "caption": $("#caption").val()};
+        init(GetTableColumn("sysUser"), "/system/sysUser/queryByPaging", data, "pagingTable");
+    }
+
+
+    function del() {
+        var id = $(".table-color-").attr("dataid");
+
+        if (id == null) {
+            alert("请先选择要删除的数据");
+            return;
+        }
+        var flag = confirm("确认删除吗？");
+        if (flag) {
+            $.ajax({
+                type: "POST",
+                url: "/system/sysUser/delete",
+                data: {"pkSysUser": id},
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 0) {
+                        Notify.success(data.message);
+                        setTimeout("location.reload()", 1);
+                    } else {
+                        alert(data.message)
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+
+    }
+
+
+    function sub() {
+        query();
+
+    }
+
+
+</script>
