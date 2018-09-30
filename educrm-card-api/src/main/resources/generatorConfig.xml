@@ -1,0 +1,1066 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+	<!--classPathEntry:数据库的JDBC驱动 -->
+	<!-- 本地 -->
+	<!--<classPathEntry location="D:\Java\maven\repository\mysql\mysql-connector-java\5.1.25\mysql-connector-java-5.1.25.jar" />-->
+	<!--<classPathEntry location="E:\java\MavenRepository\mysql\mysql-connector-java\5.1.25\mysql-connector-java-5.1.25.jar" />-->
+	<classPathEntry location="D:\JavaTools\MAVEN\mavenrepository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar" />
+	<!--<classPathEntry location="D:\java\MavenRepository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar" />-->
+
+	<!--<classPathEntry location="D:\mavenRepository\mysql\mysql-connector-java\5.1.25\mysql-connector-java-5.1.25.jar" />-->
+    <!--<classPathEntry location="/Users/tanluoyu/.m2/repository/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar" />-->
+
+	<context id="context1" targetRuntime="MyBatis3">
+
+		<!-- 此处是将Example改名为Criteria 当然 想改成什么都行~   -->
+		<!--  <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+             <property name="searchString" value="Example$" />
+             <property name="replaceString" value="Criteria" />
+         </plugin>  -->
+
+		<commentGenerator>
+			<property name="suppressDate" value="true"/>
+			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+			<property name="suppressAllComments" value="true"/>
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+						connectionURL="jdbc:mysql://119.27.172.73:3306/wx_pro_erp_zj_junhua" userId="root" password="shmy6451" />
+		<!--connectionURL="jdbc:mysql://119.27.172.73:3306/wuxuedb" userId="root" password="shmy6451" />-->
+
+		<!--eclipse  targetProject为"ch_two_service"-->
+		<!--Intellij IDEA targetProject为"src/main/java"-->
+		<javaModelGenerator targetPackage="com.wuxue.model" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="false" />
+		</javaModelGenerator>
+
+		<!-- 必须的（1 required） -->
+		<!-- map xml 生成器 -->
+		<sqlMapGenerator
+				targetPackage="mapper" targetProject="src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- 可选的（0 or 1） -->
+		<!-- mapper 或者就是dao接口生成器 -->
+		<!--eclipse  targetProject为"ch_two_service"-->
+		<!--Intellij IDEA targetProject为"src/main/java"-->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.wuxue.mapper" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="methodNameCalculator" value="extended" />
+		</javaClientGenerator>
+
+
+		<!-- 必须的（1...N） -->
+		<!-- pojo 实体生成器 -->
+		<!-- tableName:用于自动生成代码的数据库表; -->
+		<!-- domainObjectName:对应于数据库表的javaBean类名 -->
+
+		<!--<table tableName="talk_cloud_room" domainObjectName="TalkCloudRoom" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="talk_cloud_file" domainObjectName="TalkCloudFile" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="hy_product" domainObjectName="HyProduct" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="hy_pay" domainObjectName="HyPay" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="hy_order" domainObjectName="HyOrder" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="hy_order_detail" domainObjectName="HyOrderDetail" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="hy_order_change" domainObjectName="HyOrderChange" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="department" domainObjectName="Department" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="domain" domainObjectName="Domain" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="sys_autocode" domainObjectName="SysAutocode" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="sys_autocode_counter" domainObjectName="SysAutocodeCounter" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="sys_dict" domainObjectName="SysDict" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="sys_dict_values" domainObjectName="SysDictValues" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="sys_menu_button" domainObjectName="SysMenuButton" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="sys_power" domainObjectName="SysPower" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="sys_user_role" domainObjectName="SysUserRole" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="class_room" domainObjectName="ClassRoom" enableInsert="true"-->
+					   <!--enableCountByExample="false"-->
+					   <!--enableUpdateByExample="false"-->
+					   <!--enableDeleteByExample="false"-->
+					   <!--enableSelectByExample="false"-->
+					   <!--selectByExampleQueryId="false" >-->
+		<!--<property name="useActualColumnNames" value="false"/>-->
+	<!--</table>-->
+		<!--<table tableName="class_time" domainObjectName="ClassTime" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="classinfo" domainObjectName="Classinfo" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="classinfo_activity" domainObjectName="ClassinfoActivity" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="classinfo_activity_details" domainObjectName="ClassinfoActivityDetails" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="classinfo_student" domainObjectName="ClassinfoStudent" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="dorm_room" domainObjectName="DormRoom" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="employee" domainObjectName="Employee" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="employee_certificate" domainObjectName="EmployeeCertificate" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="employee_home_info" domainObjectName="EmployeeHomeInfo" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="employee_job_exp" domainObjectName="EmployeeJobExp" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="expense_item" domainObjectName="ExpenseItem" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="linkman" domainObjectName="Linkman" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="payables" domainObjectName="Payables" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="payment" domainObjectName="Payment" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="receipt" domainObjectName="Receipt" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="receivable" domainObjectName="Receivable" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student" domainObjectName="Student" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_activity_exp" domainObjectName="StudentActivityExp" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_awards" domainObjectName="StudentAwards" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_behavior_record" domainObjectName="StudentBehaviorRecord" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_credit" domainObjectName="StudentCredit" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_edu_experience" domainObjectName="StudentEduExperience" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_interview" domainObjectName="StudentInterview" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_interview_record" domainObjectName="StudentInterviewRecord" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_interview_records" domainObjectName="StudentInterviewRecords" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_plans" domainObjectName="StudentPlans" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_signup" domainObjectName="StudentSignup" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_specialty" domainObjectName="StudentSpecialty" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_test_plans" domainObjectName="StudentTestPlans" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_test_plans_scores" domainObjectName="StudentTestPlansScores" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_works_portfolio" domainObjectName="StudentWorksPortfolio" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="sys_set" domainObjectName="SysSet" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_signup_details" domainObjectName="StudentSignupDetails" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="course_lesson_chapter" domainObjectName="CourseLessonChapter" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_assign" domainObjectName="StudentAssign" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_lesson" domainObjectName="StudentLesson" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="course_evaluate" domainObjectName="CourseEvaluate" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="course" domainObjectName="Course" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="review" domainObjectName="Review" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="questions" domainObjectName="Questions" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="member" domainObjectName="Member" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="activity_student" domainObjectName="ActivityStudent" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="sys_table_column" domainObjectName="SysTableColumn" enableInsert="true"
+		enableCountByExample="false"
+		enableUpdateByExample="false"
+		enableDeleteByExample="false"
+		enableSelectByExample="false"
+		selectByExampleQueryId="false" >
+		<property name="useActualColumnNames" value="false"/>
+		</table>
+		<table tableName="sys_table_columns" domainObjectName="SysTableColumns" enableInsert="true"
+		enableCountByExample="false"
+		enableUpdateByExample="false"
+		enableDeleteByExample="false"
+		enableSelectByExample="false"
+		selectByExampleQueryId="false" >
+		<property name="useActualColumnNames" value="false"/>
+		</table>-->
+	<!--<table tableName="sys_log" domainObjectName="SysLog" enableInsert="true"
+		   enableCountByExample="false"
+		   enableUpdateByExample="false"
+		   enableDeleteByExample="false"
+		   enableSelectByExample="false"
+		   selectByExampleQueryId="false" >
+		<property name="useActualColumnNames" value="false"/>
+	</table>-->
+	<!--<table tableName="student_shift" domainObjectName="StudentShift" enableInsert="true"
+		   enableCountByExample="false"
+		   enableUpdateByExample="false"
+		   enableDeleteByExample="false"
+		   enableSelectByExample="false"
+		   selectByExampleQueryId="false" >
+		<property name="useActualColumnNames" value="false"/>
+	</table>-->
+	<!--<table tableName="dorm_room_student" domainObjectName="DormRoomStudent" enableInsert="true"-->
+		   <!--enableCountByExample="false"-->
+		   <!--enableUpdateByExample="false"-->
+		   <!--enableDeleteByExample="false"-->
+		   <!--enableSelectByExample="false"-->
+		   <!--selectByExampleQueryId="false" >-->
+		<!--<property name="useActualColumnNames" value="false"/>-->
+	<!--</table>-->
+	<!--<table tableName="notice" domainObjectName="Notice" enableInsert="true"
+		   enableCountByExample="false"
+		   enableUpdateByExample="false"
+		   enableDeleteByExample="false"
+		   enableSelectByExample="false"
+		   selectByExampleQueryId="false" >
+		<property name="useActualColumnNames" value="false"/>
+	</table>
+	<table tableName="task" domainObjectName="Task" enableInsert="true"
+		   enableCountByExample="false"
+		   enableUpdateByExample="false"
+		   enableDeleteByExample="false"
+		   enableSelectByExample="false"
+		   selectByExampleQueryId="false" >
+		<property name="useActualColumnNames" value="false"/>
+	</table>-->
+	<!--<table tableName="school_bus" domainObjectName="SchoolBus" enableInsert="true"-->
+		   <!--enableCountByExample="false"-->
+		   <!--enableUpdateByExample="false"-->
+		   <!--enableDeleteByExample="false"-->
+		   <!--enableSelectByExample="false"-->
+		   <!--selectByExampleQueryId="false" >-->
+		<!--<property name="useActualColumnNames" value="false"/>-->
+	<!--</table>-->
+	<!--<table tableName="school_bus_student" domainObjectName="SchoolBusStudent" enableInsert="true"-->
+		   <!--enableCountByExample="false"-->
+		   <!--enableUpdateByExample="false"-->
+		   <!--enableDeleteByExample="false"-->
+		   <!--enableSelectByExample="false"-->
+		   <!--selectByExampleQueryId="false" >-->
+		<!--<property name="useActualColumnNames" value="false"/>-->
+	<!--</table>-->
+	<!--<table tableName="dorm_room_employee" domainObjectName="DormRoomEmployee" enableInsert="true"-->
+		   <!--enableCountByExample="false"-->
+		   <!--enableUpdateByExample="false"-->
+		   <!--enableDeleteByExample="false"-->
+		   <!--enableSelectByExample="false"-->
+		   <!--selectByExampleQueryId="false" >-->
+		<!--<property name="useActualColumnNames" value="false"/>-->
+	<!--</table>-->
+	<!--<table tableName="school_bus_student_num" domainObjectName="SchoolBusStudentNum" enableInsert="true"-->
+		   <!--enableCountByExample="false"-->
+		   <!--enableUpdateByExample="false"-->
+		   <!--enableDeleteByExample="false"-->
+		   <!--enableSelectByExample="false"-->
+		   <!--selectByExampleQueryId="false" >-->
+		<!--<property name="useActualColumnNames" value="false"/>-->
+	<!--</table>-->
+	<!--<table tableName="classinfo_student_report" domainObjectName="ClassinfoStudentReport" enableInsert="true"
+		   enableCountByExample="false"
+		   enableUpdateByExample="false"
+		   enableDeleteByExample="false"
+		   enableSelectByExample="false"
+		   selectByExampleQueryId="false" >
+		<property name="useActualColumnNames" value="false"/>
+	</table>
+	<table tableName="employee_report" domainObjectName="EmployeeReport" enableInsert="true"
+		   enableCountByExample="false"
+		   enableUpdateByExample="false"
+		   enableDeleteByExample="false"
+		   enableSelectByExample="false"
+		   selectByExampleQueryId="false" >
+		<property name="useActualColumnNames" value="false"/>
+	</table>
+	<table tableName="enrolment_performance_report" domainObjectName="EnrolmentPerformanceReport" enableInsert="true"
+		   enableCountByExample="false"
+		   enableUpdateByExample="false"
+		   enableDeleteByExample="false"
+		   enableSelectByExample="false"
+		   selectByExampleQueryId="false" >
+		<property name="useActualColumnNames" value="false"/>
+	</table>
+	<table tableName="finance_report" domainObjectName="FinanceReport" enableInsert="true"
+		   enableCountByExample="false"
+		   enableUpdateByExample="false"
+		   enableDeleteByExample="false"
+		   enableSelectByExample="false"
+		   selectByExampleQueryId="false" >
+		<property name="useActualColumnNames" value="false"/>
+	</table>
+	<table tableName="market_report" domainObjectName="MarketReport" enableInsert="true"
+		   enableCountByExample="false"
+		   enableUpdateByExample="false"
+		   enableDeleteByExample="false"
+		   enableSelectByExample="false"
+		   selectByExampleQueryId="false" >
+		<property name="useActualColumnNames" value="false"/>
+	</table>-->
+	<!--<table tableName="classinfo_room" domainObjectName="ClassinfoRoom" enableInsert="true"-->
+		   <!--enableCountByExample="false"-->
+		   <!--enableUpdateByExample="false"-->
+		   <!--enableDeleteByExample="false"-->
+		   <!--enableSelectByExample="false"-->
+		   <!--selectByExampleQueryId="false" >-->
+		<!--<property name="useActualColumnNames" value="false"/>-->
+	<!--</table>-->
+	<!--<table tableName="dorm_room_per_num" domainObjectName="DormRoomPerNum" enableInsert="true"-->
+		   <!--enableCountByExample="false"-->
+		   <!--enableUpdateByExample="false"-->
+		   <!--enableDeleteByExample="false"-->
+		   <!--enableSelectByExample="false"-->
+		   <!--selectByExampleQueryId="false" >-->
+		<!--<property name="useActualColumnNames" value="false"/>-->
+	<!--</table>-->
+		<!--<table tableName="teacher_comment" domainObjectName="TeacherComment" enableInsert="true"
+				enableCountByExample="false"
+				enableUpdateByExample="false"
+				enableDeleteByExample="false"
+				enableSelectByExample="false"
+				selectByExampleQueryId="false" >
+			<property name="useActualColumnNames" value="false"/>
+		</table>-->
+		<!--<table tableName="finance_items_report" domainObjectName="FinanceItemsReport" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="set_meal" domainObjectName="SetMeal" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="set_meal_material" domainObjectName="SetMealMaterial" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="set_meal_nutrition" domainObjectName="SetMealNutrition" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="phase_nutrient" domainObjectName="PhaseNutrient" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="parent_order" domainObjectName="ParentOrder" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="parent_pay" domainObjectName="ParentPay" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="nutritional_analysis" domainObjectName="NutritionalAnalysis" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="canteen" domainObjectName="Canteen" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="canteen_setmeal" domainObjectName="CanteenSetmeal" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="parent_order_edit" domainObjectName="ParentOrderEdit" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="look_analysis" domainObjectName="LookAnalysis" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="nutritional_analysis_details" domainObjectName="NutritionalAnalysisDetails" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="jh_answer" domainObjectName="JhAnswer" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_linkman" domainObjectName="StudentLinkman" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="student_allergens" domainObjectName="StudentAllergens" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="ask_leave_student" domainObjectName="AskLeaveStudent" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="boarding_control" domainObjectName="BoardingControl" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="boarding_record" domainObjectName="BoardingRecord" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="bus_analysis" domainObjectName="BusAnalysis" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="debus_record" domainObjectName="DebusRecord" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="delivery_application" domainObjectName="DeliveryApplication" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="delivery_student" domainObjectName="DeliveryStudent" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="notice_record" domainObjectName="NoticeRecord" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="parentconfirm" domainObjectName="Parentconfirm" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="qr_code" domainObjectName="QrCode" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="relay_control" domainObjectName="RelayControl" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="relay_control_record" domainObjectName="RelayControlRecord" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="schoolbus_line" domainObjectName="SchoolbusLine" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="shuttle_time" domainObjectName="ShuttleTime" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="site_notification" domainObjectName="SiteNotification" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="turn_recorder" domainObjectName="TurnRecorder" enableInsert="true"-->
+		<!--<table tableName="active_personnel" domainObjectName="ActivePersonnel" enableInsert="true"-->
+		<!--enableCountByExample="false"-->
+		<!--enableUpdateByExample="false"-->
+		<!--enableDeleteByExample="false"-->
+		<!--enableSelectByExample="false"-->
+		<!--selectByExampleQueryId="false" >-->
+		<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="meal_material" domainObjectName="MealMaterial" enableInsert="true"-->
+				<!--enableCountByExample="false"-->
+				<!--enableUpdateByExample="false"-->
+				<!--enableDeleteByExample="false"-->
+				<!--enableSelectByExample="false"-->
+				<!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="debus_record" domainObjectName="DebusRecord" enableInsert="true"
+			   enableCountByExample="false"
+			   enableUpdateByExample="false"
+			   enableDeleteByExample="false"
+			   enableSelectByExample="false"
+			   selectByExampleQueryId="false" >
+			<property name="useActualColumnNames" value="false"/>
+		</table>-->
+        <!--<table tableName="boarding_record" domainObjectName="BoardingRecord" enableInsert="true"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        <!--</table>-->
+		<!--<table tableName="student_allergy" domainObjectName="StudentAllergy" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="homework" domainObjectName="Homework" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="schedule_constraint" domainObjectName="ScheduleConstraint" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="wx_unionid" domainObjectName="WxUnionid" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="division_grade" domainObjectName="DivisionGrade" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="order_pay" domainObjectName="OrderPay" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="recharge" domainObjectName="Recharge" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="dorm_room_housemaster" domainObjectName="DormRoomHousemaster" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="week_table_double" domainObjectName="weekTableDouble" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="order_pay_fee" domainObjectName="OrderPayFee" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<!--<table tableName="day_student" domainObjectName="DayStudent" enableInsert="true"-->
+			   <!--enableCountByExample="false"-->
+			   <!--enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false"-->
+			   <!--enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" >-->
+			<!--<property name="useActualColumnNames" value="false"/>-->
+		<!--</table>-->
+		<table tableName="holiday" domainObjectName="Holiday" enableInsert="true"
+			   enableCountByExample="false"
+			   enableUpdateByExample="false"
+			   enableDeleteByExample="false"
+			   enableSelectByExample="false"
+			   selectByExampleQueryId="false" >
+			<property name="useActualColumnNames" value="false"/>
+		</table>
+
+
+	</context>
+
+</generatorConfiguration>
