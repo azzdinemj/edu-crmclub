@@ -1,0 +1,73 @@
+<#include "../../commons/top.ftl">
+<#include "../../commons/left.ftl">
+
+<div class="contentpanel">
+    <div class="pageheader">
+        <h2><i class="fa fa-bookmark"></i>添加类别<span>...</span></h2>
+        <div class="breadcrumb-wrapper">
+            <div class="btn-group fr title-btn">
+                <a class="btn btn-sm btn-newblue" onClick="javascript:history.back(-1);">返回</a>
+                <a class="btn btn-sm btn-newblue" onclick="sub()">保存</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <form class="look form-ajax" method="POST" id="formId" action="" data-target="" >
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-xs-3 col-md-1">类别名称</label>
+                        <div class="col-xs-9 col-md-11">
+                            <input class="form-control" readonly value="" type="text">
+                            <input name="" value="" type="hidden">
+                        </div>
+                    </div>
+                </div><!-- col-sm-4 -->
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-xs-3 col-md-1">是否启用</label>
+                        <div class="col-xs-9 col-md-11">
+                            <span class="rdio rdio-warning">
+                                <input name="package" value="1" checked="checked" id="radio2" type="radio">
+                                <label for="radio2">是</label>
+                            </span>
+                            <span class="rdio rdio-warning">
+                                <input name="package" value="0" id="radio3"  type="radio">
+                                <label for="radio3">否</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-xs-3 col-md-1">备注</label>
+                        <div class="col-xs-9 col-md-11">
+                            <textarea  class="form-control" rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<#include "../../commons/footer.ftl"/>
+<script>
+
+    KindEditor.ready(function(K) {
+        window.editor = K.create('#editor_id');
+    });
+</script>
+<script type="text/javascript">
+
+    function clear(str) {
+        str = str.replace(/,/g, "");//取消字符串中出现的所有逗号
+        return str;
+    }
+
+</script>
