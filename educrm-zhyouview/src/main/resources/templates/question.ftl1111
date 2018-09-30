@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<#assign staticPath=''>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="${staticPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${staticPath}/fonts/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" type="text/css" href="${staticPath}/css/style.css">
+
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                </button>
+                <a href="/course/query" class="navbar-brand">
+                    <img src="${staticPath}/images/logo.png" class="logo">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav ml-auto navbar-right">
+
+                    <li class="nav-item"><a class="nav-link " href="/course/query">课程中心</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/questions/query">题库</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/teacher/query">师资力量</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">关于我们</a></li>
+
+                    <#--<li class="nav-item">-->
+                        <#--<div class="probootstrap-date-wrap">-->
+                            <#--<span class="icon ion-search"></span>-->
+                            <#--<input id="probootstrap-date-departure" class="form-control" placeholder="" type="text">-->
+                        <#--</div>-->
+                    <#--</li>-->
+                    <li><div class="iconimg">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown">
+                                <a class="myicon" title="lily"><img src="${staticPath}/images/bg.jpg"></a> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class="bh" href="/student/personalcenter"><i class="fa fa-home"></i> 个人中心</a></li>
+                                <li><a class="bh" href="/student/set"><i class="fa fa-home"></i> 我的设置</a></li>
+                                <li><a class="bh" href="/signout" ><i class="fa fa-sign-out"></i> 退出登录</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</nav>
+<section class="word-nav">
+    <div class="container">
+        <div class="row">
+            <div class="panel nav nav-word">
+                <div class="navTem-list">
+                    <div class="title">
+                        题目类型
+                    </div>
+                    <ul class="list-q">
+                            <a style="color: black;" href="/questions/query"><li>全部<span class="all icon ion-chevron-right"></span></li></a>
+                    <#if dict??>
+                        <#list dict as d>
+                                <a  style="color: black;" href="/questions/query?type=${(d.pkSysDictValues)!}" >
+                                    <li>
+                                     ${(d.caption)!}
+                                         <span class="${(d.pkSysDictValues)!}"></span>
+                                    </li>
+                                </a>
+                        </#list>
+                    </#if>
+
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="class_center">
+    <div class="container">
+        <h3 class="q-title">全部</h3>
+        <div class="row">
+
+         <#if questionlist??>
+              <#list questionlist.list as ques >
+             <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="cardn">
+                    <div class="card-content">
+                        <div class="text-center mb4">
+                            <img class="bg-light-purple circle card__icon" onerror="this.src='/images/img/no.jpg'" src="${staticPath}${(ques.img)!}" alt="Hosting icon">
+                        </div>
+                        <div class="card-text">
+                            <h3 class="card-title">${(ques.title)!}</h3>
+                            <a href="${(ques.url)!}" download >
+                            <button class=" btn-orange">下载</button>
+                            </a>
+                   </div>
+               </div>
+           </div>
+       </div>
+       </#list>
+     </#if>
+
+   </div>
+
+
+
+
+        <!--course为pageinfo对象-->
+        <!--分页页码-->
+
+     <#if questionlist??>
+        <ul class="pagination"  style="margin-left: 1%"  id="page">
+            <li><a href="/questions/query?pageNo=${questionlist.prePage}">&laquo;</a></li>
+        <#assign tp=questionlist.pages/>
+        <#assign p=questionlist.pageNum/>
+        <#assign sp=p-3/>
+        <#assign ep=p+4/>
+        <#assign eoff=ep-tp/>
+        <#if (eoff>0)>
+            <#assign sp = sp - eoff/>
+        </#if>
+        <#if (sp<=0)>
+            <#assign ep = ep - sp+1/>
+        </#if>
+        <#list sp..ep as x>
+            <#if (x>0 && x<=tp)>
+             <li ><a href="/questions/query?pageNo=${x}">${x}</a></li>
+            </#if>
+        </#list>
+            <li ><a href="/questions/query?pageNo=${questionlist.nextPage}">&raquo;</a></li>
+        </ul>
+     </#if>
+
+    </div>
+</section>
+
+<div class="footer">
+<p>京ICP备05069333号  &nbsp;&nbsp; &nbsp;&nbsp;京公网安备11010802014348号  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国北京海淀区马甸路2号中国航油大厦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 邮编：100088  &nbsp;&nbsp;&nbsp;&nbsp; 电话：0086-10-59890000      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+</div>
+<script src="${staticPath}/js/jquery.min.js"></script>
+<script src="${staticPath}/js/bootstrap.min.js"></script>
+<script src="${staticPath}/js/over.js"></script>
+
+
+
+</body>
+</html>
+<script>
+
+    $(function () {
+    <#if type??>
+        $(".all").removeClass("ion-chevron-right");
+        $(".${(type)!}").addClass("ion-chevron-right");//类型
+    </#if>
+    });
+</script>
+
+
+
+
+
+
+})
