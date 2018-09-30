@@ -1,0 +1,93 @@
+﻿<#import "../commons/spring.ftl" as spring/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title></title>
+
+    <link href="../css/style.default.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/plug/bootstrapValidator.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-dialog.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-notify.css">
+    <link rel="stylesheet" type="text/css" href="../css/datepicker.css">
+
+
+</head>
+<body class="signin">
+<section>
+
+    <div class="signinpanel">
+
+        <div class="row">
+
+            <!--  <div class="col-md-7">
+
+                  <div class="signin-info">
+                      <img src="images/lilogo.png">
+                      <div class="mb20"></div>
+
+                      <h5><strong>Welcome to the Chinese and American School!</strong></h5>
+                   &lt;!&ndash;   <ul>
+                          <li><i class="fa fa-arrow-circle-o-right mr5"></i> Fully Responsive Layout</li>
+                          <li><i class="fa fa-arrow-circle-o-right mr5"></i> HTML5/CSS3 Valid</li>
+                          <li><i class="fa fa-arrow-circle-o-right mr5"></i> Retina Ready</li>
+                          <li><i class="fa fa-arrow-circle-o-right mr5"></i> WYSIWYG CKEditor</li>
+                          <li><i class="fa fa-arrow-circle-o-right mr5"></i> and much more...</li>
+                      </ul>&ndash;&gt;
+                      <div class="mb20"></div>
+                  </div>&lt;!&ndash; signin0-info &ndash;&gt;
+
+              </div>--><!-- col-sm-7 -->
+            <div class="col-md-2 col-xs-3"></div>
+            <div class="col-md-8 col-xs-12">
+                <div class="logo text-center">
+                    <#--<img src="images/lilogo.png">-->
+                        <img src="http://118.126.114.169/logo.png" onerror="this.src='images/logo.png'">
+                </div>
+                <form id="formid" class="form-loginajax" method="post" action="/signon" data-target="/sigonindex">
+                    <h4 class="nomargin">Welcome</h4>
+                    <p class="mt5 mb20">Log in to your account.</p>
+
+                    <input type="text" class="form-control uname" id="username" name="user.pkSysUser" placeholder="name" required autofocus/>
+                    <input type="password" class="form-control pword" id="password" name="user.password" placeholder="Password" required/>
+
+                    <#--<div id="errordiv" style="display:none"><span style="color:red">False hints：<span id="errormsg"></span></span></div>-->
+                    <input type="submit" class="btn btn-news mb15 btn-block login" value=<@spring.message "login.login"/>></input>
+
+                    <div class="row mt15">
+                        <div class="col-xs-6 text-center"><a href="?lang=zh_CN">Chinese</a></div>
+
+                        <div class="col-xs-6 text-center"><a href="?lang=en_US">English</a></div>
+                    </div>
+                </form>
+
+            </div><!-- row -->
+            <div class="col-xs-2 col-md-3"></div>
+
+
+        </div><!-- signin -->
+    </div>
+</section>
+</body>
+
+</html>
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/login/bootstrapValidator.min.js"></script>
+<script src="../js/login/bootstrap-notify.js"></script>
+<script src="../js/bootstrap-datetimepicker.min.js"></script>
+<script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="../js/function.js"></script>
+<script src="../js/wuxue-common.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setCookie("locale","${.locale}");
+    });
+</script>
+<#--
+${.locale}-->

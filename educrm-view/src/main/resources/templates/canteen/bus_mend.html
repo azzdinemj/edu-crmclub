@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title></title>
+
+    <link href="../css/style.default.css" rel="stylesheet">
+    <!-- <link href="css/jquery.datatables.css" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" href="../css/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/datepicker.css">
+    <!--rili-->
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../js/uncompressed/moment.js"></script>
+    <script type="text/javascript" src="../js/uncompressed/daterangepicker.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../js/html5shiv.js"></script>
+    <script src="../js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+
+
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+
+
+<section>
+
+    <div class="leftpanel">
+
+
+        <div class="logopanel">
+            <h1><span>[</span>  力迈中美（国际）学校 <span>]</span></h1>
+        </div><!-- logopanel -->
+        <div class="leftpanelinner">
+
+            <!-- This is only visible to small devices -->
+            <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                <div class="media userlogged">
+                    <img alt="" src="../images/photos/blog3.jpg" class="media-object">
+                    <div class="media-body">
+                        <h4>Mike</h4>
+                        <span>"..."</span>
+                    </div>
+                </div>
+
+                <h5 class="sidebartitle actitle">账户</h5>
+                <ul class="nav nav-pills nav-stacked nav-bracket mb30">
+                    <li><a href="../signin.html"><i class="fa fa-sign-out"></i> <span>退出</span></a></li>
+                </ul>
+            </div>
+            <!--导航===================================-->
+            <!-- <h5 class="sidebartitle">导航菜单</h5>-->
+            <ul class="nav nav-pills nav-stacked nav-bracket">
+                <li class="nav-parent active"><a href=""><i class="fa fa-cogs"></i> <span>君华</span></a>
+                    <ul class="children" style="display: block">
+                        <li><a href="index.html" ><i class="fa fa-caret-right"></i>选餐统计</a></li>
+                        <li><a href="dining.html"><i class="fa fa-caret-right"></i>套餐管理</a></li>
+                        <li><a href="personaldining.html"><i class="fa fa-caret-right"></i>选餐记录</a></li>
+                        <li><a href="food_materials.html"><i class="fa fa-caret-right"></i>套餐原料管理</a></li>
+                        <li><a href="trophicanalysis.html"><i class="fa fa-caret-right"></i>营养分析</a></li>
+                        <li><a href="results.html"><i class="fa fa-caret-right"></i>考试管理</a></li>
+                        <li><a href="achievement_analysis.html"><i class="fa fa-caret-right"></i>成绩分析</a></li>
+                        <li><a href="test.html"><i class="fa fa-caret-right"></i>考务管理</a></li>
+                        <li><a href="schoolbus.html"><i class="fa fa-caret-right"></i>校车管理</a></li>
+                        <li class="active"><a href="bus_mend.html"><i class="fa fa-caret-right"></i>校车维修</a></li>
+                        <li><a href="classactive.html"><i class="fa fa-caret-right"></i>班级活动</a></li>
+                        <li><a href="competition.html"><i class="fa fa-caret-right"></i>班级竞赛</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <!--  导航结束-->
+
+
+        </div><!-- leftpanelinner -->
+    </div><!-- leftpanel -->
+
+    <!-- leftpanel -->
+
+    <div class="mainpanel"><!--mainpanel-->
+        <div class="headerbar">
+
+            <a class="menutoggle"><i class="fa fa-bars"></i></a>
+            <div class="header-right">
+                <ul class="headermenu">
+                    <li>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <img src="../images/photos/blog3.jpg" alt="" />
+                                Mike
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                                <li><a href="../signin.html"><i class="glyphicon glyphicon-log-out"></i> 退出</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </div><!-- header-right -->
+
+        </div><!-- headerbar -->
+
+
+        <!--添加部分===========================================-->
+
+        <div class="contentpanel">
+            <div class="pageheader">
+                <h2><i class="fa fa-bookmark"></i>校车维修 <span>...</span></h2>
+                <div class="breadcrumb-wrapper">
+                    <div class="btn-group fr title-btn">
+                        <a class="btn btn-sm btn-info" href="mend_detail.html">新增</a>
+                        <a class="btn btn-sm btn-info" href="">删除</a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-heading pd10 bor0 new">
+                <form class="form-inline search white">
+                    <div class="form-group">
+                        <label class="control-label">日期 :</label>
+                        <input type="text" title=""  name="reservation"  class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">姓名 :</label>
+                        <input type="text" title=""  name="reservation"  class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label></label>
+                        <div class="btn-group">
+                            <button type="button"  class="btn btn-info btn-sm">查询</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="panel-body pd0">
+                <div class="table-responsive">
+                    <table id="table"  class="table table-striped table-bordered" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>维修校车</th>
+                            <th>申请时间</th>
+                            <th>申请人</th>
+                            <th>校车状态</th>
+                            <th>审批结果</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td><a class="colorinfo" href="bus_detail.html"></a></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                 <span class="colorinfo">通过</span>
+                                 <span class="colorred hide">未通过</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div><!-- table-responsive -->
+            </div><!-- panel-body -->
+
+        </div>
+        <!--添加部分结束==============================================-->
+
+
+    </div><!-- mainpanel -->
+
+
+</section>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">套餐管理-添加</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-sm btn-info">添加</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="../js/jquery-migrate-1.2.1.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/modernizr.min.js"></script>
+<script src="../js/jquery.sparkline.min.js"></script>
+<script src="../js/toggles.min.js"></script>
+<script src="../js/retina.min.js"></script>
+<script src="../js/jquery.cookies.js"></script>
+
+<script src="../js/jquery.datatables.min.js"></script>
+<script type="text/javascript" language="javascript" src="../js/dataTables.bootstrap.js"></script>
+
+<script src="../js/custom.js?v=1"></script>
+
+
+</body>
+</html>

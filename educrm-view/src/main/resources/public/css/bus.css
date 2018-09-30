@@ -1,0 +1,89 @@
+.rescontent{
+    display: block;
+
+}
+.addresstitle{
+    font-size: 18px;
+}
+.addresstitle span{
+    color: #828282;
+    margin-left: 15px;
+    font-size: 14px;
+}
+
+.address>div{
+    float: left;
+
+}
+.addreschan .blue{
+    background-color: transparent;
+    color: #0099FF;
+    border: 1px solid #0099FF;
+    padding: 3px 25px;
+}
+img.del {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    margin-top:-10px;
+    margin-left: -15px;
+    opacity: 0;
+
+}
+.addreschan{
+    margin-right: 20px;
+}
+.addreschan b{
+    margin-right: 15px;
+}
+.addreschan .blue:hover,.addbtn a:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+.addreschan .blue:hover .del{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    margin-top:-10px;
+    margin-left: -15px;
+    opacity: 1;
+    cursor: pointer;
+}
+.shows{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    margin-top:-10px;
+    margin-left: -15px;
+    opacity: 1;
+    cursor: pointer;
+
+}
+.addbtn a{
+    background-color: #0099FF;
+    color: #fff;
+    padding: 3px 25px;
+    border:1px solid #0099FF;
+}
+#msgBox .list ul li{
+    list-style: none;
+    float: left;
+    height: 45px;
+}
+#msgBox .list ul li.hover{background:#0099FF;}
+.teacherlevel,.studentlevel{
+    border-bottom: 1px solid #cacaca;
+    padding-bottom: 25px;
+    display: block;width: 100%;
+
+}
+
+.teacherlevel .userPic{width:50px;height:50px;display:inline;margin-left:10px;}
+.teacherlevel .userPic img{width: 50px;height: 50px;border-radius:50%;}
+.teacherlevel .content{float:left;font-size:14px;margin-left:10px;word-wrap:break-word;}
+.teacherlevel .name{display:inline;padding-right:5px;font-size: 18px!important;}
+
+.studentlevel .userPic{float:right;width:50px;height:50px;display:inline;margin-left:10px;}
+.studentlevel .userPic img{width: 50px;height: 50px;border-radius:50%;}
+.studentlevel .content{float:right;font-size:14px;margin-right:10px;word-wrap:break-word;}
+.studentlevel .name{display:inline;padding-right:5px;}
